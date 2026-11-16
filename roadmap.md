@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Adjust testing token cap and configurable reservation; verify safety bypasses caps and crisis help remains available.
+
 - [x] Part 4: single-session chat using Chat UI composition, always-visible crisis help and safety page, per-card deeper explanations, story skip, and mode-specific replies. Real full reply and all three deeper levels verified on desktop/phone; further live checks stopped at the daily cap.
 
 - [x] Update server-only library selection: core/index slugs, active and explicitly invited faith stories, faith/deep entries, and steady entry 4; selection tests passed and a signed-in ordinary steady reply returned with saving off.
