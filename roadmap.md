@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Update server-only library selection: core/index slugs, active and explicitly invited faith stories, faith/deep entries, and steady entry 4; verify selection rules.
+
 - [x] Switch chat to direct Anthropic with a server-only ANTHROPIC_API_KEY and the requested model configuration; both models and signed-in safety flow verified, with 30 checks passing.
 
 - [x] Part 1: Foundation — tables + privacy rules, magic-link sign-in, 18+ step, welcome with AI notice, settings/consent, home-screen install, placeholder library rows
