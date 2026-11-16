@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_access_state: {
+        Row: {
+          key: string
+          message: string
+          status: number
+        }
+        Insert: {
+          key: string
+          message: string
+          status: number
+        }
+        Update: {
+          key?: string
+          message?: string
+          status?: number
+        }
+        Relationships: []
+      }
       app_config: {
         Row: {
           key: string
@@ -56,6 +74,30 @@ export type Database = {
           kind?: string
           tags?: string[]
           title?: string
+        }
+        Relationships: []
+      }
+      chat_reservations: {
+        Row: {
+          completed: boolean
+          day: string
+          id: string
+          reserved_tokens: number
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          day: string
+          id?: string
+          reserved_tokens: number
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          day?: string
+          id?: string
+          reserved_tokens?: number
+          user_id?: string
         }
         Relationships: []
       }
@@ -164,8 +206,10 @@ export type Database = {
           consent_save: boolean
           consent_share: boolean
           created_at: string
+          privacy_notice_version: string | null
           settings: Json
           user_id: string
+          verse_offered_at: string | null
         }
         Insert: {
           age_confirmed_at?: string | null
@@ -173,8 +217,10 @@ export type Database = {
           consent_save?: boolean
           consent_share?: boolean
           created_at?: string
+          privacy_notice_version?: string | null
           settings?: Json
           user_id: string
+          verse_offered_at?: string | null
         }
         Update: {
           age_confirmed_at?: string | null
@@ -182,8 +228,10 @@ export type Database = {
           consent_save?: boolean
           consent_share?: boolean
           created_at?: string
+          privacy_notice_version?: string | null
           settings?: Json
           user_id?: string
+          verse_offered_at?: string | null
         }
         Relationships: []
       }
@@ -216,6 +264,18 @@ export type Database = {
       can_save: { Args: { _user_id: string }; Returns: boolean }
       change_consent: {
         Args: { _granted: boolean; _type: string; _version: string }
+        Returns: undefined
+      }
+      reserve_chat: {
+        Args: { _budget: number; _user: string }
+        Returns: string
+      }
+      save_chat_exchange: {
+        Args: { _conversation: string; _message: string; _reply: string }
+        Returns: string
+      }
+      settle_chat: {
+        Args: { _id: string; _tokens: number }
         Returns: undefined
       }
     }

@@ -15,6 +15,13 @@
       "when": 1794792380246,
       "tag": "0001_versioned_optional_consent",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794793399528,
+      "tag": "0002_chat_limits_and_first_run",
+      "breakpoints": true
     }
   ]
 }
