@@ -9,6 +9,7 @@ export function cleanMessage(raw: string) {
   return cleaned;
 }
 export function keywordCrisis(message: string) {
+  message = message.normalize("NFKC").replace(/[\u0000-\u001f\u007f\u200b-\u200f\u202a-\u202e\u2060-\u206f]/g, "");
   return /\b(suicid\w*|self[ -]?harm|kill (myself|yourself|him|her|them)|end my life|hurt (myself|someone)|overdos\w*|abuse\w*|abusiv\w*|emergency|danger\w*|not safe|unsafe|bleeding|can't breathe|cannot breathe|weapon|rape\w*|assault\w*)\b/i.test(message);
 }
 export function mentionsFaith(message: string) { return /\b(god|jesus|bible|christ\w*|faith|pray\w*|scripture|church|religion|spiritual\w*)\b/i.test(message); }
