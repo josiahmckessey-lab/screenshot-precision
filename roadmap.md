@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Switch chat to direct Anthropic with a server-only ANTHROPIC_API_KEY and the requested model configuration; verify the connection.
+- [x] Switch chat to direct Anthropic with a server-only ANTHROPIC_API_KEY and the requested model configuration; both models and signed-in safety flow verified, with 30 checks passing.
 
 - [x] Part 1: Foundation — tables + privacy rules, magic-link sign-in, 18+ step, welcome with AI notice, settings/consent, home-screen install, placeholder library rows
 - [x] Part 2: Welcome, age confirmation before email sign-in, optional saving and de-identified builder review consent, versioned consent records
