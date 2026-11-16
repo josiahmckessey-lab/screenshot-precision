@@ -20,8 +20,26 @@ export async function runChat(
   input: ChatInput,
   userId: string,
   user: SupabaseClient<Database>,
-  apiKey: string,
+  apiKey: string | undefined,
 ): Promise<ChatResult> {
+  const safetyReply = async (): Promise<ChatResult> => {
+    // Text-free event recording is best effort and must never suppress crisis help.
+    try {
+      await user.from("crisis_events").insert({ user_id: userId });
+    } catch {
+      /* Safety remains available if event recording is unavailable. */
+    }
+    return {
+      reply: { mode: "safety", message: SAFETY_RESPONSE },
+      conversationId: null,
+      saved: false,
+    };
+  };
+  // Auth is enforced by the RPC middleware. This free safety path must precede
+  // configuration, provider availability, spending reservations and any rate limit.
+  if (keywordCrisis(input.message)) return safetyReply();
+  const message = cleanMessage(input.message);
+  if (!apiKey) throw new Error("AI replies need configuration before they can start.");
   const { data: profile, error: profileError } = await user
     .from("profiles")
     .select("*")
@@ -56,21 +74,28 @@ export async function runChat(
   const main = model("model_reply"),
     crisis = model("model_crisis_check"),
     router = model("model_routing");
-  // Reserve a conservative maximum before concurrent requests can consume the same allowance.
+  const reservationBudget = config["request_token_reservation"];
+  if (
+    typeof reservationBudget !== "number" ||
+    !Number.isSafeInteger(reservationBudget) ||
+    reservationBudget <= 0
+  )
+    throw new Error("The reply token reservation needs configuration.");
+  // Read each request's reservation from private configuration without a rebuild.
   const { data: reservation, error: reserveError } = await admin.rpc("reserve_chat", {
     _user: userId,
-    _budget: 100000,
+    _budget: reservationBudget,
   });
   if (reserveError) throw new Error("We couldn't check today's limits.");
   if (!reservation) throw new Error(REST_NOTICE);
   let tokens = 0,
-    uncertain = false;
+    uncertain = false,
+    safety = false;
   const calls = createClaudeCalls(apiKey, (n) => {
     tokens += n;
   });
   try {
-    const message = cleanMessage(input.message);
-    let flagged = keywordCrisis(message);
+    let flagged = false;
     try {
       flagged =
         (
@@ -87,13 +112,8 @@ export async function runChat(
       else if (!flagged) throw e;
     }
     if (flagged) {
-      const { error } = await user.from("crisis_events").insert({ user_id: userId });
-      if (error) throw new Error("We couldn't record the safety check.");
-      return {
-        reply: { mode: "safety", message: SAFETY_RESPONSE },
-        conversationId: null,
-        saved: false,
-      };
+      safety = true;
+      return await safetyReply();
     }
     const rawSettings = profile.settings as { verse_on?: boolean; story_on?: boolean } | null;
     const settings = {
@@ -314,10 +334,14 @@ export async function runChat(
       throw new Error("The AI provider could not prepare a valid reply.");
     throw error;
   } finally {
-    const { error } = await admin.rpc("settle_chat", {
-      _id: reservation,
-      _tokens: uncertain ? Math.max(tokens, 100000) : tokens,
-    });
-    if (error) throw new Error("We couldn't finish recording today's usage.");
+    try {
+      const { error } = await admin.rpc("settle_chat", {
+        _id: reservation,
+        _tokens: uncertain ? Math.max(tokens, reservationBudget) : tokens,
+      });
+      if (error) throw new Error("We couldn't finish recording today's usage.");
+    } catch (error) {
+      if (!safety) throw error;
+    }
   }
 }
