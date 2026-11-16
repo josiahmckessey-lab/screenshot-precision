@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { Settings } from "lucide-react";
 
 import { AgeGate } from "@/components/app/AgeGate";
@@ -21,7 +21,11 @@ export const Route = createFileRoute("/_authenticated/home")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(profileQuery),
+  loader: async ({ context }) => {
+    const profile = await context.queryClient.ensureQueryData(profileQuery);
+    if (!profile.consent_reviewed_at) throw redirect({ to: "/consent" });
+    return profile;
+  },
   component: HomePage,
 });
 
