@@ -19,7 +19,8 @@ export const Route = createFileRoute("/_authenticated/home")({
   }),
   loader: async ({ context }) => {
     const profile = await context.queryClient.ensureQueryData(profileQuery);
-    if (!profile.consent_reviewed_at || profile.privacy_notice_version !== CONSENT_VERSION) throw redirect({ to: "/consent" });
+    if (!profile.consent_reviewed_at || profile.privacy_notice_version !== CONSENT_VERSION)
+      throw redirect({ to: "/consent" });
     if (!profile.verse_offered_at) throw redirect({ to: "/verse-choice" });
     return profile;
   },
@@ -27,5 +28,9 @@ export const Route = createFileRoute("/_authenticated/home")({
 });
 
 function HomePage() {
-  return <AgeGate><ChatScreen /></AgeGate>;
+  return (
+    <AgeGate>
+      <ChatScreen />
+    </AgeGate>
+  );
 }
