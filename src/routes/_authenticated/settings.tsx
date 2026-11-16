@@ -5,13 +5,13 @@ import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 
 import { AgeGate } from "@/components/app/AgeGate";
+import { ConsentChoices } from "@/components/app/ConsentChoices";
 import { AppShell } from "@/components/app/AppShell";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
-import { setConsent, updateSettings, type MyProfile } from "@/lib/account.functions";
+import { updateSettings, type MyProfile } from "@/lib/account.functions";
 import { APP_NAME } from "@/lib/brand";
-import { CONSENT_TEXT } from "@/lib/consent-text";
 import { profileQuery } from "@/lib/profile-query";
 
 export const Route = createFileRoute("/_authenticated/settings")({
@@ -77,7 +77,6 @@ function SettingsPage() {
   const { data: profile } = useSuspenseQuery(profileQuery);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const consentFn = useServerFn(setConsent);
   const settingsFn = useServerFn(updateSettings);
 
   const patchCache = (patch: Partial<MyProfile>) =>
@@ -87,11 +86,6 @@ function SettingsPage() {
     queryClient.invalidateQueries({ queryKey: profileQuery.queryKey });
   };
 
-  const consent = useMutation({
-    mutationFn: (v: { type: "save" | "share"; granted: boolean }) => consentFn({ data: v }),
-    onMutate: (v) => patchCache(v.type === "save" ? { consent_save: v.granted } : { consent_share: v.granted }),
-    onError,
-  });
   const settings = useMutation({
     mutationFn: (v: MyProfile["settings"]) => settingsFn({ data: v }),
     onMutate: (v) => patchCache({ settings: v }),
@@ -99,8 +93,10 @@ function SettingsPage() {
   });
 
   async function signOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
     await supabase.auth.signOut();
-    navigate({ to: "/", replace: true });
+    navigate({ to: "/auth", replace: true });
   }
 
   return (
@@ -111,24 +107,7 @@ function SettingsPage() {
 
           <div>
             <h2 className="text-2xl">Privacy</h2>
-            <div className="divide-y divide-border">
-              <ToggleRow
-                id="consent-save"
-                title={CONSENT_TEXT.save.title}
-                body={CONSENT_TEXT.save.body}
-                checked={profile.consent_save}
-                disabled={consent.isPending}
-                onChange={(granted) => consent.mutate({ type: "save", granted })}
-              />
-              <ToggleRow
-                id="consent-share"
-                title={CONSENT_TEXT.share.title}
-                body={CONSENT_TEXT.share.body}
-                checked={profile.consent_share}
-                disabled={consent.isPending}
-                onChange={(granted) => consent.mutate({ type: "share", granted })}
-              />
-            </div>
+            <ConsentChoices />
           </div>
 
           <div>

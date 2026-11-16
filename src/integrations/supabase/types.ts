@@ -160,6 +160,7 @@ export type Database = {
       profiles: {
         Row: {
           age_confirmed_at: string | null
+          consent_reviewed_at: string | null
           consent_save: boolean
           consent_share: boolean
           created_at: string
@@ -168,6 +169,7 @@ export type Database = {
         }
         Insert: {
           age_confirmed_at?: string | null
+          consent_reviewed_at?: string | null
           consent_save?: boolean
           consent_share?: boolean
           created_at?: string
@@ -176,6 +178,7 @@ export type Database = {
         }
         Update: {
           age_confirmed_at?: string | null
+          consent_reviewed_at?: string | null
           consent_save?: boolean
           consent_share?: boolean
           created_at?: string
@@ -211,6 +214,10 @@ export type Database = {
     }
     Functions: {
       can_save: { Args: { _user_id: string }; Returns: boolean }
+      change_consent: {
+        Args: { _granted: boolean; _type: string; _version: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
