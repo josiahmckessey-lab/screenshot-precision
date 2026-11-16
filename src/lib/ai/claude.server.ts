@@ -7,6 +7,8 @@ export function createClaudeCalls(key: string, onUsage: (tokens: number) => void
   return {
     async object<T>(model: string, schema: z.ZodType<T>, system: string, messages: ModelMessage[], budget: number, cache = false): Promise<T> {
       const result = streamText({ model: provider(model), output: Output.object({ schema }), maxOutputTokens: budget, maxRetries: 0,
+        // SDK errors can contain request bodies; never send them to console logging.
+        onError: () => {},
         system: cache ? [{ role: "system", content: system, providerOptions: { anthropic: { cacheControl: { type: "ephemeral" } } } }] : system,
         messages });
       try {
