@@ -37,7 +37,7 @@ function ReplyCard({ part, busy, expand }: { part: ReplyPart; busy: boolean; exp
     <MessageResponse className="text-lg leading-relaxed" mode="static">{part.text}</MessageResponse>
     {part.id==="verse" && <p className="border-t border-border pt-4 text-base">{part.practical}</p>}
     {details.map(detail=><div key={detail.level} className="space-y-3 border-t border-border pt-4"><h3 className="text-xl">{DEPTH_TITLES[detail.level-1]}</h3><MessageResponse mode="static" className="text-lg leading-relaxed">{detail.text}</MessageResponse></div>)}
-    {loading && <p role="status" className="text-sm text-muted-foreground"><Shimmer>Taking a closer look…</Shimmer></p>}
+    {loading && <div role="status" className="text-sm text-muted-foreground"><Shimmer>Taking a closer look…</Shimmer></div>}
     {level && <Button variant="link" className="h-auto max-w-full whitespace-normal p-0 text-left text-base" disabled={busy || loading} onClick={()=>void more()}>{KNOW_MORE}</Button>}
   </article>;
 }
@@ -94,7 +94,7 @@ export function ChatScreen() {
           {"message" in turn.result.reply ? <MessageResponse mode="static">{turn.result.reply.message}</MessageResponse> : turn.result.reply.mode==="steady" ? <div className="space-y-4"><MessageResponse mode="static">{turn.result.reply.grounding ?? ""}</MessageResponse><MessageResponse mode="static">{turn.result.reply.question ?? ""}</MessageResponse></div> : <div className="space-y-5">{turn.result.reply.parts.map(part=><ReplyCard key={part.id} part={part} busy={busy} expand={level=>expand(turn,part,level)} />)}</div>}
         </MessageContent></Message>}
       </div>)}
-      {busy && <Message from="assistant"><p role="status" className="text-base text-muted-foreground"><Shimmer>Taking a moment…</Shimmer></p></Message>}
+      {busy && <Message from="assistant"><div role="status" className="text-base text-muted-foreground"><Shimmer>Taking a moment…</Shimmer></div></Message>}
     </ConversationContent><ConversationScrollButton aria-label="Latest message" /></Conversation>
     <footer className="shrink-0 bg-background pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
       {error && <p role="alert" className="mb-3 text-base text-destructive">{error}</p>}
