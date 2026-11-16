@@ -52,28 +52,46 @@ export type Database = {
       }
       brain_chunks: {
         Row: {
+          approx_tokens: number | null
           body: string
           entry_number: number | null
+          faith_layer: boolean
           id: string
           kind: string
+          slug: string | null
+          status: string
+          story_number: string | null
           tags: string[]
           title: string
+          version: string
         }
         Insert: {
+          approx_tokens?: number | null
           body: string
           entry_number?: number | null
+          faith_layer?: boolean
           id?: string
           kind: string
+          slug?: string | null
+          status?: string
+          story_number?: string | null
           tags?: string[]
           title: string
+          version?: string
         }
         Update: {
+          approx_tokens?: number | null
           body?: string
           entry_number?: number | null
+          faith_layer?: boolean
           id?: string
           kind?: string
+          slug?: string | null
+          status?: string
+          story_number?: string | null
           tags?: string[]
           title?: string
+          version?: string
         }
         Relationships: []
       }
