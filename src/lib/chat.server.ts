@@ -21,7 +21,7 @@ export async function runChat(input: ChatInput, userId: string, user: SupabaseCl
   const { data: configRows, error: configError } = await admin.from("app_config").select("key,value");
   if (configError || !configRows) throw new Error("We couldn't load reply settings.");
   const config = Object.fromEntries(configRows.map(c=>[c.key,c.value]));
-  const model = (key: string) => { const v=config[key]; if (typeof v !== "string" || !v.startsWith("anthropic/")) throw new Error("The reply model needs configuration."); return v; };
+   const model = (key: string) => { const v=config[key]; if (typeof v !== "string" || !/^claude-[a-z0-9-]+$/.test(v)) throw new Error("The reply model needs configuration."); return v; };
   const main = model("model_reply"), crisis = model("model_crisis_check"), router = model("model_routing");
   // Reserve a conservative maximum before concurrent requests can consume the same allowance.
   const { data: reservation, error: reserveError } = await admin.rpc("reserve_chat",{ _user: userId, _budget: 100000 });

@@ -39,7 +39,7 @@ use the editor.
 - Sign-in is email magic link only (`signInWithOtp`); `/_authenticated` is a client-only gate; the 18+ step is `AgeGate` wrapping each signed-in page.
 - User-facing copy lives in `src/lib/brand.ts` / `src/lib/consent-text.ts`; banned-word check runs in `src/test/product-rules.test.ts`.
 - Installable via manifest only (`public/manifest.webmanifest`); no service worker unless offline is requested.
-- Chat is a final-validated typed RPC in `chat.functions.ts` with server-only Claude streaming helpers; no unvalidated generated text is exposed before safety/output checks.
+- Chat is a final-validated typed RPC in `chat.functions.ts` with server-only Claude streaming helpers; no unvalidated generated text is exposed before safety/output checks. The explicit project override uses direct Anthropic Messages calls, reads its credential only inside the authenticated handler, and reads native model IDs from server-only configuration, avoiding gateway routing.
 - Daily budgets use atomic database reservations and settlement, with conservative reservation retained after uncertain failures, preventing concurrent calls from overspending.
 - Exchange persistence rechecks saving under a profile row lock and commits both messages together; safety messages only create text-free crisis events.
 - Provider access blocks persist in the server-only AI access state until an owner clears them after restoring access; no automatic retries or model substitutions.
