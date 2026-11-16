@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Part 4: usable single-session chat, always-visible crisis help and safety page, per-card deeper explanations, story skip, and mode-specific replies; verify signed-in phone and desktop flows.
+- [x] Part 4: single-session chat using Chat UI composition, always-visible crisis help and safety page, per-card deeper explanations, story skip, and mode-specific replies. Real full reply and all three deeper levels verified on desktop/phone; further live checks stopped at the daily cap.
 
 - [x] Update server-only library selection: core/index slugs, active and explicitly invited faith stories, faith/deep entries, and steady entry 4; selection tests passed and a signed-in ordinary steady reply returned with saving off.
 
@@ -13,5 +13,6 @@
 - [x] Disclose outside AI-provider retention and add the one-time, opt-in Bible verse step after consent
 - [x] Verify live Haiku classifier/routing and Sonnet structured-output calls with synthetic input; authenticated safety reply and usage accounting
 - [x] Verify ordinary replies with the real imported library and saving off through the authenticated chat function.
-- [ ] Enable the reply box and verify saved exchanges through the chat screen — waiting on the requested chat-screen work; the reply box remains disabled and was outside this server-only update.
+- [x] Enable the reply box and verify ordinary replies through the signed-in chat screen.
+- [ ] Verify saved exchanges end-to-end — current account has saving off and daily usage prevents further live tests; consent choices were left unchanged.
 - [ ] Real app name (using "Daybreak" for now) — waiting on user

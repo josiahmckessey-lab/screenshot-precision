@@ -223,7 +223,7 @@ export function ChatScreen() {
               <h1 className="text-3xl md:text-4xl">What's happening today?</h1>
             </div>
           )}
-          {turns.map((turn) => (
+          {!safety && turns.map((turn) => (
             <div key={turn.id} className="space-y-6">
               <Message from="user">
                 <MessageContent className="group-[.is-user]:bg-primary group-[.is-user]:text-primary-foreground text-lg">
