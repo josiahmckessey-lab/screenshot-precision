@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedConsentRouteImport } from './routes/_authenticated/consent'
 import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated/home'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedVerseChoiceRouteImport } from './routes/_authenticated/verse-choice'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -45,6 +46,12 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedVerseChoiceRoute =
+  AuthenticatedVerseChoiceRouteImport.update({
+    id: '/verse-choice',
+    path: '/verse-choice',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -52,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/consent': typeof AuthenticatedConsentRoute
   '/home': typeof AuthenticatedHomeRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/verse-choice': typeof AuthenticatedVerseChoiceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -59,6 +67,7 @@ export interface FileRoutesByTo {
   '/consent': typeof AuthenticatedConsentRoute
   '/home': typeof AuthenticatedHomeRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/verse-choice': typeof AuthenticatedVerseChoiceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,12 +77,14 @@ export interface FileRoutesById {
   '/_authenticated/consent': typeof AuthenticatedConsentRoute
   '/_authenticated/home': typeof AuthenticatedHomeRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/verse-choice': typeof AuthenticatedVerseChoiceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/consent' | '/home' | '/settings'
+  fullPaths:
+    '/' | '/auth' | '/consent' | '/home' | '/settings' | '/verse-choice'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/consent' | '/home' | '/settings'
+  to: '/' | '/auth' | '/consent' | '/home' | '/settings' | '/verse-choice'
   id:
     | '__root__'
     | '/'
@@ -82,6 +93,7 @@ export interface FileRouteTypes {
     | '/_authenticated/consent'
     | '/_authenticated/home'
     | '/_authenticated/settings'
+    | '/_authenticated/verse-choice'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -134,6 +146,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/verse-choice': {
+      id: '/_authenticated/verse-choice'
+      path: '/verse-choice'
+      fullPath: '/verse-choice'
+      preLoaderRoute: typeof AuthenticatedVerseChoiceRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -141,12 +160,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConsentRoute: typeof AuthenticatedConsentRoute
   AuthenticatedHomeRoute: typeof AuthenticatedHomeRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedVerseChoiceRoute: typeof AuthenticatedVerseChoiceRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConsentRoute: AuthenticatedConsentRoute,
   AuthenticatedHomeRoute: AuthenticatedHomeRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedVerseChoiceRoute: AuthenticatedVerseChoiceRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
