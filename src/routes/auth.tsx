@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { APP_NAME } from "@/lib/brand";
+import { WelcomeStep } from "@/components/app/WelcomeStep";
+import { AGE_ACCEPTED_KEY } from "@/lib/consent-text";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -31,15 +33,17 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [ageAccepted, setAgeAccepted] = useState(false);
 
   // Arriving from the email link (or already signed in): continue to the app.
   useEffect(() => {
     let active = true;
+    setAgeAccepted(localStorage.getItem(AGE_ACCEPTED_KEY) === "true");
     supabase.auth.getSession().then(({ data }) => {
-      if (active && data.session) navigate({ to: "/home", replace: true });
+      if (active && data.session) navigate({ to: "/consent", replace: true });
     });
     const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) navigate({ to: "/home", replace: true });
+      if (session) navigate({ to: "/consent", replace: true });
     });
     return () => {
       active = false;
@@ -49,6 +53,7 @@ function AuthPage() {
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
+    if (!ageAccepted) return;
     setError(null);
     const parsed = emailSchema.safeParse(email);
     if (!parsed.success) {
@@ -70,7 +75,7 @@ function AuthPage() {
 
   return (
     <AppShell>
-      {status === "sent" ? (
+      {!ageAccepted ? <WelcomeStep onContinue={() => setAgeAccepted(true)} /> : status === "sent" ? (
         <section className="fade-up flex flex-1 flex-col justify-center gap-6 py-10">
           <MailCheck className="size-10 text-primary" aria-hidden="true" />
           <h1 className="text-4xl">Check your email</h1>
