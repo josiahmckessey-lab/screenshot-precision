@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Adjust testing token cap and configurable reservation; verify safety bypasses caps and crisis help remains available.
+- [x] Adjust testing token cap to 600,000 and configurable reservation to 30,000, preserving other caps; cap/provider-block safety checks passed, plus a real ordinary reply, fixed safety response, and crisis help during processing on desktop/phone. All 66 tests passed.
 
 - [x] Part 4: single-session chat using Chat UI composition, always-visible crisis help and safety page, per-card deeper explanations, story skip, and mode-specific replies. Real full reply and all three deeper levels verified on desktop/phone; further live checks stopped at the daily cap.
 
@@ -16,5 +16,5 @@
 - [x] Verify live Haiku classifier/routing and Sonnet structured-output calls with synthetic input; authenticated safety reply and usage accounting
 - [x] Verify ordinary replies with the real imported library and saving off through the authenticated chat function.
 - [x] Enable the reply box and verify ordinary replies through the signed-in chat screen.
-- [ ] Verify saved exchanges end-to-end — current account has saving off and daily usage prevents further live tests; consent choices were left unchanged.
+- [ ] Verify saved exchanges end-to-end — current account has saving off; consent choices were left unchanged.
 - [ ] Real app name (using "Daybreak" for now) — waiting on user
