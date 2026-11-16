@@ -11,5 +11,5 @@ export const replySchema = z.object({
 });
 export type GeneratedReply = z.infer<typeof replySchema>;
 export type ChatReply = GeneratedReply | { mode: "safety" | "steady"; message: string };
-export type ChatInput = { message: string; conversationId?: string; history?: { role: "user" | "assistant"; content: string }[] };
+export type ChatInput = { message: string; conversationId?: string | undefined; history?: { role: "user" | "assistant"; content: string }[] | undefined };
 export type ChatResult = { reply: ChatReply; conversationId: string | null; saved: boolean };

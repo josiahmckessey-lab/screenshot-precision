@@ -84,7 +84,7 @@ export async function runChat(input: ChatInput, userId: string, user: SupabaseCl
     }
     const finalReply=reply??{mode:"steady" as const,message:REPLY_FALLBACK};
     // Persistence re-checks consent under a row lock; both messages commit together.
-    const {data:cid,error:saveError}=await user.rpc("save_chat_exchange",{_conversation:input.conversationId??null,_message:message,_reply:JSON.stringify(finalReply)});
+    const {data:cid,error:saveError}=await user.rpc("save_chat_exchange",{...(input.conversationId ? {_conversation:input.conversationId} : {}),_message:message,_reply:JSON.stringify(finalReply)});
     if(saveError) throw new Error("Your reply was prepared, but we couldn't save the exchange.");
     return {reply:finalReply,conversationId:cid,saved:Boolean(cid)};
   } catch(error) {

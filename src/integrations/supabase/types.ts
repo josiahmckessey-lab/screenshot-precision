@@ -271,7 +271,7 @@ export type Database = {
         Returns: string
       }
       save_chat_exchange: {
-        Args: { _conversation: string; _message: string; _reply: string }
+        Args: { _conversation?: string; _message?: string; _reply?: string }
         Returns: string
       }
       settle_chat: {

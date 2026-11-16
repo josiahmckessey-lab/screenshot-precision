@@ -17,7 +17,7 @@ export function createClaudeCalls(key: string, onUsage: (tokens: number) => void
         if (reason === "content-filter") throw new Error("The AI provider declined this request.");
         return await result.output;
       } finally {
-        const usage = await result.usage.catch(() => undefined);
+        const usage = await Promise.resolve(result.usage).catch(() => undefined);
         if (usage) onUsage(usage.totalTokens ?? ((usage.inputTokens ?? 0)+(usage.outputTokens ?? 0)));
       }
     },
