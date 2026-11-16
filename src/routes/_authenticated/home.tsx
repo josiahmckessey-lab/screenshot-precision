@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { APP_NAME } from "@/lib/brand";
 import { profileQuery } from "@/lib/profile-query";
+import { CONSENT_VERSION } from "@/lib/consent-text";
 
 export const Route = createFileRoute("/_authenticated/home")({
   head: () => ({
@@ -23,7 +24,8 @@ export const Route = createFileRoute("/_authenticated/home")({
   }),
   loader: async ({ context }) => {
     const profile = await context.queryClient.ensureQueryData(profileQuery);
-    if (!profile.consent_reviewed_at) throw redirect({ to: "/consent" });
+    if (!profile.consent_reviewed_at || profile.privacy_notice_version !== CONSENT_VERSION) throw redirect({ to: "/consent" });
+    if (!profile.verse_offered_at) throw redirect({ to: "/verse-choice" });
     return profile;
   },
   component: HomePage,

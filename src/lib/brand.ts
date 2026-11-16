@@ -11,3 +11,8 @@ export const WELCOME_NOTICE =
 
 export const CRISIS_LINE =
   "If you might hurt yourself or someone else, call or text 988 (US), or call 911 now.";
+
+export const PROVIDER_NOTICE = "Your messages are sent to an outside AI provider to produce replies. The provider may keep them for a limited time under its own policy, even when you choose not to save conversations in your account.";
+export const REST_NOTICE = "The app is resting for today. Please come back tomorrow.";
+export const SAFETY_RESPONSE = "Your safety matters. If you are in danger, facing an emergency, or might hurt yourself or someone else, call 911 right now in the US. For thoughts of suicide or self-harm, call or text 988 in the US. If you are elsewhere, contact your local emergency number. If it is safe, move away from immediate danger and reach out to someone you trust. You do not have to face this alone.";
+export const REPLY_FALLBACK = "Let's pause for a moment. Feel your feet on the floor and take one slow breath. What is one small, safe step you can take right now?";

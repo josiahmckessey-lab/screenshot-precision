@@ -5,6 +5,7 @@ import { setConsent } from "@/lib/account.functions";
 import { CONSENT_TEXT, CONSENT_VERSION } from "@/lib/consent-text";
 import { profileQuery } from "@/lib/profile-query";
 import { nextConsent } from "@/lib/consent-rules";
+import { PROVIDER_NOTICE } from "@/lib/brand";
 
 export function ConsentChoices({ onBusyChange }: { onBusyChange?: (busy: boolean) => void }) {
   const { data: profile } = useSuspenseQuery(profileQuery);
@@ -20,6 +21,7 @@ export function ConsentChoices({ onBusyChange }: { onBusyChange?: (busy: boolean
   });
   return (
     <div>
+      <p className="text-base text-muted-foreground">{PROVIDER_NOTICE}</p>
       <div className="divide-y divide-border">
         {(["save", "share"] as const).map(type => (
           <div key={type} className="flex items-start justify-between gap-5 py-5">

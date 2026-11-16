@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { APP_NAME, WELCOME_NOTICE } from "@/lib/brand";
+import { APP_NAME, PROVIDER_NOTICE, WELCOME_NOTICE } from "@/lib/brand";
 import { ADULTS_ONLY, AGE_ACCEPTED_KEY, CONSENT_TEXT } from "@/lib/consent-text";
 import { canContinueAge } from "@/lib/consent-rules";
 
@@ -16,6 +16,7 @@ export function WelcomeStep({ onContinue }: { onContinue: () => void }) {
         <Bot className="mt-1 size-6 shrink-0 text-primary" aria-hidden="true" />
         <p className="text-lg">{WELCOME_NOTICE}</p>
       </div>
+      <p className="text-base text-muted-foreground">{PROVIDER_NOTICE}</p>
       <p className="text-sm text-muted-foreground">Draft notice — lawyer review pending.</p>
       <label className="flex cursor-pointer items-center gap-4 text-lg">
         <Checkbox checked={checked} onCheckedChange={v => setChecked(v === true)} aria-label={CONSENT_TEXT.age} className="size-6" />
