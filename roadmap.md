@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Part 4: usable single-session chat, always-visible crisis help and safety page, per-card deeper explanations, story skip, and mode-specific replies; verify signed-in phone and desktop flows.
+
 - [x] Update server-only library selection: core/index slugs, active and explicitly invited faith stories, faith/deep entries, and steady entry 4; selection tests passed and a signed-in ordinary steady reply returned with saving off.
 
 - [x] Switch chat to direct Anthropic with a server-only ANTHROPIC_API_KEY and the requested model configuration; both models and signed-in safety flow verified, with 30 checks passing.
