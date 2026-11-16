@@ -1,12 +1,9 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { Output, streamText, type ModelMessage } from "ai";
 import type { z } from "zod";
-import { createLovableAiGatewayRunIdFetch } from "./run-id.server.ts";
 
 export function createClaudeCalls(key: string, onUsage: (tokens: number) => void) {
-  const run = createLovableAiGatewayRunIdFetch();
-  const provider = createAnthropic({ baseURL: "https://ai.gateway.lovable.dev/v1", apiKey: key,
-    headers: { "Lovable-API-Key": key, "X-Lovable-AIG-SDK": "vercel-ai-sdk" }, fetch: run.fetch });
+  const provider = createAnthropic({ baseURL: "https://api.anthropic.com/v1", apiKey: key });
   return {
     async object<T>(model: string, schema: z.ZodType<T>, system: string, messages: ModelMessage[], budget: number, cache = false): Promise<T> {
       const result = streamText({ model: provider(model), output: Output.object({ schema }), maxOutputTokens: budget, maxRetries: 0,
