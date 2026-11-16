@@ -4,6 +4,7 @@ import { Switch } from "@/components/ui/switch";
 import { setConsent } from "@/lib/account.functions";
 import { CONSENT_TEXT, CONSENT_VERSION } from "@/lib/consent-text";
 import { profileQuery } from "@/lib/profile-query";
+import { nextConsent } from "@/lib/consent-rules";
 
 export function ConsentChoices({ onBusyChange }: { onBusyChange?: (busy: boolean) => void }) {
   const { data: profile } = useSuspenseQuery(profileQuery);
@@ -29,7 +30,10 @@ export function ConsentChoices({ onBusyChange }: { onBusyChange?: (busy: boolean
             <Switch id={`consent-${type}`} className="mt-1 shrink-0" aria-describedby={`consent-${type}-description`}
               checked={type === "save" ? profile.consent_save : profile.consent_share}
               disabled={mutation.isPending || (type === "share" && !profile.consent_save)}
-              onCheckedChange={granted => mutation.mutate({ type, granted })} />
+              onCheckedChange={granted => {
+                const next = nextConsent(profile, type, granted);
+                mutation.mutate({ type, granted: type === "save" ? next.consent_save : next.consent_share });
+              }} />
           </div>
         ))}
       </div>
