@@ -15,6 +15,27 @@
       "when": 1794792380246,
       "tag": "0001_versioned_optional_consent",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794793399528,
+      "tag": "0002_chat_limits_and_first_run",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794793516259,
+      "tag": "0003_allow_owner_exchange_rpc",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794793546311,
+      "tag": "0004_optional_new_conversation",
+      "breakpoints": true
     }
   ]
 }

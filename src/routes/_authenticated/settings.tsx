@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { updateSettings, type MyProfile } from "@/lib/account.functions";
 import { APP_NAME } from "@/lib/brand";
 import { profileQuery } from "@/lib/profile-query";
+import { VERSE_TITLE, VERSE_OFFER } from "@/lib/consent-text";
 
 export const Route = createFileRoute("/_authenticated/settings")({
   head: () => ({
@@ -123,8 +124,8 @@ function SettingsPage() {
               />
               <ToggleRow
                 id="verse-on"
-                title="Include a verse"
-                body="Some replies can include a short verse."
+                title={VERSE_TITLE}
+                body={VERSE_OFFER}
                 checked={profile.settings.verse_on}
                 disabled={settings.isPending}
                 onChange={(verse_on) => settings.mutate({ ...profile.settings, verse_on })}

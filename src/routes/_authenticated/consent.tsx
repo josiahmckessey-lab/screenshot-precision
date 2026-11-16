@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { finishConsent } from "@/lib/account.functions";
 import { APP_NAME } from "@/lib/brand";
 import { profileQuery } from "@/lib/profile-query";
+import { CONSENT_VERSION } from "@/lib/consent-text";
 
 export const Route = createFileRoute("/_authenticated/consent")({
   head: () => ({ meta: [
@@ -28,9 +29,9 @@ function ConsentPage() {
   const queryClient = useQueryClient();
   const finish = useServerFn(finishConsent);
   const [busy, setBusy] = useState(false);
-  const mutation = useMutation({ mutationFn: () => finish(), onSuccess: async () => {
+  const mutation = useMutation({ mutationFn: () => finish({ data: { version: CONSENT_VERSION } }), onSuccess: async () => {
     await queryClient.invalidateQueries({ queryKey: profileQuery.queryKey });
-    navigate({ to: "/home", replace: true });
+    navigate({ to: "/verse-choice", replace: true });
   } });
   return <AppShell><AgeGate>
     <section className="fade-up flex flex-1 flex-col justify-center gap-8 py-8">

@@ -1,0 +1,1 @@
+GRANT EXECUTE ON FUNCTION public.save_chat_exchange(uuid,text,text) TO authenticated;
