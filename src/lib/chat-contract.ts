@@ -15,7 +15,7 @@ export const chatInputSchema = z.object({
   message: z.string(),
   conversationId: z.string().uuid().optional(),
   history: z.array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().max(6000) })).max(12).optional(),
-  knowMore: z.object({ entryNumber: z.number().int().positive(), level: z.union([z.literal(1), z.literal(2), z.literal(3)]) }).optional(),
+  knowMore: z.object({ entryNumber: z.number().int().positive(), level: z.union([z.literal(1), z.literal(2), z.literal(3)]), partId: z.enum(["picture", "phenomenon", "story", "next", "verse"]).optional(), partText: z.string().max(6000).optional() }).optional(),
 });
 export type ChatInput = z.infer<typeof chatInputSchema>;
-export type ChatResult = { reply: ChatReply; conversationId: string | null; saved: boolean };
+export type ChatResult = { reply: ChatReply; conversationId: string | null; saved: boolean; entryNumber?: number | undefined; detail?: { partId: string; level: number; text: string } | undefined };
