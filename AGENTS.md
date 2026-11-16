@@ -28,3 +28,13 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- Server logic uses TanStack `createServerFn` (in `src/lib/*.functions.ts`), not Supabase Edge Functions — the brief's "Edge Functions" maps to these.
+- `brain_chunks`, `app_config`, `spend_ledger` have RLS on with no user policies and no anon/authenticated grants; read them only via `supabaseAdmin` loaded inside a handler after auth. Never import their contents into browser code (enforced by `src/test/product-rules.test.ts`).
+- Every user-owned table uses a plain `user_id uuid` and own-row RLS; only `profiles` references `auth.users`. Conversation/message inserts require `public.can_save(auth.uid())`.
+- Consent changes go through server functions that update `profiles` and append `consent_log` with the text version from `app_config`.
+- Sign-in is email magic link only (`signInWithOtp`); `/_authenticated` is a client-only gate; the 18+ step is `AgeGate` wrapping each signed-in page.
+- User-facing copy lives in `src/lib/brand.ts` / `src/lib/consent-text.ts`; banned-word check runs in `src/test/product-rules.test.ts`.
+- Installable via manifest only (`public/manifest.webmanifest`); no service worker unless offline is requested.
