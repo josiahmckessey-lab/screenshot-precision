@@ -45,3 +45,4 @@ use the editor.
 - Provider access blocks persist in the server-only AI access state until an owner clears them after restoring access; no automatic retries or model substitutions.
 - Privacy acknowledgement is versioned and required for chat; the one-time verse offer is stored on the profile so skip/reloads cannot opt people in.
 - Library selection lives in a server-only helper: load core/index by slug, enforce active and explicitly invited faith stories, select faith/deep supplements, and force steady mode to entry 4 only; this prevents model-selected identifiers from bypassing retrieval rules.
+- Chat uses AI Elements conversation/message/composer primitives with the existing final-validated RPC, rather than exposing streamed unvalidated text; session history stays in memory and database writes remain consent-controlled. Card expansion returns only the requested part and adds deep material at levels 2–3.
