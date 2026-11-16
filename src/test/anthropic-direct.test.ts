@@ -4,7 +4,7 @@ import { describe, expect, it, vi, afterEach } from "vitest";
 import { z } from "zod";
 import { createClaudeCalls } from "../lib/ai/claude.server";
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 describe("Direct Anthropic chat", () => {
   it.each(["claude-sonnet-5-5", "claude-haiku-5-5"])("streams %s directly without gateway headers", async (model) => {
@@ -31,6 +31,13 @@ describe("Direct Anthropic chat", () => {
     expect(headers.has("X-Lovable-AIG-Run-ID")).toBe(false);
     expect(JSON.parse(String(init.body))).toMatchObject({ model, stream: true, max_tokens: 256 });
     expect(usage).toHaveBeenCalledWith(15);
+  });
+
+  it("does not log message text when a provider request fails", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ type: "error", error: { type: "invalid_request_error", message: "Invalid request." } }), { status: 400, headers: { "content-type": "application/json" } })));
+    await expect(createClaudeCalls("test-only-credential", () => {}).object("claude-haiku-5-5", z.object({ unsafe: z.boolean() }), "Classify safety.", [{ role: "user", content: "private message must not be logged" }], 256)).rejects.toThrow();
+    expect(log).not.toHaveBeenCalled();
   });
 
   it("reads the Anthropic secret only inside the server handler", () => {

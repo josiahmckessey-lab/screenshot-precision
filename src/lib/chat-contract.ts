@@ -11,5 +11,11 @@ export const replySchema = z.object({
 });
 export type GeneratedReply = z.infer<typeof replySchema>;
 export type ChatReply = GeneratedReply | { mode: "safety" | "steady"; message: string };
-export type ChatInput = { message: string; conversationId?: string | undefined; history?: { role: "user" | "assistant"; content: string }[] | undefined };
+export const chatInputSchema = z.object({
+  message: z.string(),
+  conversationId: z.string().uuid().optional(),
+  history: z.array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().max(6000) })).max(12).optional(),
+  knowMore: z.object({ entryNumber: z.number().int().positive(), level: z.union([z.literal(1), z.literal(2), z.literal(3)]) }).optional(),
+});
+export type ChatInput = z.infer<typeof chatInputSchema>;
 export type ChatResult = { reply: ChatReply; conversationId: string | null; saved: boolean };
