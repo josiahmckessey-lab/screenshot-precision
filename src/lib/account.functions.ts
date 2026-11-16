@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { CONSENT_VERSION } from "@/lib/consent-text";
 
 export type ProfileSettings = { story_on: boolean; verse_on: boolean };
 
@@ -10,6 +11,7 @@ export type MyProfile = {
   age_confirmed_at: string | null;
   consent_save: boolean;
   consent_share: boolean;
+  consent_reviewed_at: string | null;
   settings: ProfileSettings;
 };
 
@@ -32,7 +34,7 @@ export const getMyProfile = createServerFn({ method: "GET" })
     const { supabase, userId } = context;
     const { data, error } = await supabase
       .from("profiles")
-      .select("user_id, age_confirmed_at, consent_save, consent_share, settings")
+      .select("user_id, age_confirmed_at, consent_save, consent_share, consent_reviewed_at, settings")
       .eq("user_id", userId)
       .maybeSingle();
     if (error) throw new Error("We couldn't load your settings. Please try again.");
@@ -42,7 +44,7 @@ export const getMyProfile = createServerFn({ method: "GET" })
     const { data: created, error: insertError } = await supabase
       .from("profiles")
       .insert({ user_id: userId })
-      .select("user_id, age_confirmed_at, consent_save, consent_share, settings")
+      .select("user_id, age_confirmed_at, consent_save, consent_share, consent_reviewed_at, settings")
       .single();
     if (insertError || !created) throw new Error("We couldn't set up your space. Please try again.");
     return { ...created, settings: normalizeSettings(created.settings) };
@@ -50,41 +52,37 @@ export const getMyProfile = createServerFn({ method: "GET" })
 
 export const confirmAge = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => z.object({ confirmed: z.literal(true) }).parse(input))
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
-    const textVersion = await readTextVersion("text_version_age");
+    if (await readTextVersion("text_version_age") !== CONSENT_VERSION) throw new Error("Please reload to see the current age notice.");
     const { error } = await supabase
       .from("profiles")
       .update({ age_confirmed_at: new Date().toISOString() })
-      .eq("user_id", userId);
+      .eq("user_id", userId).is("age_confirmed_at", null);
     if (error) throw new Error("We couldn't save that. Please try again.");
-    await supabase.from("consent_log").insert({
-      user_id: userId,
-      consent_type: "age_18_plus",
-      granted: true,
-      text_version: textVersion,
-    });
     return { ok: true };
   });
 
 export const setConsent = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
-    z.object({ type: z.enum(["save", "share"]), granted: z.boolean() }).parse(input),
+    z.object({ type: z.enum(["save", "share"]), granted: z.boolean(), version: z.string() }).parse(input),
   )
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context;
-    const textVersion = await readTextVersion(`text_version_consent_${data.type}`);
-    const patch = data.type === "save" ? { consent_save: data.granted } : { consent_share: data.granted };
-    const { error } = await supabase.from("profiles").update(patch).eq("user_id", userId);
+    const { supabase } = context;
+    const { error } = await supabase.rpc("change_consent", { _type: data.type, _granted: data.granted, _version: data.version });
     if (error) throw new Error("We couldn't save that choice. Please try again.");
-    const { error: logError } = await supabase.from("consent_log").insert({
-      user_id: userId,
-      consent_type: data.type,
-      granted: data.granted,
-      text_version: textVersion,
-    });
-    if (logError) throw new Error("We couldn't record that choice. Please try again.");
+    return { ok: true };
+  });
+
+export const finishConsent = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { error, data } = await context.supabase.from("profiles")
+      .update({ consent_reviewed_at: new Date().toISOString() })
+      .eq("user_id", context.userId).not("age_confirmed_at", "is", null).select("user_id").single();
+    if (error || !data) throw new Error("We couldn't save your choices. Please try again.");
     return { ok: true };
   });
 
