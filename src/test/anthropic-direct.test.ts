@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it, vi, afterEach } from "vitest";
 import { z } from "zod";
 import { createClaudeCalls } from "../lib/ai/claude.server";
@@ -33,7 +34,7 @@ describe("Direct Anthropic chat", () => {
   });
 
   it("reads the Anthropic secret only inside the server handler", () => {
-    const source = readFileSync(new URL("../lib/chat.functions.ts", import.meta.url), "utf8");
+    const source = readFileSync(join(__dirname, "../lib/chat.functions.ts"), "utf8");
     expect(source).toContain("process.env['ANTHROPIC_API_KEY']");
     expect(source.indexOf("process.env['ANTHROPIC_API_KEY']")).toBeGreaterThan(source.indexOf(".handler("));
     expect(source).not.toContain("LOVABLE_API_KEY");
