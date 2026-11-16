@@ -14,13 +14,203 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      app_config: {
+        Row: {
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
+      }
+      brain_chunks: {
+        Row: {
+          body: string
+          entry_number: number | null
+          id: string
+          kind: string
+          tags: string[]
+          title: string
+        }
+        Insert: {
+          body: string
+          entry_number?: number | null
+          id?: string
+          kind: string
+          tags?: string[]
+          title: string
+        }
+        Update: {
+          body?: string
+          entry_number?: number | null
+          id?: string
+          kind?: string
+          tags?: string[]
+          title?: string
+        }
+        Relationships: []
+      }
+      consent_log: {
+        Row: {
+          consent_type: string
+          created_at: string
+          granted: boolean
+          id: string
+          text_version: string
+          user_id: string
+        }
+        Insert: {
+          consent_type: string
+          created_at?: string
+          granted: boolean
+          id?: string
+          text_version: string
+          user_id: string
+        }
+        Update: {
+          consent_type?: string
+          created_at?: string
+          granted?: boolean
+          id?: string
+          text_version?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      conversations: {
+        Row: {
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      crisis_events: {
+        Row: {
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          age_confirmed_at: string | null
+          consent_save: boolean
+          consent_share: boolean
+          created_at: string
+          settings: Json
+          user_id: string
+        }
+        Insert: {
+          age_confirmed_at?: string | null
+          consent_save?: boolean
+          consent_share?: boolean
+          created_at?: string
+          settings?: Json
+          user_id: string
+        }
+        Update: {
+          age_confirmed_at?: string | null
+          consent_save?: boolean
+          consent_share?: boolean
+          created_at?: string
+          settings?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
+      spend_ledger: {
+        Row: {
+          day: string
+          requests: number
+          tokens: number
+          user_id: string
+        }
+        Insert: {
+          day?: string
+          requests?: number
+          tokens?: number
+          user_id: string
+        }
+        Update: {
+          day?: string
+          requests?: number
+          tokens?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      can_save: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
