@@ -12,11 +12,17 @@ export function keywordCrisis(message: string) {
   return /\b(suicid\w*|self[ -]?harm|kill (myself|yourself|him|her|them)|end my life|hurt (myself|someone)|overdos\w*|abuse\w*|abusiv\w*|emergency|danger\w*|not safe|unsafe|bleeding|can't breathe|cannot breathe|weapon|rape\w*|assault\w*)\b/i.test(message);
 }
 export function mentionsFaith(message: string) { return /\b(god|jesus|bible|christ\w*|faith|pray\w*|scripture|church|religion|spiritual\w*)\b/i.test(message); }
-export function validReply(raw: unknown, settings: { verse_on: boolean; story_on: boolean }, faithAllowed: boolean): GeneratedReply | null {
+export function validReply(raw: unknown, settings: { verse_on: boolean; story_on: boolean }, faithAllowed: boolean, privateTexts: string[] = []): GeneratedReply | null {
   const parsed = replySchema.safeParse(raw);
   if (!parsed.success) return null;
   const r = parsed.data;
   const text = [r.grounding,r.question,...r.parts.flatMap(p=>[p.title,p.text,p.reference,p.practical])].filter(Boolean).join(" ");
+  if (/\b(system prompt|core instructions|my instructions|developer message|private library|brain_chunks)\b/i.test(text)) return null;
+  const normalized=text.toLowerCase().replace(/\s+/g," ");
+  for(const privateText of privateTexts) {
+    const source=privateText.toLowerCase().replace(/\s+/g," ");
+    for(let i=0;i+120<=source.length;i+=40) if(normalized.includes(source.slice(i,i+120))) return null;
+  }
   if (bannedPattern.test(text) || /\b(you (have|suffer from|are diagnosed with)|your diagnosis is|you are (bipolar|autistic|depressed|schizophrenic))\b/i.test(text)) return null;
   if (!faithAllowed && (mentionsFaith(text) || r.faith_story)) return null;
   if (r.mode === "steady") return r.parts.length === 0 && !r.faith_story && Boolean(r.grounding?.trim()) && Boolean(r.question?.trim()) ? r : null;
