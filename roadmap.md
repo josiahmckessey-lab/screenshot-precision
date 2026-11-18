@@ -19,3 +19,4 @@
 - [x] Saved-exchange check dropped: chat paused, app is now a read-only library.
 - [ ] Real app name (using "Daybreak" for now) — waiting on user
 - [x] Read-only library: no accounts, chat paused in paused-chat/, local 18+ screen, About + Safety, crisis button everywhere.
+- [ ] Guide page at /guide built with the exact wording and footer links from home and topic pages; the three contact lines (name, email or phone, reply time) are placeholders — waiting on user.

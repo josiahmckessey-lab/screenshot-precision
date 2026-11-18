@@ -1,24 +1,51 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+
 import { AppShell } from "@/components/app/AppShell";
-import { APP_NAME, GUIDE_TEXT } from "@/lib/brand";
+import {
+  APP_NAME,
+  GUIDE_CONTACT,
+  GUIDE_CONTACT_LABEL,
+  GUIDE_CRISIS_TEXT,
+  GUIDE_HOURS,
+  GUIDE_INTRO,
+  GUIDE_NAME,
+  GUIDE_TEXT,
+  GUIDE_TITLE,
+} from "@/lib/brand";
 
 export const Route = createFileRoute("/guide")({
   head: () => ({
     meta: [
-      { title: `Find a guide — ${APP_NAME}` },
+      { title: `${GUIDE_TITLE} — ${APP_NAME}` },
       { name: "description", content: GUIDE_TEXT },
-      { property: "og:title", content: `Find a guide — ${APP_NAME}` },
+      { property: "og:title", content: `${GUIDE_TITLE} — ${APP_NAME}` },
       { property: "og:description", content: GUIDE_TEXT },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: () => (
+  component: GuidePage,
+});
+
+function GuidePage() {
+  return (
     <AppShell>
-      <div className="space-y-6 py-8">
-        <h1 className="text-4xl">Find a guide</h1>
-        <p className="text-lg">{GUIDE_TEXT}</p>
+      <div className="space-y-6 py-6">
+        <Link to="/" className="text-base underline underline-offset-4">← Back to home</Link>
+        <h1 className="text-4xl leading-tight sm:text-5xl">{GUIDE_TITLE}</h1>
+        <p className="text-lg leading-relaxed">{GUIDE_INTRO}</p>
+
+        <section className="space-y-3 rounded-2xl border bg-card p-5 text-card-foreground">
+          <h2 className="text-lg leading-relaxed">{GUIDE_CONTACT_LABEL}</h2>
+          <p className="text-lg font-semibold">{GUIDE_NAME}</p>
+          <p className="text-lg">{GUIDE_CONTACT}</p>
+          <p className="text-lg text-muted-foreground">{GUIDE_HOURS}</p>
+        </section>
+
+        <p className="border-l-4 border-clay bg-clay-soft p-5 text-lg leading-relaxed">
+          {GUIDE_CRISIS_TEXT}
+        </p>
       </div>
     </AppShell>
-  ),
-});
+  );
+}

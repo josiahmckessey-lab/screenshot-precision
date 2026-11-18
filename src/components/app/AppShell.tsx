@@ -27,6 +27,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <footer className="flex gap-6 pt-8 text-base">
         <Link to="/about" className="underline underline-offset-4">About</Link>
         <Link to="/safety" className="underline underline-offset-4">Safety</Link>
+        <Link to="/guide" className="underline underline-offset-4">Find a guide</Link>
       </footer>
     </div>
   );
