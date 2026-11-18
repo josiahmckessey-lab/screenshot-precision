@@ -19,4 +19,5 @@
 - [x] Saved-exchange check dropped: chat paused, app is now a read-only library.
 - [ ] Real app name (using "Daybreak" for now) — waiting on user
 - [x] Read-only library: no accounts, chat paused in paused-chat/, local 18+ screen, About + Safety, crisis button everywhere.
-- [ ] Guide page at /guide built with the exact wording and footer links from home and topic pages; guide name is "Josiah"; the contact line and the reply-time line are still placeholders — waiting on user.
+- [x] Guide page at /guide built with the exact wording and footer links from home and topic pages; guide name "Josiah", phone (407) 243-8448 and JosiahMcKessey@proton.me shown as call/mail links.
+- [ ] Guide page reply-time line still a placeholder — waiting on user.
