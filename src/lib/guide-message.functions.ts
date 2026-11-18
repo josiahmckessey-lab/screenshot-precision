@@ -9,8 +9,8 @@ export const send_guide_message = createServerFn({ method: "POST" })
     return saveThenNotify(async () => {
       const { data: id, error } = await client.rpc("submit_guide_message", {
         _body: data.body,
-        _reply_to: data.reply_to || null,
-        _included_question: data.included_question || null,
+        ...(data.reply_to ? { _reply_to: data.reply_to } : {}),
+        ...(data.included_question ? { _included_question: data.included_question } : {}),
       });
       if (error) throw new Error("message_save_failed");
       return id;

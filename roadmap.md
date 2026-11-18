@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Guide message form: optional reply and session question, insert-only storage, Resend notification, device/hour and atomic daily caps, honeypot and crisis panel; verify saved message and email delivery.
+- [x] Guide message form: optional reply and session question, insert-only storage, Resend notification, device/hour and atomic daily caps, honeypot and crisis panel; browser confirmation and saved row verified, Resend reports test email delivered.
 
 - [x] Keep results at /ideas in session storage, preserve topic return links, replace minute limit with three-second pause, raise sorter cap to 1500, and add another question plus direct guide message access; browser verified back/reload, replacement, start over, guide draft and mobile crisis help.
 
