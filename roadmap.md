@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Keep results at /ideas in session storage, preserve topic return links, replace minute limit with three-second pause, raise sorter cap to 1500, and add another question plus direct guide message access; browser verified back/reload, replacement, start over, guide draft and mobile crisis help.
+
 - [x] Adjust testing token cap to 600,000 and configurable reservation to 30,000, preserving other caps; cap/provider-block safety checks passed, plus a real ordinary reply, fixed safety response, and crisis help during processing on desktop/phone. All 66 tests passed.
 
 - [x] Part 4: single-session chat using Chat UI composition, always-visible crisis help and safety page, per-card deeper explanations, story skip, and mode-specific replies. Real full reply and all three deeper levels verified on desktop/phone; further live checks stopped at the daily cap.

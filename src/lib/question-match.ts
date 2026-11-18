@@ -50,8 +50,7 @@ export function bestTopics(text: string, topicNumbers: number[]): number[] | nul
   return scored.length ? scored.slice(0, 3).map((x) => x.n) : null;
 }
 
-export const RATE_KEY = "daybreak-last-question";
-export const RATE_MS = 60_000;
+export const RATE_MS = 3_000;
 export function canSend(last: number | null, now: number): boolean {
   return last === null || now - last >= RATE_MS;
 }

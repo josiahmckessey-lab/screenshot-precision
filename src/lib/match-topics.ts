@@ -4,6 +4,7 @@
 import { bestTopics } from "@/lib/question-match";
 
 export const FALLBACK_TOPICS = [1, 4, 8] as const;
+export const DEFAULT_MATCH_DAILY_CAP = 1500;
 
 /** Keep only whole numbers from 1 to 20, at most 3, no repeats. */
 export function sanitizeMatches(raw: unknown): number[] {

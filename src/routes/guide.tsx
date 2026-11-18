@@ -1,6 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 
 import { AppShell } from "@/components/app/AppShell";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import {
   APP_NAME,
   GUIDE_CONTACT_LABEL,
@@ -14,6 +17,8 @@ import {
   GUIDE_PHONE_HREF,
   GUIDE_TEXT,
   GUIDE_TITLE,
+  GUIDE_MESSAGE_LABEL,
+  MESSAGE_GUIDE,
 } from "@/lib/brand";
 
 export const Route = createFileRoute("/guide")({
@@ -31,6 +36,7 @@ export const Route = createFileRoute("/guide")({
 });
 
 function GuidePage() {
+  const [message, setMessage] = useState("");
   return (
     <AppShell>
       <div className="space-y-6 py-6">
@@ -52,6 +58,12 @@ function GuidePage() {
             </a>
           </p>
           <p className="text-lg text-muted-foreground">{GUIDE_HOURS}</p>
+        </section>
+
+        <section id="message-box" className="scroll-mt-6 space-y-3">
+          <h2 className="text-2xl">{MESSAGE_GUIDE}</h2>
+          <Textarea aria-label={GUIDE_MESSAGE_LABEL} rows={5} value={message} onChange={(e) => setMessage(e.target.value)} />
+          <Button asChild><a href={`${GUIDE_EMAIL_HREF}?body=${encodeURIComponent(message)}`}>{MESSAGE_GUIDE}</a></Button>
         </section>
 
         <p className="border-l-4 border-clay bg-clay-soft p-5 text-lg leading-relaxed">

@@ -5,13 +5,12 @@
 
 import { createServerFn } from "@tanstack/react-start";
 
-import { parseMatchReply } from "./match-topics";
+import { DEFAULT_MATCH_DAILY_CAP, parseMatchReply } from "./match-topics";
 import { askTopicModel, createPublicReadClient } from "./match-topics.server";
 
 const SORTER_INSTRUCTION =
   'A person has typed something. Choose up to 3 topics from the list that relate most closely, best match first. Return only JSON in this form: {"matches": [numbers], "crisis": true or false}. Set crisis to true only if the text suggests danger to the person or to someone else. Return nothing else. Do not write advice or any other text.';
 
-const DEFAULT_DAILY_CAP = 300;
 const DEFAULT_MODEL = "claude-haiku-5-5";
 
 // `reason` is a short machine code for the app's own diagnostics. It is never shown.
@@ -40,7 +39,7 @@ export const match_topics = createServerFn({ method: "POST" })
         .select("value")
         .eq("key", "match_topic_daily_cap")
         .maybeSingle();
-      let cap = DEFAULT_DAILY_CAP;
+      let cap = DEFAULT_MATCH_DAILY_CAP;
       if (!capRow.error && typeof capRow.data?.value === "number") cap = capRow.data.value;
       const counted = await supabaseAdmin.rpc("record_match_call");
       if (typeof counted.data !== "number") return fail("count_error");

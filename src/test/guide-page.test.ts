@@ -41,7 +41,7 @@ describe("Guide page", () => {
     expect(guideSource).toContain("GUIDE_EMAIL_HREF");
   });
 
-  it("collects no names, emails or other details", () => {
-    expect(guideSource).not.toMatch(/<form|<input|textarea|email\s*[:=]/i);
+  it("collects no names or email addresses", () => {
+    expect(guideSource).not.toMatch(/<form|<input|email\s*[:=]/i);
   });
 });

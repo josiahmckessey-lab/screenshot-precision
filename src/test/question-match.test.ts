@@ -13,9 +13,10 @@ describe("question box rules", () => {
     expect(bestTopics("alone and lonely, ashamed of the shame, a friend", all)?.[0]).toBe(8);
     expect(bestTopics("zzz qqq", all)).toBeNull();
   });
-  it("allows one question per minute", () => {
+  it("pauses for exactly three seconds, with no minute limit", () => {
     expect(canSend(null, 1000)).toBe(true);
-    expect(canSend(1000, 50_000)).toBe(false);
-    expect(canSend(1000, 61_000)).toBe(true);
+    expect(canSend(1000, 3999)).toBe(false);
+    expect(canSend(1000, 4000)).toBe(true);
+    expect(canSend(1000, 5000)).toBe(true);
   });
 });

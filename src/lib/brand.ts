@@ -39,7 +39,12 @@ export const QUESTION_KNOW_MORE = "Know more";
 export const QUESTION_ENDS =
   "That is where this library ends. For anything further, a guide can be reached here.";
 export const QUESTION_START_OVER = "Start over";
-export const QUESTION_WAIT = "One question per minute. Please wait a moment and send again.";
+export const ASK_ANOTHER_QUESTION = "Ask another question";
+export const BACK_TO_IDEAS = "Back to the ideas";
+export const NEED_MORE_TITLE = "Need more than this?";
+export const NEED_MORE_TEXT = "If this is not enough, a message can go straight to Josiah, a guide.";
+export const MESSAGE_GUIDE = "Message a guide";
+export const GUIDE_MESSAGE_LABEL = "Message";
 
 // Guide page. All three contact lines are real.
 export const GUIDE_TITLE = "Find a guide";

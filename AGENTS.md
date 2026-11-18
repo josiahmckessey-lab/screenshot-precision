@@ -48,3 +48,5 @@ use the editor.
 - Chat uses AI Elements conversation/message/composer primitives with the existing final-validated RPC, rather than exposing streamed unvalidated text; session history stays in memory and database writes remain consent-controlled. Card expansion returns only the requested part and adds deep material at levels 2–3.
 - The app is a read-only library with no accounts: the paused AI chat, sign-in, consent and settings code lives in root `paused-chat/` (outside `src/`, so it is never routed, bundled, linted or tested); restore from there instead of rewriting.
 - The 18+ gate lives in `__root.tsx` and reads device local storage only (`/safety` stays reachable); every page uses `AppShell`, which carries the crisis button.
+- Ideas persist typed text, validated ordered topic numbers and crisis state in device session storage; the dedicated ideas route and explicit topic origin search field preserve navigation without server result history.
+- The guide message box opens a pre-addressed email with the draft body; it collects no contact fields and stores no draft on the server.

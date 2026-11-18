@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
 import {
-  APP_NAME, DEPTH_TITLES, FIND_GUIDE, KNOW_MORE_LABEL, QUESTION_TOPIC_TITLE, SCRIPTURE_LABEL,
+  APP_NAME, BACK_TO_IDEAS, DEPTH_TITLES, FIND_GUIDE, KNOW_MORE_LABEL, QUESTION_TOPIC_TITLE, SCRIPTURE_LABEL,
   TOPIC_FOOTER, TOPIC_PICTURE_LABEL, TOPIC_SENTENCE_LABEL, TRY_LABEL,
 } from "@/lib/brand";
 
@@ -35,6 +35,8 @@ async function loadTopic(slug: string) {
 }
 
 export const Route = createFileRoute("/topic/$slug")({
+  validateSearch: (search: Record<string, unknown>): { from?: string } =>
+    typeof search["from"] === "string" ? { from: search["from"] } : {},
   loader: ({ params }) => loadTopic(params.slug),
   head: ({ loaderData }) => {
     const title = loaderData ? `${loaderData.title} — ${APP_NAME}` : `Topic — ${APP_NAME}`;
@@ -73,6 +75,8 @@ function TopicError({ error, reset }: ErrorComponentProps) {
 }
 
 function BackLink() {
+  const { from } = Route.useSearch();
+  if (from === "ideas") return <Link to="/ideas" className="text-base underline underline-offset-4">← {BACK_TO_IDEAS}</Link>;
   return <Link to="/" className="text-base underline underline-offset-4">← Back to home</Link>;
 }
 
