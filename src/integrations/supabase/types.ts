@@ -182,6 +182,30 @@ export type Database = {
         }
         Relationships: []
       }
+      guide_messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          included_question: string | null
+          reply_to: string | null
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          included_question?: string | null
+          reply_to?: string | null
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          included_question?: string | null
+          reply_to?: string | null
+        }
+        Relationships: []
+      }
       library_pages: {
         Row: {
           home_line: string
@@ -383,6 +407,10 @@ export type Database = {
       settle_chat: {
         Args: { _id: string; _tokens: number }
         Returns: undefined
+      }
+      submit_guide_message: {
+        Args: { _body: string; _included_question?: string; _reply_to?: string }
+        Returns: string
       }
     }
     Enums: {

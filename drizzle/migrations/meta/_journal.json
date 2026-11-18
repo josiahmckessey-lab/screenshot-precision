@@ -43,6 +43,13 @@
       "when": 1795022858068,
       "tag": "0005_add_match_topic_daily_cap",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795024341237,
+      "tag": "0006_create_guide_messages",
+      "breakpoints": true
     }
   ]
 }
