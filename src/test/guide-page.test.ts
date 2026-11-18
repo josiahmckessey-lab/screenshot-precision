@@ -8,6 +8,7 @@ import {
   GUIDE_CRISIS_TEXT,
   GUIDE_EMAIL,
   GUIDE_EMAIL_HREF,
+  GUIDE_HOURS,
   GUIDE_INTRO,
   GUIDE_PHONE,
   GUIDE_PHONE_HREF,
@@ -33,6 +34,9 @@ describe("Guide page", () => {
     expect(GUIDE_PHONE_HREF).toBe("tel:+14072438448");
     expect(GUIDE_EMAIL).toBe("JosiahMcKessey@proton.me");
     expect(GUIDE_EMAIL_HREF).toBe("mailto:JosiahMcKessey@proton.me");
+    expect(GUIDE_HOURS).toBe(
+      "Will respond when the message is seen. Every message is read ahead of everything else.",
+    );
     expect(guideSource).toContain("GUIDE_PHONE_HREF");
     expect(guideSource).toContain("GUIDE_EMAIL_HREF");
   });

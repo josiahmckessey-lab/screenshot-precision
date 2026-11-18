@@ -36,6 +36,13 @@
       "when": 1794793546311,
       "tag": "0004_optional_new_conversation",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1795022858068,
+      "tag": "0005_add_match_topic_daily_cap",
+      "breakpoints": true
     }
   ]
 }

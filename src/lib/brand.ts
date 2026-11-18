@@ -24,7 +24,7 @@ export const SCRIPTURE_LABEL = "For readers who want Scripture";
 export const QUESTION_TITLE = "Leave a question";
 export const QUESTION_TOPIC_TITLE = "Leave a question about this topic";
 export const QUESTION_NOTICE =
-  "Questions are saved without names or accounts and are read by a person later, not right away. For someone in danger, call or text 988.";
+  "An automated sorter reads the typed text only to pick which pages fit. The text is then saved for a person to read later, not right away. No names or accounts. Not for emergencies. For someone in danger, call or text 988. For immediate danger, call 911.";
 export const QUESTION_SENT_SHORT = "Question saved. A person will read it later, not right away.";
 export const QUESTION_ERROR = "The question could not be saved. Please try again later.";
 export const FIND_GUIDE = "Find a guide";
@@ -33,12 +33,15 @@ export const GUIDE_TEXT = "A guide is not professional care and not crisis care.
 export const QUESTION_CRISIS_TEXT =
   "If someone is in danger, call or text 988 (Suicide and Crisis Lifeline). For immediate danger, call 911.";
 export const QUESTION_SEND = "Send question";
-export const QUESTION_RECEIVED = "Received. A person reads these later, not right away.";
-export const QUESTION_MATCHES = "These pictures may fit:";
-export const QUESTION_START = "A place to start:";
+export const QUESTION_IDEAS_HEADING = "Ideas from the model that relate";
+export const QUESTION_SIT_LABEL = "A question to sit with";
+export const QUESTION_KNOW_MORE = "Know more";
+export const QUESTION_ENDS =
+  "That is where this library ends. For anything further, a guide can be reached here.";
+export const QUESTION_START_OVER = "Start over";
 export const QUESTION_WAIT = "One question per minute. Please wait a moment and send again.";
 
-// Guide page. The hours line is still a placeholder until it arrives.
+// Guide page. All three contact lines are real.
 export const GUIDE_TITLE = "Find a guide";
 export const GUIDE_INTRO =
   "A guide is a steady person a little further along the same road, who has walked something similar and walks with another in ordinary life. A guide is not professional care and not crisis care. This library can point toward a guide. It cannot be one.";
@@ -48,6 +51,6 @@ export const GUIDE_PHONE = "(407) 243-8448";
 export const GUIDE_PHONE_HREF = "tel:+14072438448";
 export const GUIDE_EMAIL = "JosiahMcKessey@proton.me";
 export const GUIDE_EMAIL_HREF = "mailto:JosiahMcKessey@proton.me";
-export const GUIDE_HOURS = "[A line about hours or how long a reply may take]";
+export const GUIDE_HOURS = "Will respond when the message is seen. Every message is read ahead of everything else.";
 export const GUIDE_CRISIS_TEXT =
   "If someone is in danger, call or text 988. For immediate danger, call 911.";

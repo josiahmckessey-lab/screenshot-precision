@@ -34,12 +34,19 @@ describe("Product rules", () => {
     expect(offenders.map((f) => relative(root, f))).toEqual([]);
   });
 
-  it("has no sign-in, accounts or server calls in the app", () => {
-    const forbidden = /supabase\.auth|signIn|signUp|createServerFn|document\.cookie/;
+  it("has no sign-in or accounts in the app", () => {
+    const forbidden = /supabase\.auth|signIn|signUp|document\.cookie/;
     const offenders = appFiles.filter(
       (f) => !f.includes(join("integrations", "")) && !f.includes(join("components", "ui")) && forbidden.test(readFileSync(f, "utf8")),
     );
     expect(offenders.map((f) => relative(root, f))).toEqual([]);
+  });
+
+  it("keeps the one server function to the topic sorter module", () => {
+    const users = appFiles
+      .filter((f) => readFileSync(f, "utf8").includes("createServerFn"))
+      .map((f) => relative(root, f));
+    expect(users).toEqual([join("src", "lib", "match-topics.functions.ts")]);
   });
 
   it("uses no first- or second-person words in shown copy", async () => {

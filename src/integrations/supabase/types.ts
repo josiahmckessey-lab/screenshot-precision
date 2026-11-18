@@ -230,6 +230,21 @@ export type Database = {
         }
         Relationships: []
       }
+      match_calls: {
+        Row: {
+          calls: number
+          day: string
+        }
+        Insert: {
+          calls?: number
+          day: string
+        }
+        Update: {
+          calls?: number
+          day?: string
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           content: string
@@ -356,6 +371,7 @@ export type Database = {
         Args: { _granted: boolean; _type: string; _version: string }
         Returns: undefined
       }
+      record_match_call: { Args: never; Returns: number }
       reserve_chat: {
         Args: { _budget: number; _user: string }
         Returns: string

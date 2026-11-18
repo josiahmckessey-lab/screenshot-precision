@@ -20,4 +20,5 @@
 - [ ] Real app name (using "Daybreak" for now) — waiting on user
 - [x] Read-only library: no accounts, chat paused in paused-chat/, local 18+ screen, About + Safety, crisis button everywhere.
 - [x] Guide page at /guide built with the exact wording and footer links from home and topic pages; guide name "Josiah", phone (407) 243-8448 and JosiahMcKessey@proton.me shown as call/mail links.
-- [ ] Guide page reply-time line still a placeholder — waiting on user.
+- [x] Guide page reply-time line: "Will respond when the message is seen. Every message is read ahead of everything else."
+- [x] Question box: "Ideas that relate" — match_topics server function (direct Anthropic, claude-haiku-5-5, 300/day cap in app_config), validated topic cards with home_line + Know more, guide line + Start over, crisis panel above cards, new notice text. Verified live: model-picked cards, model-set crisis panel on text with no local danger words, on-device keyword fallback when the reply is unusable, capped path falls back to keywords and the crisis panel still shows, one-per-minute device limit, no cookies.
