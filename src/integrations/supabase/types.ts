@@ -182,6 +182,54 @@ export type Database = {
         }
         Relationships: []
       }
+      library_pages: {
+        Row: {
+          home_line: string
+          level1: string
+          level2: string
+          level3: string
+          picture: string
+          scripture: Json
+          sentence: string
+          slug: string
+          status: string
+          title: string
+          topic_number: number
+          try_text: string
+          version: string
+        }
+        Insert: {
+          home_line: string
+          level1: string
+          level2: string
+          level3: string
+          picture: string
+          scripture?: Json
+          sentence: string
+          slug: string
+          status?: string
+          title: string
+          topic_number: number
+          try_text: string
+          version?: string
+        }
+        Update: {
+          home_line?: string
+          level1?: string
+          level2?: string
+          level3?: string
+          picture?: string
+          scripture?: Json
+          sentence?: string
+          slug?: string
+          status?: string
+          title?: string
+          topic_number?: number
+          try_text?: string
+          version?: string
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           content: string
@@ -250,6 +298,30 @@ export type Database = {
           settings?: Json
           user_id?: string
           verse_offered_at?: string | null
+        }
+        Relationships: []
+      }
+      questions: {
+        Row: {
+          body: string
+          contact: string | null
+          created_at: string
+          id: string
+          topic_slug: string | null
+        }
+        Insert: {
+          body: string
+          contact?: string | null
+          created_at?: string
+          id?: string
+          topic_slug?: string | null
+        }
+        Update: {
+          body?: string
+          contact?: string | null
+          created_at?: string
+          id?: string
+          topic_slug?: string | null
         }
         Relationships: []
       }
