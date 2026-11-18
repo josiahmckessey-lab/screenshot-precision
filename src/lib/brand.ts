@@ -45,6 +45,16 @@ export const NEED_MORE_TITLE = "Need more than this?";
 export const NEED_MORE_TEXT = "If this is not enough, a message can go straight to Josiah, a guide.";
 export const MESSAGE_GUIDE = "Message a guide";
 export const GUIDE_MESSAGE_LABEL = "Message";
+export const GUIDE_MESSAGE_TITLE = "Send a message to Josiah, a guide";
+export const GUIDE_MESSAGE_PLACEHOLDER = "A message, in a few words or a few paragraphs.";
+export const GUIDE_REPLY_LABEL = "An email address, only if a reply is wanted";
+export const GUIDE_INCLUDE_LABEL = "Include the last question asked in the library";
+export const GUIDE_MESSAGE_NOTICE = "Messages are sent to a person, who reads them later, not right away. Replies may take a few days. Not for emergencies. For someone in danger, call or text 988. For immediate danger, call 911. An email address is used only to reply and is never shown anywhere else.";
+export const GUIDE_SEND_LABEL = "Send message";
+export const GUIDE_RECEIVED = "Received. A person reads these later, not right away.";
+export const GUIDE_SEND_ERROR = "The message could not be received. Please try again later.";
+export const GUIDE_LIMIT_TEXT = "The message limit has been reached. Please try again later.";
+export const GUIDE_INVALID_TEXT = "A message of 1 to 3000 characters and a valid optional email address are required.";
 
 // Guide page. All three contact lines are real.
 export const GUIDE_TITLE = "Find a guide";

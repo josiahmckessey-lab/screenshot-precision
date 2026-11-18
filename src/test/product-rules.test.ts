@@ -42,11 +42,11 @@ describe("Product rules", () => {
     expect(offenders.map((f) => relative(root, f))).toEqual([]);
   });
 
-  it("keeps the one server function to the topic sorter module", () => {
+  it("keeps server functions to the topic sorter and guide submission modules", () => {
     const users = appFiles
       .filter((f) => readFileSync(f, "utf8").includes("createServerFn"))
       .map((f) => relative(root, f));
-    expect(users).toEqual([join("src", "lib", "match-topics.functions.ts")]);
+    expect(users.sort()).toEqual([join("src", "lib", "guide-message.functions.ts"), join("src", "lib", "match-topics.functions.ts")].sort());
   });
 
   it("uses no first- or second-person words in shown copy", async () => {
