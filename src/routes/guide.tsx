@@ -3,12 +3,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/app/AppShell";
 import {
   APP_NAME,
-  GUIDE_CONTACT,
   GUIDE_CONTACT_LABEL,
   GUIDE_CRISIS_TEXT,
+  GUIDE_EMAIL,
+  GUIDE_EMAIL_HREF,
   GUIDE_HOURS,
   GUIDE_INTRO,
   GUIDE_NAME,
+  GUIDE_PHONE,
+  GUIDE_PHONE_HREF,
   GUIDE_TEXT,
   GUIDE_TITLE,
 } from "@/lib/brand";
@@ -38,7 +41,16 @@ function GuidePage() {
         <section className="space-y-3 rounded-2xl border bg-card p-5 text-card-foreground">
           <h2 className="text-lg leading-relaxed">{GUIDE_CONTACT_LABEL}</h2>
           <p className="text-lg font-semibold">{GUIDE_NAME}</p>
-          <p className="text-lg">{GUIDE_CONTACT}</p>
+          <p className="text-lg">
+            <a className="underline underline-offset-4" href={GUIDE_PHONE_HREF}>
+              {GUIDE_PHONE}
+            </a>
+          </p>
+          <p className="text-lg">
+            <a className="underline underline-offset-4" href={GUIDE_EMAIL_HREF}>
+              {GUIDE_EMAIL}
+            </a>
+          </p>
           <p className="text-lg text-muted-foreground">{GUIDE_HOURS}</p>
         </section>
 

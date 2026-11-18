@@ -45,7 +45,13 @@ describe("Product rules", () => {
   it("uses no first- or second-person words in shown copy", async () => {
     const brand = await import("@/lib/brand");
     const words = /\b(i|me|my|we|us|our|you|your|you're|we're)\b/i;
-    const bad = Object.values(brand).filter((v) => typeof v === "string" && words.test(v.replace(/\bUS\b/g, "")));
+    // A real contact address is data, not prose: ".me" in an email or a tel:/mailto:
+    // link must not trip the check on shown copy.
+    const isContact = (v: string) =>
+      /^(mailto:|tel:)/i.test(v) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    const bad = Object.values(brand).filter(
+      (v) => typeof v === "string" && !isContact(v) && words.test(v.replace(/\bUS\b/g, "")),
+    );
     expect(bad).toEqual([]);
   });
 });
