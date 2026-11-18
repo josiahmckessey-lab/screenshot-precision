@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { CRISIS_TEXT } from "@/lib/brand";
 
-export function CrisisPanel() {
+export function CrisisPanel({ text = CRISIS_TEXT }: { text?: string }) {
   return (
     <section
       aria-label="Crisis help"
       className="space-y-4 border-l-4 border-clay bg-clay-soft p-5 text-foreground"
     >
-      <p className="text-lg leading-relaxed">{CRISIS_TEXT}</p>
+      <p className="text-lg leading-relaxed">{text}</p>
       <div className="flex flex-wrap gap-2">
         <Button asChild variant="quiet">
           <a href="tel:988"><Phone />Call 988</a>

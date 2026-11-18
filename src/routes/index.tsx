@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/app/AppShell";
-import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
+import { QuestionBox } from "@/components/app/QuestionBox";
+import { APP_NAME, APP_TAGLINE, QUESTION_TITLE } from "@/lib/brand";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,6 +24,10 @@ function Home() {
       <section className="fade-up flex flex-1 flex-col justify-center gap-6 py-10">
         <h1 className="text-5xl">{APP_NAME}</h1>
         <p className="text-lg text-muted-foreground">{APP_TAGLINE}</p>
+      </section>
+      <section className="space-y-3 rounded-2xl border bg-card p-5 text-card-foreground">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{QUESTION_TITLE}</h2>
+        <QuestionBox />
       </section>
     </AppShell>
   );

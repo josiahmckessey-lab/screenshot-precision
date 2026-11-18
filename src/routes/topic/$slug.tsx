@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
 import {
-  APP_NAME, DEPTH_TITLES, FIND_GUIDE, KNOW_MORE_LABEL, QUESTION_TITLE, SCRIPTURE_LABEL,
+  APP_NAME, DEPTH_TITLES, FIND_GUIDE, KNOW_MORE_LABEL, QUESTION_TOPIC_TITLE, SCRIPTURE_LABEL,
   TOPIC_FOOTER, TOPIC_PICTURE_LABEL, TOPIC_SENTENCE_LABEL, TRY_LABEL,
 } from "@/lib/brand";
 
@@ -131,7 +131,7 @@ function TopicPage() {
           </Collapsible>
         )}
 
-        <Card label={QUESTION_TITLE}><QuestionBox topicSlug={t.slug} /></Card>
+        <Card label={QUESTION_TOPIC_TITLE}><QuestionBox topicSlug={t.slug} /></Card>
 
         <div className="space-y-2 pt-4">
           <Link to="/guide" className="text-lg underline underline-offset-4">{FIND_GUIDE}</Link>

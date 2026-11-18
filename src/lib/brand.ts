@@ -21,7 +21,8 @@ export const KNOW_MORE_LABEL = "Want to know more about this?";
 export const DEPTH_TITLES = ["The plain why", "How it works", "Research and roots"] as const;
 export const TRY_LABEL = "One small thing to try";
 export const SCRIPTURE_LABEL = "For readers who want Scripture";
-export const QUESTION_TITLE = "Leave a question about this topic";
+export const QUESTION_TITLE = "Leave a question";
+export const QUESTION_TOPIC_TITLE = "Leave a question about this topic";
 export const QUESTION_NOTICE =
   "Questions are saved without names or accounts and are read by a person later, not right away. For someone in danger, call or text 988.";
 export const QUESTION_SENT_SHORT = "Question saved. A person will read it later, not right away.";
@@ -29,3 +30,10 @@ export const QUESTION_ERROR = "The question could not be saved. Please try again
 export const FIND_GUIDE = "Find a guide";
 export const TOPIC_FOOTER = "This library is not professional care or crisis care.";
 export const GUIDE_TEXT = "A guide is not professional care and not crisis care.";
+export const QUESTION_CRISIS_TEXT =
+  "If someone is in danger, call or text 988 (Suicide and Crisis Lifeline). For immediate danger, call 911.";
+export const QUESTION_SEND = "Send question";
+export const QUESTION_RECEIVED = "Received. A person reads these later, not right away.";
+export const QUESTION_MATCHES = "These pictures may fit:";
+export const QUESTION_START = "A place to start:";
+export const QUESTION_WAIT = "One question per minute. Please wait a moment and send again.";
