@@ -43,7 +43,7 @@ export const GUIDE_TITLE = "Find a guide";
 export const GUIDE_INTRO =
   "A guide is a steady person a little further along the same road, who has walked something similar and walks with another in ordinary life. A guide is not professional care and not crisis care. This library can point toward a guide. It cannot be one.";
 export const GUIDE_CONTACT_LABEL = "For the pilot, a guide can be reached here:";
-export const GUIDE_NAME = "[NAME]";
+export const GUIDE_NAME = "Josiah";
 export const GUIDE_CONTACT = "[EMAIL OR PHONE]";
 export const GUIDE_HOURS = "[A line about hours or how long a reply may take]";
 export const GUIDE_CRISIS_TEXT =
