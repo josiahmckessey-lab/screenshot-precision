@@ -105,7 +105,7 @@ function TopicPage() {
 
         {levels.slice(0, depth).map((text, i) => (
           <div key={i} className="space-y-6">
-            <Card label={DEPTH_TITLES[i]}><Md text={text} /></Card>
+            <Card label={DEPTH_TITLES[i] ?? ""}><Md text={text ?? ""} /></Card>
             {i === 0 && tryCard}
           </div>
         ))}
