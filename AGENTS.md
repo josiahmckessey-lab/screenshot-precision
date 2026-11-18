@@ -46,3 +46,5 @@ use the editor.
 - Privacy acknowledgement is versioned and required for chat; the one-time verse offer is stored on the profile so skip/reloads cannot opt people in.
 - Library selection lives in a server-only helper: load core/index by slug, enforce active and explicitly invited faith stories, select faith/deep supplements, and force steady mode to entry 4 only; this prevents model-selected identifiers from bypassing retrieval rules.
 - Chat uses AI Elements conversation/message/composer primitives with the existing final-validated RPC, rather than exposing streamed unvalidated text; session history stays in memory and database writes remain consent-controlled. Card expansion returns only the requested part and adds deep material at levels 2–3.
+- The app is a read-only library with no accounts: the paused AI chat, sign-in, consent and settings code lives in root `paused-chat/` (outside `src/`, so it is never routed, bundled, linted or tested); restore from there instead of rewriting.
+- The 18+ gate lives in `__root.tsx` and reads device local storage only (`/safety` stays reachable); every page uses `AppShell`, which carries the crisis button.

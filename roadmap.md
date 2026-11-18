@@ -16,5 +16,6 @@
 - [x] Verify live Haiku classifier/routing and Sonnet structured-output calls with synthetic input; authenticated safety reply and usage accounting
 - [x] Verify ordinary replies with the real imported library and saving off through the authenticated chat function.
 - [x] Enable the reply box and verify ordinary replies through the signed-in chat screen.
-- [ ] Verify saved exchanges end-to-end — current account has saving off; consent choices were left unchanged.
+- [x] Saved-exchange check dropped: chat paused, app is now a read-only library.
 - [ ] Real app name (using "Daybreak" for now) — waiting on user
+- [x] Read-only library: no accounts, chat paused in paused-chat/, local 18+ screen, About + Safety, crisis button everywhere.

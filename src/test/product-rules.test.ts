@@ -33,11 +33,18 @@ describe("Product rules", () => {
     expect(offenders.map((f) => relative(root, f))).toEqual([]);
   });
 
-  it("uses email magic link only — no password or social sign-in calls", () => {
-    const forbidden = /signInWithPassword|signUp\(|signInWithOAuth|updateUser\(\s*\{\s*password/;
+  it("has no sign-in, accounts or server calls in the app", () => {
+    const forbidden = /supabase\.auth|signIn|signUp|createServerFn|document\.cookie/;
     const offenders = appFiles.filter(
-      (f) => !f.includes(join("integrations", "")) && forbidden.test(readFileSync(f, "utf8")),
+      (f) => !f.includes(join("integrations", "")) && !f.includes(join("components", "ui")) && forbidden.test(readFileSync(f, "utf8")),
     );
     expect(offenders.map((f) => relative(root, f))).toEqual([]);
+  });
+
+  it("uses no first- or second-person words in shown copy", async () => {
+    const brand = await import("@/lib/brand");
+    const words = /\b(i|me|my|we|us|our|you|your|you're|we're)\b/i;
+    const bad = Object.values(brand).filter((v) => typeof v === "string" && words.test(v.replace(/\bUS\b/g, "")));
+    expect(bad).toEqual([]);
   });
 });

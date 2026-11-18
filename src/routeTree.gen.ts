@@ -10,26 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as SafetyRouteImport } from './routes/safety'
-import { Route as AuthenticatedConsentRouteImport } from './routes/_authenticated/consent'
-import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated/home'
-import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
-import { Route as AuthenticatedVerseChoiceRouteImport } from './routes/_authenticated/verse-choice'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SafetyRoute = SafetyRouteImport.update({
@@ -37,92 +28,34 @@ const SafetyRoute = SafetyRouteImport.update({
   path: '/safety',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedConsentRoute = AuthenticatedConsentRouteImport.update({
-  id: '/consent',
-  path: '/consent',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedHomeRoute = AuthenticatedHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedVerseChoiceRoute =
-  AuthenticatedVerseChoiceRouteImport.update({
-    id: '/verse-choice',
-    path: '/verse-choice',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
+  '/about': typeof AboutRoute
   '/safety': typeof SafetyRoute
-  '/consent': typeof AuthenticatedConsentRoute
-  '/home': typeof AuthenticatedHomeRoute
-  '/settings': typeof AuthenticatedSettingsRoute
-  '/verse-choice': typeof AuthenticatedVerseChoiceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
+  '/about': typeof AboutRoute
   '/safety': typeof SafetyRoute
-  '/consent': typeof AuthenticatedConsentRoute
-  '/home': typeof AuthenticatedHomeRoute
-  '/settings': typeof AuthenticatedSettingsRoute
-  '/verse-choice': typeof AuthenticatedVerseChoiceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/auth': typeof AuthRoute
+  '/about': typeof AboutRoute
   '/safety': typeof SafetyRoute
-  '/_authenticated/consent': typeof AuthenticatedConsentRoute
-  '/_authenticated/home': typeof AuthenticatedHomeRoute
-  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
-  '/_authenticated/verse-choice': typeof AuthenticatedVerseChoiceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/auth'
-    | '/safety'
-    | '/consent'
-    | '/home'
-    | '/settings'
-    | '/verse-choice'
+  fullPaths: '/' | '/about' | '/safety'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/auth'
-    | '/safety'
-    | '/consent'
-    | '/home'
-    | '/settings'
-    | '/verse-choice'
-  id:
-    | '__root__'
-    | '/'
-    | '/_authenticated'
-    | '/auth'
-    | '/safety'
-    | '/_authenticated/consent'
-    | '/_authenticated/home'
-    | '/_authenticated/settings'
-    | '/_authenticated/verse-choice'
+  to: '/' | '/about' | '/safety'
+  id: '__root__' | '/' | '/about' | '/safety'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  AuthRoute: typeof AuthRoute
+  AboutRoute: typeof AboutRoute
   SafetyRoute: typeof SafetyRoute
 }
 
@@ -135,18 +68,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/safety': {
@@ -156,58 +82,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SafetyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/consent': {
-      id: '/_authenticated/consent'
-      path: '/consent'
-      fullPath: '/consent'
-      preLoaderRoute: typeof AuthenticatedConsentRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/home': {
-      id: '/_authenticated/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof AuthenticatedHomeRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/settings': {
-      id: '/_authenticated/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/verse-choice': {
-      id: '/_authenticated/verse-choice'
-      path: '/verse-choice'
-      fullPath: '/verse-choice'
-      preLoaderRoute: typeof AuthenticatedVerseChoiceRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
   }
 }
 
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedConsentRoute: typeof AuthenticatedConsentRoute
-  AuthenticatedHomeRoute: typeof AuthenticatedHomeRoute
-  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
-  AuthenticatedVerseChoiceRoute: typeof AuthenticatedVerseChoiceRoute
-}
-
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedConsentRoute: AuthenticatedConsentRoute,
-  AuthenticatedHomeRoute: AuthenticatedHomeRoute,
-  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
-  AuthenticatedVerseChoiceRoute: AuthenticatedVerseChoiceRoute,
-}
-
-const AuthenticatedRouteRouteWithChildren =
-  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  AuthRoute: AuthRoute,
+  AboutRoute: AboutRoute,
   SafetyRoute: SafetyRoute,
 }
 export const routeTree = rootRouteImport

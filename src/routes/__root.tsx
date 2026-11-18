@@ -4,17 +4,19 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
+import { AppShell } from "@/components/app/AppShell";
+import { AgeScreen } from "@/components/app/AgeScreen";
+import { AGE_ACCEPTED_KEY, APP_NAME, APP_TAGLINE } from "@/lib/brand";
 
 function NotFoundComponent() {
   return (
@@ -23,7 +25,7 @@ function NotFoundComponent() {
         <h1 className="text-7xl font-bold text-foreground">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          This page does not exist or has moved.
         </p>
         <div className="mt-6">
           <Link
@@ -52,7 +54,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
           This page didn't load
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+          Something went wrong. Trying again or going home may help.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -83,9 +85,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: `${APP_NAME} — ${APP_TAGLINE}` },
-      { name: "description", content: "A calm AI companion for hard days. For adults 18 and over." },
+      { name: "description", content: "A read-only library for hard days. For adults 18 and older." },
       { property: "og:title", content: `${APP_NAME} — ${APP_TAGLINE}` },
-      { property: "og:description", content: "A calm AI companion for hard days." },
+      { property: "og:description", content: "A read-only library for hard days." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#f8f4ea" },
@@ -129,22 +131,23 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const router = useRouter();
-
+  const pathname = useLocation({ select: (l) => l.pathname });
+  // null until the device's local answer is read (after hydration).
+  const [adult, setAdult] = useState<boolean | null>(null);
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((event) => {
-      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
-      router.invalidate();
-      if (event === "SIGNED_OUT") queryClient.clear();
-      else queryClient.invalidateQueries();
-    });
-    return () => data.subscription.unsubscribe();
-  }, [router, queryClient]);
+    setAdult(localStorage.getItem(AGE_ACCEPTED_KEY) === "true");
+  }, []);
+  // The safety page is always reachable, even before the age screen.
+  const gated = pathname !== "/safety" && adult !== true;
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      {gated ? (
+        <AppShell>{adult === false && <AgeScreen onContinue={() => setAdult(true)} />}</AppShell>
+      ) : (
+        <Outlet />
+      )}
       <Toaster position="top-center" />
     </QueryClientProvider>
   );

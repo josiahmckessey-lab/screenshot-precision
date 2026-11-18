@@ -1,7 +1,7 @@
 {
   "name": "Daybreak",
   "short_name": "Daybreak",
-  "description": "A calm companion for hard days.",
+  "description": "A quiet library for hard days.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

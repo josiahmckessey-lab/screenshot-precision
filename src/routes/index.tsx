@@ -1,32 +1,29 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/app/AppShell";
-import { WelcomeStep } from "@/components/app/WelcomeStep";
 import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: `${APP_NAME} — ${APP_TAGLINE}` },
-      {
-        name: "description",
-        content:
-          "Describe what's happening and get a short, calm reply from an AI companion. For adults 18 and over.",
-      },
+      { name: "description", content: "A read-only library of pictures and plain explanations. For adults 18 and older." },
       { property: "og:title", content: `${APP_NAME} — ${APP_TAGLINE}` },
-      { property: "og:description", content: "A calm AI companion for hard days. For adults 18+." },
+      { property: "og:description", content: "A read-only library for adults 18 and older." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: Welcome,
+  component: Home,
 });
 
-function Welcome() {
-  const navigate = useNavigate();
+function Home() {
   return (
     <AppShell>
-      <WelcomeStep onContinue={() => navigate({ to: "/auth" })} />
+      <section className="fade-up flex flex-1 flex-col justify-center gap-6 py-10">
+        <h1 className="text-5xl">{APP_NAME}</h1>
+        <p className="text-lg text-muted-foreground">{APP_TAGLINE}</p>
+      </section>
     </AppShell>
   );
 }
