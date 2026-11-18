@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createPublicReadClient } from "@/lib/match-topics.server";
 import { guideEmailText, guideMessageSchema, saveThenNotify } from "@/lib/guide-message";
+import { APP_NAME } from "@/lib/brand";
 
 export const send_guide_message = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => guideMessageSchema.parse(data))
@@ -22,7 +23,7 @@ export const send_guide_message = createServerFn({ method: "POST" })
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${gatewayKey}`, "X-Connection-Api-Key": key, "Idempotency-Key": `guide-message-${id}` },
         body: JSON.stringify({
-          from: "Daybreak <onboarding@resend.dev>",
+          from: `${APP_NAME} <onboarding@resend.dev>`,
           to: ["josiahmckessey@proton.me"],
           subject: "Library message",
           ...(data.reply_to ? { reply_to: data.reply_to } : {}),

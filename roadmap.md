@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Rename to The Gift from one constant; add exact home welcome and About content with six ordered groups of live topic questions and guide link; verified all 20 links, phone layout and installed name.
+
 - [x] Guide message form: optional reply and session question, insert-only storage, Resend notification, device/hour and atomic daily caps, honeypot and crisis panel; browser confirmation and saved row verified, Resend reports test email delivered.
 
 - [x] Keep results at /ideas in session storage, preserve topic return links, replace minute limit with three-second pause, raise sorter cap to 1500, and add another question plus direct guide message access; browser verified back/reload, replacement, start over, guide draft and mobile crisis help.
@@ -21,7 +23,7 @@
 - [x] Verify ordinary replies with the real imported library and saving off through the authenticated chat function.
 - [x] Enable the reply box and verify ordinary replies through the signed-in chat screen.
 - [x] Saved-exchange check dropped: chat paused, app is now a read-only library.
-- [ ] Real app name (using "Daybreak" for now) — waiting on user
+- [x] Real app name supplied: The Gift.
 - [x] Read-only library: no accounts, chat paused in paused-chat/, local 18+ screen, About + Safety, crisis button everywhere.
 - [x] Guide page at /guide built with the exact wording and footer links from home and topic pages; guide name "Josiah", phone (407) 243-8448 and JosiahMcKessey@proton.me shown as call/mail links.
 - [x] Guide page reply-time line: "Will respond when the message is seen. Every message is read ahead of everything else."

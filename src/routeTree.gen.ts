@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as GuideRouteImport } from './routes/guide'
 import { Route as IdeasRouteImport } from './routes/ideas'
+import { Route as ManifestDotwebmanifestRouteImport } from './routes/manifest[.]webmanifest'
 import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as TopicSlugRouteImport } from './routes/topic/$slug'
 
@@ -36,6 +37,11 @@ const IdeasRoute = IdeasRouteImport.update({
   path: '/ideas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ManifestDotwebmanifestRoute = ManifestDotwebmanifestRouteImport.update({
+  id: '/manifest.webmanifest',
+  path: '/manifest.webmanifest',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SafetyRoute = SafetyRouteImport.update({
   id: '/safety',
   path: '/safety',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/guide': typeof GuideRoute
   '/ideas': typeof IdeasRoute
+  '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/safety': typeof SafetyRoute
   '/topic/$slug': typeof TopicSlugRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/guide': typeof GuideRoute
   '/ideas': typeof IdeasRoute
+  '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/safety': typeof SafetyRoute
   '/topic/$slug': typeof TopicSlugRoute
 }
@@ -69,20 +77,36 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/guide': typeof GuideRoute
   '/ideas': typeof IdeasRoute
+  '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/safety': typeof SafetyRoute
   '/topic/$slug': typeof TopicSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/guide' | '/ideas' | '/safety' | '/topic/$slug'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/guide'
+    | '/ideas'
+    | '/manifest.webmanifest'
+    | '/safety'
+    | '/topic/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/guide' | '/ideas' | '/safety' | '/topic/$slug'
+  to:
+    | '/'
+    | '/about'
+    | '/guide'
+    | '/ideas'
+    | '/manifest.webmanifest'
+    | '/safety'
+    | '/topic/$slug'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/guide'
     | '/ideas'
+    | '/manifest.webmanifest'
     | '/safety'
     | '/topic/$slug'
   fileRoutesById: FileRoutesById
@@ -92,6 +116,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   GuideRoute: typeof GuideRoute
   IdeasRoute: typeof IdeasRoute
+  ManifestDotwebmanifestRoute: typeof ManifestDotwebmanifestRoute
   SafetyRoute: typeof SafetyRoute
   TopicSlugRoute: typeof TopicSlugRoute
 }
@@ -126,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdeasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/manifest.webmanifest': {
+      id: '/manifest.webmanifest'
+      path: '/manifest.webmanifest'
+      fullPath: '/manifest.webmanifest'
+      preLoaderRoute: typeof ManifestDotwebmanifestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/safety': {
       id: '/safety'
       path: '/safety'
@@ -148,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   GuideRoute: GuideRoute,
   IdeasRoute: IdeasRoute,
+  ManifestDotwebmanifestRoute: ManifestDotwebmanifestRoute,
   SafetyRoute: SafetyRoute,
   TopicSlugRoute: TopicSlugRoute,
 }

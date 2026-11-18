@@ -1,6 +1,6 @@
 // User-facing names and copy shared across screens.
 // Banned words (see src/test/product-rules.test.ts) must never appear in user-facing text.
-export const APP_NAME = "Daybreak";
+export { APP_NAME } from "../../src/lib/brand";
 export const APP_TAGLINE = "A quiet place for a hard day.";
 
 export const AI_NOTICE =

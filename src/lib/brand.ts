@@ -1,7 +1,7 @@
 // User-facing names and copy shared across screens.
 // Banned words (see src/test/product-rules.test.ts) must never appear in user-facing text.
 // No first- or second-person words in app text: write "a person" and "people".
-export const APP_NAME = "Daybreak";
+export const APP_NAME = "The Gift";
 export const APP_TAGLINE = "A quiet library for a hard day.";
 
 export const CRISIS_TEXT =
