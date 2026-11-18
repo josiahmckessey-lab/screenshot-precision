@@ -55,6 +55,7 @@ export const GUIDE_RECEIVED = "Received. A person reads these later, not right a
 export const GUIDE_SEND_ERROR = "The message could not be received. Please try again later.";
 export const GUIDE_LIMIT_TEXT = "The message limit has been reached. Please try again later.";
 export const GUIDE_INVALID_TEXT = "A message of 1 to 3000 characters and a valid optional email address are required.";
+export const GUIDE_REPLY_INVALID = "That email address does not look complete. Check it, or leave it empty.";
 
 // Guide page. All three contact lines are real.
 export const GUIDE_TITLE = "Find a guide";

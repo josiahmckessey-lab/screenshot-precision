@@ -25,6 +25,11 @@ export function recordGuideSend(storage: Storage, now: number) {
   storage.setItem(GUIDE_RATE_KEY, JSON.stringify([...recentGuideSends(storage, now), now]));
 }
 
+export function guideEmailText(data: GuideMessageInput): string {
+  const replyLine = `Reply email: ${data.reply_to ? data.reply_to : "none given"}`;
+  return `${replyLine}\n\nMessage:\n${data.body}${data.included_question ? `\n\nIncluded library question:\n${data.included_question}` : ""}`;
+}
+
 export async function saveThenNotify(
   save: () => Promise<string | null>, notify: (id: string) => Promise<void>,
 ): Promise<{ status: "received" | "capped" }> {

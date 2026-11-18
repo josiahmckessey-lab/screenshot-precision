@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createPublicReadClient } from "@/lib/match-topics.server";
-import { guideMessageSchema, saveThenNotify } from "@/lib/guide-message";
+import { guideEmailText, guideMessageSchema, saveThenNotify } from "@/lib/guide-message";
 
 export const send_guide_message = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => guideMessageSchema.parse(data))
@@ -26,7 +26,7 @@ export const send_guide_message = createServerFn({ method: "POST" })
           to: ["josiahmckessey@proton.me"],
           subject: "Library message",
           ...(data.reply_to ? { reply_to: data.reply_to } : {}),
-          text: `Message:\n${data.body}${data.included_question ? `\n\nIncluded library question:\n${data.included_question}` : ""}`,
+          text: guideEmailText(data),
         }),
       });
       if (!response.ok) throw new Error(`email_status_${response.status}`);
