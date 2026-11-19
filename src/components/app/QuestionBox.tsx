@@ -68,10 +68,6 @@ export function QuestionBox({ topicSlug, onResults }: { topicSlug?: string; onRe
       <Button onClick={send} disabled={!body.trim() || paused || state === "sending"}>{QUESTION_SEND}</Button>
       {state === "error" && <p role="alert" className="text-destructive">{QUESTION_ERROR}</p>}
     </div>
-    <StarterQuestions disabled={state === "sending"} onSelect={(question) => {
-      setBody(question);
-      setState("idle");
-      textarea.current?.focus();
-    }} />
+    <StarterQuestions />
   </div>;
 }

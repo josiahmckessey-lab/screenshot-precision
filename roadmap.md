@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Turn starter questions into mapped topic links with four quiet examples and shuffle; verified home, topic and ideas browser-back restoration on desktop/phone without sending or storage writes, plus 19 focused tests.
+
 - [x] Rename question headings and add four random, editable starter questions to every question box, with different examples and no send/save on selection; verified home, topics and ideas on phone, desktop rendering, no storage writes or sends on selection, and 16 tests passing.
 
 - [x] Rename to The Gift from one constant; add exact home welcome and About content with six ordered groups of live topic questions and guide link; verified all 20 links, phone layout and installed name.
