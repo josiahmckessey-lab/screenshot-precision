@@ -21,8 +21,10 @@ export const KNOW_MORE_LABEL = "Want to know more about this?";
 export const DEPTH_TITLES = ["The plain why", "How it works", "Research and roots"] as const;
 export const TRY_LABEL = "One small thing to try";
 export const SCRIPTURE_LABEL = "For readers who want Scripture";
-export const QUESTION_TITLE = "Leave a question";
-export const QUESTION_TOPIC_TITLE = "Leave a question about this topic";
+export const QUESTION_TITLE = "Pose a question";
+export const QUESTION_TOPIC_TITLE = "Pose a question about this topic";
+export const QUESTION_EXAMPLES_HEADING = "Having trouble thinking of a question? Try a few of these.";
+export const QUESTION_EXAMPLES_SHUFFLE = "Show different examples";
 export const QUESTION_NOTICE =
   "An automated sorter reads the typed text only to pick which pages fit. The text is then saved for a person to read later, not right away. No names or accounts. Not for emergencies. For someone in danger, call or text 988. For immediate danger, call 911.";
 export const QUESTION_SENT_SHORT = "Question saved. A person will read it later, not right away.";
