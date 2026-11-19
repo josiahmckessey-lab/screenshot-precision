@@ -85,3 +85,9 @@ export const FRAMEWORK_PARTS = [
   }
 ];
 export const ABOUT_GUIDE_TEXT = "A message can go straight to Josiah, a guide.";
+
+// Which framework part each topic belongs to, derived from FRAMEWORK_PARTS so
+// the mapping lives in one place. Keyed by topic number.
+export const PART_BY_TOPIC: Record<number, { number: number; title: string }> = Object.fromEntries(
+  FRAMEWORK_PARTS.flatMap((part) => part.topics.map((topic) => [topic, { number: part.number, title: part.title }])),
+);

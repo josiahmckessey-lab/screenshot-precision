@@ -48,7 +48,7 @@ function AboutPage() {
           <p className="text-lg leading-relaxed">{FRAMEWORK_INTRO}</p>
           <div className="space-y-5">
             {FRAMEWORK_PARTS.map((part) => (
-              <section key={part.number} className="space-y-4 rounded-2xl border bg-card p-5 text-card-foreground">
+              <section key={part.number} id={`part-${part.number}`} className="scroll-mt-4 space-y-4 rounded-2xl border bg-card p-5 text-card-foreground">
                 <h3 className="text-2xl font-bold">Part {part.number}. {part.title}</h3>
                 <p className="text-lg italic">{part.picture}</p>
                 <p className="text-lg leading-relaxed">{part.summary}</p>

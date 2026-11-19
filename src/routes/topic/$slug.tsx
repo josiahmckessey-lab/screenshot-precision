@@ -7,6 +7,7 @@ import { QuestionBox } from "@/components/app/QuestionBox";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
+import { PART_BY_TOPIC } from "@/content/about";
 import {
   APP_NAME, BACK_TO_IDEAS, DEPTH_TITLES, FIND_GUIDE, KNOW_MORE_LABEL, QUESTION_TOPIC_TITLE, SCRIPTURE_LABEL,
   TOPIC_FOOTER, TOPIC_PICTURE_LABEL, TOPIC_SENTENCE_LABEL, TRY_LABEL,
@@ -104,6 +105,15 @@ function TopicPage() {
       <article className="space-y-6 py-4">
         <BackLink />
         <h1 className="text-4xl leading-tight sm:text-5xl">{t.title}</h1>
+        {(() => {
+          const topicNumber = Number(t.slug.replace("topic-", ""));
+          const part = PART_BY_TOPIC[topicNumber];
+          return part ? (
+            <Link to="/about" hash={`part-${part.number}`} className="text-sm text-muted-foreground underline underline-offset-4">
+              Part {part.number}, {part.title}
+            </Link>
+          ) : null;
+        })()}
         <Card label={TOPIC_PICTURE_LABEL}><Md text={t.picture} /></Card>
         <Card label={TOPIC_SENTENCE_LABEL}><p className="text-2xl leading-snug">{t.sentence}</p></Card>
 
