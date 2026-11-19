@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      about_sections: {
+        Row: {
+          body: string
+          heading: string
+          page: string
+          position: number
+          scripture: Json
+          slug: string
+          status: string
+          version: string
+        }
+        Insert: {
+          body: string
+          heading: string
+          page?: string
+          position: number
+          scripture?: Json
+          slug: string
+          status?: string
+          version?: string
+        }
+        Update: {
+          body?: string
+          heading?: string
+          page?: string
+          position?: number
+          scripture?: Json
+          slug?: string
+          status?: string
+          version?: string
+        }
+        Relationships: []
+      }
       ai_access_state: {
         Row: {
           key: string
