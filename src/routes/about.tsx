@@ -38,6 +38,11 @@ function AboutPage() {
           <h2 className="text-3xl">{ABOUT_INTRO_HEADING}</h2>
           {ABOUT_PARAGRAPHS.map((paragraph) => <p key={paragraph} className="text-lg leading-relaxed">{paragraph}</p>)}
         </section>
+        <section className="space-y-3 rounded-2xl border bg-card p-5 text-card-foreground">
+          <h2 className="text-2xl">For readers who want the theological grounding</h2>
+          <p className="text-lg leading-relaxed">The faith underneath the model, laid out in the open. Nothing on that page is required.</p>
+          <Button asChild><Link to="/about/theology">Read the theological grounding</Link></Button>
+        </section>
         <section className="space-y-5">
           <h2 className="text-3xl">{FRAMEWORK_HEADING}</h2>
           <p className="text-lg leading-relaxed">{FRAMEWORK_INTRO}</p>

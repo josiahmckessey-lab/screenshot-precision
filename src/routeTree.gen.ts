@@ -15,6 +15,7 @@ import { Route as GuideRouteImport } from './routes/guide'
 import { Route as IdeasRouteImport } from './routes/ideas'
 import { Route as ManifestDotwebmanifestRouteImport } from './routes/manifest[.]webmanifest'
 import { Route as SafetyRouteImport } from './routes/safety'
+import { Route as AboutTheologyRouteImport } from './routes/about_.theology'
 import { Route as TopicSlugRouteImport } from './routes/topic/$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +48,11 @@ const SafetyRoute = SafetyRouteImport.update({
   path: '/safety',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutTheologyRoute = AboutTheologyRouteImport.update({
+  id: '/about_/theology',
+  path: '/about/theology',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TopicSlugRoute = TopicSlugRouteImport.update({
   id: '/topic/$slug',
   path: '/topic/$slug',
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/ideas': typeof IdeasRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/safety': typeof SafetyRoute
+  '/about/theology': typeof AboutTheologyRoute
   '/topic/$slug': typeof TopicSlugRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/ideas': typeof IdeasRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/safety': typeof SafetyRoute
+  '/about/theology': typeof AboutTheologyRoute
   '/topic/$slug': typeof TopicSlugRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/ideas': typeof IdeasRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/safety': typeof SafetyRoute
+  '/about_/theology': typeof AboutTheologyRoute
   '/topic/$slug': typeof TopicSlugRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/ideas'
     | '/manifest.webmanifest'
     | '/safety'
+    | '/about/theology'
     | '/topic/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/ideas'
     | '/manifest.webmanifest'
     | '/safety'
+    | '/about/theology'
     | '/topic/$slug'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/ideas'
     | '/manifest.webmanifest'
     | '/safety'
+    | '/about_/theology'
     | '/topic/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   IdeasRoute: typeof IdeasRoute
   ManifestDotwebmanifestRoute: typeof ManifestDotwebmanifestRoute
   SafetyRoute: typeof SafetyRoute
+  AboutTheologyRoute: typeof AboutTheologyRoute
   TopicSlugRoute: typeof TopicSlugRoute
 }
 
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SafetyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about_/theology': {
+      id: '/about_/theology'
+      path: '/about/theology'
+      fullPath: '/about/theology'
+      preLoaderRoute: typeof AboutTheologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/topic/$slug': {
       id: '/topic/$slug'
       path: '/topic/$slug'
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   IdeasRoute: IdeasRoute,
   ManifestDotwebmanifestRoute: ManifestDotwebmanifestRoute,
   SafetyRoute: SafetyRoute,
+  AboutTheologyRoute: AboutTheologyRoute,
   TopicSlugRoute: TopicSlugRoute,
 }
 export const routeTree = rootRouteImport
