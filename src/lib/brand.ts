@@ -47,6 +47,7 @@ export const QUESTION_ENDS =
 export const QUESTION_START_OVER = "Start over";
 export const ASK_ANOTHER_QUESTION = "Ask another question";
 export const BACK_TO_IDEAS = "Back to the ideas";
+export const BACK_TO_LIBRARY = "Back to the library";
 export const NEED_MORE_TITLE = "Need more than this?";
 export const NEED_MORE_TEXT = "If this is not enough, or if there is feedback to share, a message can go straight to Josiah, a guide.";
 export const MESSAGE_GUIDE = "Message a guide";
