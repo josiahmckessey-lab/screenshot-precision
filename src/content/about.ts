@@ -1,6 +1,11 @@
 import { APP_NAME } from "@/lib/brand";
 
 export const WELCOME_HEADING = `Welcome to ${APP_NAME}`;
+export const INTRO_LINES = [
+  "Welcome to The Gift",
+  "A person is one whole creature, not a pile of separate parts.",
+  "Change happens in the whole of a person, one small choice at a time.",
+] as const;
 export const WELCOME_TEXT = "A person is one whole creature, not a pile of separate parts. Body, mind, memory, and meaning move together, and change happens in the whole of a person, one small choice at a time. This quiet library gathers those ideas, each one held in an image a person can carry, with a door to go deeper. Begin with a question below, or browse the topics.";
 export const RESEARCH_HEADING = "A wellbeing library";
 export const RESEARCH_TEXT = "The Gift is a wellbeing library for personal growth. It shares ideas about how people change, one topic at a time, and welcomes questions and feedback so the library can be made clearer and more useful. It is not a standalone source of help or guidance, and it is not professional care, crisis care, or medical advice. Questions, messages, and feedback are saved and read by a person later, to answer and to improve the library. Names and accounts are never asked for. An email address is kept only when someone chooses to leave one for a reply. Information is never sold and never shared for advertising. Anyone may stop using it at any time.";

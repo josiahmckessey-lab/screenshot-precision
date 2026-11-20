@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Add the one-time post-age welcome sequence with local flags, tap/Skip controls, reduced motion, crisis help and home fade; verified all three lines, automatic completion, new/returning/legacy devices, Skip, crisis panel and reduced motion on phone and desktop; 18 tests passed. Explicit per-line timings total 9.6 seconds before the home fade.
+
 - [x] Apply Lamplight colors and locally hosted Literata headings only; replaced fixed black overlays in dialog, alert dialog, sheet and drawer with a semantic token, verified all 27 pages and phone layouts, text contrast, confidence labels, question box, crisis controls and local font requests; 28 tests passed.
 
 - [x] Add Privacy page and footer/About/form-notice links without changing existing notices; verified phone/desktop, crisis panel and 34 tests.

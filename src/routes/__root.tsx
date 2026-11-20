@@ -16,6 +16,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { AppShell } from "@/components/app/AppShell";
 import { AgeScreen } from "@/components/app/AgeScreen";
+import { WelcomeIntro } from "@/components/app/WelcomeIntro";
+import { INTRO_COMPLETED_KEY, shouldPlayIntro } from "@/lib/welcome-intro";
 import { APP_DESCRIPTION, AGE_ACCEPTED_KEY, APP_NAME, APP_PREVIEW_TITLE } from "@/lib/brand";
 
 function NotFoundComponent() {
@@ -126,10 +128,16 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useLocation({ select: (l) => l.pathname });
+  const router = useRouter();
   // null until the device's local answer is read (after hydration).
   const [adult, setAdult] = useState<boolean | null>(null);
+  const [intro, setIntro] = useState(false);
+  const [introEligible, setIntroEligible] = useState(false);
+  const [homeFade, setHomeFade] = useState(false);
   useEffect(() => {
-    setAdult(localStorage.getItem(AGE_ACCEPTED_KEY) === "true");
+    const alreadyAdult = localStorage.getItem(AGE_ACCEPTED_KEY) === "true";
+    setAdult(alreadyAdult);
+    setIntroEligible(shouldPlayIntro(alreadyAdult, localStorage.getItem(INTRO_COMPLETED_KEY)));
   }, []);
   // The safety page is always reachable, even before the age screen.
   const gated = pathname !== "/safety" && adult !== true;
@@ -138,9 +146,20 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       {gated ? (
-        <AppShell>{adult === false && <AgeScreen onContinue={() => setAdult(true)} />}</AppShell>
+        <AppShell>{adult === false && <AgeScreen onContinue={() => {
+          setAdult(true);
+          setIntro(introEligible);
+          if (introEligible) void router.navigate({ to: "/" });
+        }} />}</AppShell>
+      ) : intro && pathname !== "/safety" ? (
+        <WelcomeIntro onFinish={() => {
+          localStorage.setItem(INTRO_COMPLETED_KEY, "true");
+          setIntro(false);
+          setHomeFade(true);
+          void router.navigate({ to: "/" });
+        }} />
       ) : (
-        <Outlet />
+        <div className={homeFade ? "intro-home-fade" : "contents"}><Outlet /></div>
       )}
       <Toaster position="top-center" />
     </QueryClientProvider>
