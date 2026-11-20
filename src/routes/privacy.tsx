@@ -27,12 +27,6 @@ function PrivacyPage() {
         {PRIVACY_SECTIONS.map(({ lead, body }) => (
           <p key={lead} className="text-lg leading-relaxed"><strong>{lead}</strong>{" "}{body}</p>
         ))}
-        <section className="space-y-4 text-lg leading-relaxed">
-          <h2 className="text-2xl">Visitor counting</h2>
-          <p>Lovable records clicks on buttons and links for every visitor. Page visits, time on page, page speed, and errors are also recorded for every visitor, without cookies and without identifying anyone.</p>
-          <p>The records include pages visited, where visitors came from, country, browser, operating system, device type, time spent, page loading speed, and errors. No cookies are used, nothing is stored on the visitor’s device, IP addresses are not kept, and visitors are not identified. Detailed data is kept for 90 days and daily summaries for a year.</p>
-          <p>Lovable collects this data for the library. <a href="https://lovable.dev/privacy" className="underline underline-offset-4">Lovable’s privacy policy</a> explains how it handles it.</p>
-        </section>
       </article>
     </AppShell>
   );

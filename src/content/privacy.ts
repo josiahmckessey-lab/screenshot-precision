@@ -5,7 +5,7 @@ export const PRIVACY_SECTIONS = [
   },
   {
     lead: "What is never asked for.",
-    body: "No names, no accounts, no passwords. The library uses no cookies and loads nothing from advertising or font services. The answer to the 18 or older screen, a count of messages sent, and the last results are kept on the device only.",
+    body: "No names, no accounts, no passwords. The library uses no analytics, no tracking, and no cookies, and loads nothing from advertising or font services. The answer to the 18 or older screen, a count of messages sent, and the last results are kept on the device only.",
   },
   {
     lead: "What is never done.",
