@@ -28,7 +28,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <Link to="/about" className="underline underline-offset-4">About</Link>
         <Link to="/safety" className="underline underline-offset-4">Safety</Link>
         <Link to="/guide" className="underline underline-offset-4">Find a guide</Link>
-        <Link to="/about" hash="research" className="underline underline-offset-4">{RESEARCH_LINK}</Link>
+        <Link to="/about" hash="wellbeing" className="underline underline-offset-4">{RESEARCH_LINK}</Link>
       </footer>
     </div>
   );

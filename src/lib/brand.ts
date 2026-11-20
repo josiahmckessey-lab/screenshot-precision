@@ -4,8 +4,9 @@
 export const APP_NAME = "The Gift";
 export const APP_TAGLINE = "A quiet library of ideas about how people change.";
 export const APP_PREVIEW_TITLE = `${APP_NAME}, ${APP_TAGLINE.charAt(0).toLowerCase()}${APP_TAGLINE.slice(1)}`;
-export const RESEARCH_LINK = "About this research project";
-export const RESEARCH_NOTICE = "The Gift is a research project in development, not a standalone source of help.";
+export const APP_DESCRIPTION = `${APP_TAGLINE} For adults 18 and older.`;
+export const RESEARCH_LINK = "About this library";
+export const RESEARCH_NOTICE = "The Gift is a wellbeing library for personal growth, not a standalone source of help.";
 
 export const CRISIS_TEXT =
   "For someone in danger, call or text 988 (Suicide and Crisis Lifeline). For immediate danger, call 911.";
@@ -66,7 +67,7 @@ export const GUIDE_REPLY_INVALID = "That email address does not look complete. C
 export const GUIDE_TITLE = "Find a guide";
 export const GUIDE_INTRO =
   "A guide is a steady person a little further along the same road, who has walked something similar and walks with another in ordinary life. A guide is not professional care and not crisis care. This library can point toward a guide. It cannot be one.";
-export const GUIDE_CONTACT_LABEL = "For the pilot, a guide can be reached here:";
+export const GUIDE_CONTACT_LABEL = "For now, a guide can be reached here:";
 export const GUIDE_NAME = "Josiah";
 export const GUIDE_PHONE = "(407) 243-8448";
 export const GUIDE_PHONE_HREF = "tel:+14072438448";

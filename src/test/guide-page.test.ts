@@ -23,7 +23,7 @@ describe("Guide page", () => {
     expect(GUIDE_INTRO).toBe(
       "A guide is a steady person a little further along the same road, who has walked something similar and walks with another in ordinary life. A guide is not professional care and not crisis care. This library can point toward a guide. It cannot be one.",
     );
-    expect(GUIDE_CONTACT_LABEL).toBe("For the pilot, a guide can be reached here:");
+    expect(GUIDE_CONTACT_LABEL).toBe("For now, a guide can be reached here:");
     expect(GUIDE_CRISIS_TEXT).toBe(
       "If someone is in danger, call or text 988. For immediate danger, call 911.",
     );

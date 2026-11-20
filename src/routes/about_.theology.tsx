@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/app/AppShell";
-import { APP_NAME } from "@/lib/brand";
+import { APP_DESCRIPTION, APP_NAME } from "@/lib/brand";
 import { supabase } from "@/integrations/supabase/client";
 
 type ScriptureItem = { reference: string; verse: string };
@@ -20,9 +20,9 @@ export const Route = createFileRoute("/about_/theology")({
   head: () => ({
     meta: [
       { title: `Theological grounding — ${APP_NAME}` },
-      { name: "description", content: "The faith underneath the model, laid out in the open." },
+      { name: "description", content: APP_DESCRIPTION },
       { property: "og:title", content: `Theological grounding — ${APP_NAME}` },
-      { property: "og:description", content: "The faith underneath the model, laid out in the open." },
+      { property: "og:description", content: APP_DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

@@ -5,7 +5,7 @@ import { CrisisPanel } from "@/components/app/CrisisHelp";
 import { QuestionBox } from "@/components/app/QuestionBox";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { APP_NAME, ASK_ANOTHER_QUESTION, MESSAGE_GUIDE, NEED_MORE_TEXT, NEED_MORE_TITLE, QUESTION_CRISIS_TEXT, QUESTION_IDEAS_HEADING, QUESTION_KNOW_MORE, QUESTION_SIT_LABEL, QUESTION_START_OVER } from "@/lib/brand";
+import { APP_DESCRIPTION, APP_NAME, ASK_ANOTHER_QUESTION, MESSAGE_GUIDE, NEED_MORE_TEXT, NEED_MORE_TITLE, QUESTION_CRISIS_TEXT, QUESTION_IDEAS_HEADING, QUESTION_KNOW_MORE, QUESTION_SIT_LABEL, QUESTION_START_OVER } from "@/lib/brand";
 import { clearIdeas, readIdeas, type IdeasResult } from "@/lib/ideas-session";
 
 export const Route = createFileRoute("/ideas")({
@@ -17,9 +17,9 @@ export const Route = createFileRoute("/ideas")({
   },
   head: () => ({ meta: [
     { title: `Ideas that relate — ${APP_NAME}` },
-    { name: "description", content: "Related library pages and a question to sit with." },
+    { name: "description", content: APP_DESCRIPTION },
     { property: "og:title", content: `Ideas that relate — ${APP_NAME}` },
-    { property: "og:description", content: "Related library pages and a question to sit with." },
+    { property: "og:description", content: APP_DESCRIPTION },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
   ] }),
   component: IdeasPage,

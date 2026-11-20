@@ -1,9 +1,9 @@
-import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
+import { APP_DESCRIPTION, APP_NAME } from "@/lib/brand";
 
 export const APP_MANIFEST = {
   name: APP_NAME,
   short_name: APP_NAME,
-  description: APP_TAGLINE,
+  description: APP_DESCRIPTION,
   start_url: "/",
   scope: "/",
   display: "standalone",

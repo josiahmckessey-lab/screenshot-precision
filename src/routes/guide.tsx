@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/app/AppShell";
 import { GuideMessageBox } from "@/components/app/GuideMessageBox";
-import {
+import { APP_DESCRIPTION,
   APP_NAME,
   GUIDE_CONTACT_LABEL,
   GUIDE_CRISIS_TEXT,
@@ -13,7 +13,6 @@ import {
   GUIDE_NAME,
   GUIDE_PHONE,
   GUIDE_PHONE_HREF,
-  GUIDE_TEXT,
   GUIDE_TITLE,
 } from "@/lib/brand";
 
@@ -21,9 +20,9 @@ export const Route = createFileRoute("/guide")({
   head: () => ({
     meta: [
       { title: `${GUIDE_TITLE} — ${APP_NAME}` },
-      { name: "description", content: GUIDE_TEXT },
+      { name: "description", content: APP_DESCRIPTION },
       { property: "og:title", content: `${GUIDE_TITLE} — ${APP_NAME}` },
-      { property: "og:description", content: GUIDE_TEXT },
+      { property: "og:description", content: APP_DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

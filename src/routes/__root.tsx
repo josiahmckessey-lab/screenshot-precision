@@ -16,7 +16,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { AppShell } from "@/components/app/AppShell";
 import { AgeScreen } from "@/components/app/AgeScreen";
-import { AGE_ACCEPTED_KEY, APP_NAME, APP_TAGLINE, APP_PREVIEW_TITLE } from "@/lib/brand";
+import { APP_DESCRIPTION, AGE_ACCEPTED_KEY, APP_NAME, APP_PREVIEW_TITLE } from "@/lib/brand";
 
 function NotFoundComponent() {
   return (
@@ -85,9 +85,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: APP_PREVIEW_TITLE },
-      { name: "description", content: APP_TAGLINE },
+      { name: "description", content: APP_DESCRIPTION },
       { property: "og:title", content: APP_PREVIEW_TITLE },
-      { property: "og:description", content: APP_TAGLINE },
+      { property: "og:description", content: APP_DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#f8f4ea" },

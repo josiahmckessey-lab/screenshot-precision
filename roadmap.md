@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Apply wellbeing-library wording and adult descriptions; verified all 26 content pages, installed description and About anchor, preserved question/guide/About privacy copy, and listed unchanged research occurrences.
+
 - [x] Apply exact research-project wording, welcome and preview tagline, shared research footer link, About anchor, feedback labels, reply-time and error text; verified desktop home, research anchor scroll, installed description, seven phone page footers/crisis buttons without overflow, and 25 focused tests.
 
 - [x] Turn starter questions into mapped topic links with four quiet examples and shuffle; verified home, topic and ideas browser-back restoration on desktop/phone without sending or storage writes, plus 19 focused tests.

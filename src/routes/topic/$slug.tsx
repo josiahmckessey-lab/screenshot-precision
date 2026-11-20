@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
 import { PART_BY_TOPIC } from "@/content/about";
-import {
+import { APP_DESCRIPTION,
   APP_NAME, BACK_TO_IDEAS, DEPTH_TITLES, FIND_GUIDE, KNOW_MORE_LABEL, QUESTION_TOPIC_TITLE, SCRIPTURE_LABEL,
   TOPIC_FOOTER, TOPIC_PICTURE_LABEL, TOPIC_SENTENCE_LABEL, TRY_LABEL,
 } from "@/lib/brand";
@@ -41,11 +41,10 @@ export const Route = createFileRoute("/topic/$slug")({
   loader: ({ params }) => loadTopic(params.slug),
   head: ({ loaderData }) => {
     const title = loaderData ? `${loaderData.title} — ${APP_NAME}` : `Topic — ${APP_NAME}`;
-    const desc = loaderData?.sentence ?? "A topic page in the library.";
     return {
       meta: [
-        { title }, { name: "description", content: desc },
-        { property: "og:title", content: title }, { property: "og:description", content: desc },
+        { title }, { name: "description", content: APP_DESCRIPTION },
+        { property: "og:title", content: title }, { property: "og:description", content: APP_DESCRIPTION },
         { property: "og:type", content: "article" }, { name: "twitter:card", content: "summary" },
       ],
     };

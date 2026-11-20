@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/app/AppShell";
 import { CrisisPanel } from "@/components/app/CrisisHelp";
-import { APP_NAME } from "@/lib/brand";
+import { APP_DESCRIPTION, APP_NAME } from "@/lib/brand";
 
 export const Route = createFileRoute("/safety")({
   head: () => ({
     meta: [
       { title: `Safety — ${APP_NAME}` },
-      { name: "description", content: "Immediate safety help and US crisis contacts." },
+      { name: "description", content: APP_DESCRIPTION },
       { property: "og:title", content: `Safety — ${APP_NAME}` },
-      { property: "og:description", content: "Call or text 988, or call 911 for immediate danger." },
+      { property: "og:description", content: APP_DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
