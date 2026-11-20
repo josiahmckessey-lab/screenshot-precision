@@ -29,7 +29,7 @@ function Home() {
           {RESEARCH_NOTICE}{" "}
           <Link to="/about" hash="wellbeing" className="underline underline-offset-4">{RESEARCH_LINK}</Link>
         </p>
-        <Link to="/about" className="text-lg underline underline-offset-4">Browse the topics</Link>
+        <Link to="/about" hash="topics" className="text-lg underline underline-offset-4">Browse the topics</Link>
       </section>
       <section className="space-y-3 rounded-2xl border bg-card p-5 text-card-foreground">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{QUESTION_TITLE}</h2>

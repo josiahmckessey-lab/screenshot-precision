@@ -48,7 +48,7 @@ function AboutPage() {
           <p className="text-lg leading-relaxed">The faith underneath the model, laid out in the open. Nothing on that page is required.</p>
           <Button asChild><Link to="/about/theology">Read the theological grounding</Link></Button>
         </section>
-        <section className="space-y-5">
+        <section id="topics" className="scroll-mt-4 space-y-5">
           <h2 className="text-3xl">{FRAMEWORK_HEADING}</h2>
           <p className="text-lg leading-relaxed">{FRAMEWORK_INTRO}</p>
           <div className="space-y-5">

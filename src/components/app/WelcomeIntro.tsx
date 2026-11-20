@@ -3,7 +3,7 @@ import { Wordmark } from "@/components/app/AppShell";
 import { CrisisButton } from "@/components/app/CrisisHelp";
 import { Button } from "@/components/ui/button";
 import { INTRO_LINES } from "@/content/about";
-import { INTRO_FADE_IN_MS, INTRO_FADE_OUT_MS, INTRO_HOLD_MS } from "@/lib/welcome-intro";
+import { INTRO_FADE_OUT_MS } from "@/lib/welcome-intro";
 
 export function WelcomeIntro({ onFinish }: { onFinish: () => void }) {
   const [index, setIndex] = useState(0);
@@ -46,12 +46,6 @@ export function WelcomeIntro({ onFinish }: { onFinish: () => void }) {
       transition.current = setTimeout(next, INTRO_FADE_OUT_MS);
     }
   }, [finish, index, leaving, reduced]);
-
-  useEffect(() => {
-    if (reduced !== false || leaving) return;
-    const timer = setTimeout(advance, INTRO_FADE_IN_MS + INTRO_HOLD_MS);
-    return () => clearTimeout(timer);
-  }, [advance, leaving, reduced]);
 
   return (
     <div className="mx-auto flex h-dvh w-full max-w-xl flex-col px-6 pt-[max(1.25rem,env(safe-area-inset-top))]">

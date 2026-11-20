@@ -75,6 +75,7 @@ export function QuestionBox({ topicSlug, onResults }: { topicSlug?: string; onRe
       onChange={(e) => { setBody(e.target.value); if (state !== "sending") setState("idle"); }} />
     <div className="flex flex-wrap items-center gap-4">
       <Button onClick={send} disabled={!body.trim() || paused || state === "sending"}>{QUESTION_SEND}</Button>
+      {state === "sending" && <p role="status" className="text-muted-foreground">Finding ideas that relate</p>}
       {state === "error" && <p role="alert" className="text-destructive">{QUESTION_ERROR}</p>}
     </div>
     <StarterQuestions />

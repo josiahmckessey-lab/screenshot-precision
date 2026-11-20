@@ -16,13 +16,15 @@ describe("Welcome sequence", () => {
     expect(INTRO_COMPLETED_KEY).toBe("daybreak-intro-v1");
   });
 
-  it("finishes after three 600ms fades, 2200ms holds and 400ms exits", () => {
+  it("never auto advances and finishes after three Next taps with 400ms exits", () => {
     vi.useFakeTimers();
     const finish = vi.fn();
     render(<WelcomeIntro onFinish={finish} />);
+    act(() => vi.advanceTimersByTime(30000));
+    expect(finish).not.toHaveBeenCalled();
     for (let i = 0; i < 3; i++) {
-      act(() => vi.advanceTimersByTime(2800));
-      expect(finish).not.toHaveBeenCalled();
+      fireEvent.click(screen.getByRole("button", { name: "Next" }));
+      if (i < 2) expect(finish).not.toHaveBeenCalled();
       act(() => vi.advanceTimersByTime(400));
     }
     expect(finish).toHaveBeenCalledTimes(1);
