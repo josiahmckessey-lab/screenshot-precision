@@ -3,12 +3,12 @@
 @import "tw-animate-css";
 @import "@fontsource/atkinson-hyperlegible/400.css";
 @import "@fontsource/atkinson-hyperlegible/700.css";
-@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/literata";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-display: "Literata Variable", ui-serif, Georgia, serif;
   --font-sans: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -41,6 +41,9 @@
   --color-clay: var(--clay);
   --color-clay-soft: var(--clay-soft);
   --color-sage-soft: var(--sage-soft);
+  --color-crisis: var(--crisis);
+  --color-crisis-foreground: var(--crisis-foreground);
+  --color-overlay: var(--overlay);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -56,50 +59,54 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Calm palette: warm paper, evergreen ink, a touch of clay sunrise. */
+/* Lamplight: dark surfaces and a soft amber glow. */
 :root {
+  color-scheme: dark;
+  --crisis: var(--clay-soft);
+  --crisis-foreground: #FFE9D6;
+  --overlay: #000000;
   --radius: 1rem;
-  --background: oklch(0.968 0.016 85);
-  --foreground: oklch(0.28 0.035 155);
-  --card: oklch(0.988 0.009 85);
-  --card-foreground: oklch(0.28 0.035 155);
-  --popover: oklch(0.988 0.009 85);
-  --popover-foreground: oklch(0.28 0.035 155);
-  --primary: oklch(0.4 0.06 155);
-  --primary-foreground: oklch(0.975 0.014 85);
-  --secondary: oklch(0.935 0.02 120);
-  --secondary-foreground: oklch(0.3 0.04 155);
-  --muted: oklch(0.94 0.017 85);
-  --muted-foreground: oklch(0.47 0.025 150);
-  --accent: oklch(0.93 0.035 60);
-  --accent-foreground: oklch(0.36 0.07 45);
-  --clay: oklch(0.64 0.12 45);
-  --clay-soft: oklch(0.93 0.035 60);
-  --sage-soft: oklch(0.93 0.025 145);
-  --destructive: oklch(0.55 0.17 30);
-  --destructive-foreground: oklch(0.975 0.014 85);
-  --border: oklch(0.885 0.02 85);
-  --input: oklch(0.87 0.022 85);
-  --ring: oklch(0.55 0.06 155);
+  --background: #14202B;
+  --foreground: #F1E8D6;
+  --card: #1D2E3D;
+  --card-foreground: #F1E8D6;
+  --popover: #1D2E3D;
+  --popover-foreground: #F1E8D6;
+  --primary: #E8B15D;
+  --primary-foreground: #14202B;
+  --secondary: #1D2E3D;
+  --secondary-foreground: #F1E8D6;
+  --muted: #1D2E3D;
+  --muted-foreground: #B7B9B3;
+  --accent: #2A3E50;
+  --accent-foreground: #F1E8D6;
+  --clay: #E8B15D;
+  --clay-soft: #6B2A1E;
+  --sage-soft: #1D2E3D;
+  --destructive: #E8B15D;
+  --destructive-foreground: #14202B;
+  --border: #33475A;
+  --input: #4A5B6A;
+  --ring: #E8B15D;
   --chart-1: oklch(0.64 0.12 45);
   --chart-2: oklch(0.5 0.06 155);
   --chart-3: oklch(0.7 0.06 120);
   --chart-4: oklch(0.8 0.08 80);
   --chart-5: oklch(0.45 0.04 200);
-  --sidebar: oklch(0.968 0.016 85);
-  --sidebar-foreground: oklch(0.28 0.035 155);
-  --sidebar-primary: oklch(0.4 0.06 155);
-  --sidebar-primary-foreground: oklch(0.975 0.014 85);
-  --sidebar-accent: oklch(0.94 0.017 85);
-  --sidebar-accent-foreground: oklch(0.28 0.035 155);
-  --sidebar-border: oklch(0.885 0.02 85);
-  --sidebar-ring: oklch(0.55 0.06 155);
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
 
   --shadow-soft: 0 1px 2px color-mix(in oklab, var(--foreground) 6%, transparent),
     0 12px 32px -16px color-mix(in oklab, var(--foreground) 18%, transparent);
-  --gradient-dawn: radial-gradient(
+  --gradient-lamplight: radial-gradient(
     120% 70% at 50% 0%,
-    color-mix(in oklab, var(--clay) 14%, transparent) 0%,
+    color-mix(in oklab, var(--primary) 8%, transparent) 0%,
     transparent 60%
   );
 }
@@ -116,7 +123,7 @@
 
   body {
     background-color: var(--color-background);
-    background-image: var(--gradient-dawn);
+    background-image: var(--gradient-lamplight);
     background-repeat: no-repeat;
     color: var(--color-foreground);
     font-family: var(--font-sans);

@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Apply Lamplight colors and locally hosted Literata headings only; replaced fixed black overlays in dialog, alert dialog, sheet and drawer with a semantic token, verified all 27 pages and phone layouts, text contrast, confidence labels, question box, crisis controls and local font requests; 28 tests passed.
+
 - [x] Add Privacy page and footer/About/form-notice links without changing existing notices; verified phone/desktop, crisis panel and 34 tests.
 - [x] Turn off visitor counting with approval and restore exact supplied Privacy wording. Automatic 12-month deletion was not verified or changed in this page-only request.
 

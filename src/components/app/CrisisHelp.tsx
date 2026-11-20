@@ -15,7 +15,7 @@ export function CrisisPanel({ text = CRISIS_TEXT }: { text?: string }) {
   return (
     <section
       aria-label="Crisis help"
-      className="space-y-4 border-l-4 border-clay bg-clay-soft p-5 text-foreground"
+      className="space-y-4 border-l-4 border-clay bg-crisis p-5 text-crisis-foreground"
     >
       <p className="text-lg leading-relaxed">{text}</p>
       <div className="flex flex-wrap gap-2">
@@ -60,7 +60,7 @@ export function CrisisButton() {
 
   return (
     <>
-      <Button variant="quiet" onClick={() => change(true)} className="h-11 px-3">
+      <Button variant="crisis" onClick={() => change(true)} className="h-11 px-3">
         <Phone />
         Crisis help
       </Button>
