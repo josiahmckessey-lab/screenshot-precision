@@ -1,5 +1,5 @@
 import { useServerFn } from "@tanstack/react-start";
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { CrisisPanel } from "@/components/app/CrisisHelp";
 import { StarterQuestions } from "@/components/app/StarterQuestions";
@@ -67,7 +67,10 @@ export function QuestionBox({ topicSlug, onResults }: { topicSlug?: string; onRe
 
   return <div className="space-y-4">
     {crisis && <CrisisPanel text={QUESTION_CRISIS_TEXT} />}
-    <p className="text-base text-muted-foreground">{QUESTION_NOTICE}</p>
+    <div className="space-y-1">
+      <p className="text-base text-muted-foreground">{QUESTION_NOTICE}</p>
+      <Link to="/privacy" className="text-sm text-muted-foreground underline underline-offset-4">How this is handled</Link>
+    </div>
     <Textarea ref={textarea} aria-label={topicSlug ? QUESTION_TOPIC_TITLE : QUESTION_TITLE} value={body} maxLength={2000} rows={4} className="text-lg"
       onChange={(e) => { setBody(e.target.value); if (state !== "sending") setState("idle"); }} />
     <div className="flex flex-wrap items-center gap-4">

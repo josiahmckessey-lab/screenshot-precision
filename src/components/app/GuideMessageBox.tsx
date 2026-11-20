@@ -1,4 +1,5 @@
 import { useServerFn } from "@tanstack/react-start";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -50,7 +51,10 @@ export function GuideMessageBox() {
 
   return <section id="message-box" className="scroll-mt-6 space-y-4">
     <h2 className="text-2xl">{GUIDE_MESSAGE_TITLE}</h2>
-    <p className="text-base leading-relaxed text-muted-foreground">{GUIDE_MESSAGE_NOTICE}</p>
+    <div className="space-y-1">
+      <p className="text-base leading-relaxed text-muted-foreground">{GUIDE_MESSAGE_NOTICE}</p>
+      <Link to="/privacy" className="text-sm text-muted-foreground underline underline-offset-4">How this is handled</Link>
+    </div>
     {crisis && <CrisisPanel text={QUESTION_CRISIS_TEXT} />}
     {received ? <p role="status" className="text-lg">{GUIDE_RECEIVED}</p> : <form noValidate className="space-y-4" onSubmit={(e) => { e.preventDefault(); void submit(); }}>
       <div className="space-y-2">

@@ -41,6 +41,7 @@ function AboutPage() {
         <section id="wellbeing" className="scroll-mt-4 space-y-5">
           <h2 className="text-3xl">{RESEARCH_HEADING}</h2>
           <p className="text-lg leading-relaxed">{RESEARCH_TEXT}</p>
+          <Link to="/privacy" className="underline underline-offset-4">Privacy</Link>
         </section>
         <section className="space-y-3 rounded-2xl border bg-card p-5 text-card-foreground">
           <h2 className="text-2xl">For readers who want the theological grounding</h2>

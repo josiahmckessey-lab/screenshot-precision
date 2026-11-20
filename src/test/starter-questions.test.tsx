@@ -9,8 +9,8 @@ vi.mock("@tanstack/react-start", () => ({ useServerFn: () => actions.sorter }));
 vi.mock("@tanstack/react-router", () => ({
   useNavigate: () => actions.navigate,
   useLocation: () => "/",
-  Link: ({ params, children }: { params: { slug: string }; children: ReactNode }) =>
-    <a href={`/topic/${params.slug}`} onClick={(event) => event.preventDefault()}>{children}</a>,
+  Link: ({ to, params, children }: { to: string; params?: { slug: string }; children: ReactNode }) =>
+    <a href={params ? `/topic/${params.slug}` : to} onClick={(event) => event.preventDefault()}>{children}</a>,
 }));
 vi.mock("@/lib/match-topics.functions", () => ({ match_topics: vi.fn() }));
 vi.mock("@/integrations/supabase/client", () => ({
@@ -64,7 +64,7 @@ describe("Starter question behavior", () => {
     render(<QuestionBox {...(topicSlug ? { topicSlug } : {})} />);
     const input = screen.getByRole("textbox");
     fireEvent.change(input, { target: { value: "An edited question" } });
-    const examples = screen.getAllByRole("link");
+    const examples = screen.getAllByRole("link").filter((link) => link.getAttribute("href")?.startsWith("/topic/"));
     expect(examples).toHaveLength(4);
     const example = examples[0];
     if (!example) throw new Error("No example rendered");

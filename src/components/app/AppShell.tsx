@@ -27,6 +27,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <footer className="flex flex-wrap gap-x-6 gap-y-3 pt-8 text-base">
         <Link to="/about" className="underline underline-offset-4">About</Link>
         <Link to="/safety" className="underline underline-offset-4">Safety</Link>
+        <Link to="/privacy" className="underline underline-offset-4">Privacy</Link>
         <Link to="/guide" className="underline underline-offset-4">Find a guide</Link>
         <Link to="/about" hash="wellbeing" className="underline underline-offset-4">{RESEARCH_LINK}</Link>
       </footer>

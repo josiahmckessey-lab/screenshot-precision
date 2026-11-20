@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Add Privacy page and footer/About/form-notice links without changing existing notices; verified phone/desktop, crisis panel and 34 tests.
+- [ ] Finalize exact no-analytics Privacy wording: waiting for the visitor-counting choice; current page accurately discloses enabled counting. Automatic 12-month deletion was not verified or changed in this page-only request.
+
 - [x] Apply wellbeing-library wording and adult descriptions; verified all 26 content pages, installed description and About anchor, preserved question/guide/About privacy copy, and listed unchanged research occurrences.
 
 - [x] Apply exact research-project wording, welcome and preview tagline, shared research footer link, About anchor, feedback labels, reply-time and error text; verified desktop home, research anchor scroll, installed description, seven phone page footers/crisis buttons without overflow, and 25 focused tests.
