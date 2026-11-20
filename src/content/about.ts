@@ -1,7 +1,9 @@
 import { APP_NAME } from "@/lib/brand";
 
 export const WELCOME_HEADING = `Welcome to ${APP_NAME}`;
-export const WELCOME_TEXT = "A person is one whole creature, not a pile of separate parts. Body, mind, memory, and meaning move together, and change happens in the whole of a person, one small choice at a time. This library explains those ideas through pictures and plain sentences. Begin with a question below, or browse the topics.";
+export const WELCOME_TEXT = "A person is one whole creature, not a pile of separate parts. Body, mind, memory, and meaning move together, and change happens in the whole of a person, one small choice at a time. This quiet library gathers those ideas, each one an image to carry and a door to go deeper. Begin with a question below, or browse the topics.";
+export const RESEARCH_HEADING = "A research project";
+export const RESEARCH_TEXT = "The Gift is a research project in development. It is not a standalone source of help or guidance, and it is not professional care, crisis care, or medical advice. It exists so that people can read, engage with, and give feedback on a model of change, and so that the model can be reviewed and improved over time. Questions, messages, and feedback are saved and read by a person later. Names and accounts are never asked for. An email address is kept only when someone chooses to leave one for a reply. Anyone may stop using it at any time.";
 export const ABOUT_HEADING = "About";
 export const ABOUT_INTRO_HEADING = "What this is";
 export const ABOUT_PARAGRAPHS = [

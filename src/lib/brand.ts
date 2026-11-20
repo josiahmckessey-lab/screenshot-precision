@@ -2,7 +2,10 @@
 // Banned words (see src/test/product-rules.test.ts) must never appear in user-facing text.
 // No first- or second-person words in app text: write "a person" and "people".
 export const APP_NAME = "The Gift";
-export const APP_TAGLINE = "A quiet library for a hard day.";
+export const APP_TAGLINE = "A quiet library of ideas about how people change.";
+export const APP_PREVIEW_TITLE = `${APP_NAME}, ${APP_TAGLINE.charAt(0).toLowerCase()}${APP_TAGLINE.slice(1)}`;
+export const RESEARCH_LINK = "About this research project";
+export const RESEARCH_NOTICE = "The Gift is a research project in development, not a standalone source of help.";
 
 export const CRISIS_TEXT =
   "For someone in danger, call or text 988 (Suicide and Crisis Lifeline). For immediate danger, call 911.";
@@ -13,7 +16,7 @@ export const AGE_STOP = "This library is only for adults, 18 and older.";
 export const AGE_ACCEPTED_KEY = "daybreak-adult-v1";
 
 export const ABOUT_TEXT =
-  "This library is a collection of pictures and plain explanations drawn from one model of change. It is not professional care, not crisis care, and not medical advice. Questions left in the question box are saved without names or accounts and are read by a person later, not right away.";
+  "This library is a collection of ideas drawn from one model of change. It is not professional care, not crisis care, and not medical advice. Questions left in the question box are saved without names or accounts and are read by a person later, not right away.";
 
 export const TOPIC_PICTURE_LABEL = "The picture";
 export const TOPIC_SENTENCE_LABEL = "In one sentence";
@@ -44,11 +47,11 @@ export const QUESTION_START_OVER = "Start over";
 export const ASK_ANOTHER_QUESTION = "Ask another question";
 export const BACK_TO_IDEAS = "Back to the ideas";
 export const NEED_MORE_TITLE = "Need more than this?";
-export const NEED_MORE_TEXT = "If this is not enough, a message can go straight to Josiah, a guide.";
+export const NEED_MORE_TEXT = "If this is not enough, or if there is feedback to share, a message can go straight to Josiah, a guide.";
 export const MESSAGE_GUIDE = "Message a guide";
 export const GUIDE_MESSAGE_LABEL = "Message";
-export const GUIDE_MESSAGE_TITLE = "Send a message to Josiah, a guide";
-export const GUIDE_MESSAGE_PLACEHOLDER = "A message, in a few words or a few paragraphs.";
+export const GUIDE_MESSAGE_TITLE = "Send a message or feedback to Josiah, a guide";
+export const GUIDE_MESSAGE_PLACEHOLDER = "A message or feedback, in a few words or a few paragraphs.";
 export const GUIDE_REPLY_LABEL = "An email address, only if a reply is wanted";
 export const GUIDE_INCLUDE_LABEL = "Include the last question asked in the library";
 export const GUIDE_MESSAGE_NOTICE = "Messages are sent to a person, who reads them later, not right away. Replies may take a few days. Not for emergencies. For someone in danger, call or text 988. For immediate danger, call 911. An email address is used only to reply and is never shown anywhere else.";
@@ -69,6 +72,6 @@ export const GUIDE_PHONE = "(407) 243-8448";
 export const GUIDE_PHONE_HREF = "tel:+14072438448";
 export const GUIDE_EMAIL = "JosiahMcKessey@proton.me";
 export const GUIDE_EMAIL_HREF = "mailto:JosiahMcKessey@proton.me";
-export const GUIDE_HOURS = "Will respond when the message is seen. Every message is read ahead of everything else.";
+export const GUIDE_HOURS = "Replies to calls, texts, and messages may take a few days.";
 export const GUIDE_CRISIS_TEXT =
   "If someone is in danger, call or text 988. For immediate danger, call 911.";

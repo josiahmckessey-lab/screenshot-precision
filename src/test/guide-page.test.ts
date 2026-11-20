@@ -35,7 +35,7 @@ describe("Guide page", () => {
     expect(GUIDE_EMAIL).toBe("JosiahMcKessey@proton.me");
     expect(GUIDE_EMAIL_HREF).toBe("mailto:JosiahMcKessey@proton.me");
     expect(GUIDE_HOURS).toBe(
-      "Will respond when the message is seen. Every message is read ahead of everything else.",
+      "Replies to calls, texts, and messages may take a few days.",
     );
     expect(guideSource).toContain("GUIDE_PHONE_HREF");
     expect(guideSource).toContain("GUIDE_EMAIL_HREF");

@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Apply exact research-project wording, welcome and preview tagline, shared research footer link, About anchor, feedback labels, reply-time and error text; verified desktop home, research anchor scroll, installed description, seven phone page footers/crisis buttons without overflow, and 25 focused tests.
+
 - [x] Turn starter questions into mapped topic links with four quiet examples and shuffle; verified home, topic and ideas browser-back restoration on desktop/phone without sending or storage writes, plus 19 focused tests.
 
 - [x] Rename question headings and add four random, editable starter questions to every question box, with different examples and no send/save on selection; verified home, topics and ideas on phone, desktop rendering, no storage writes or sends on selection, and 16 tests passing.

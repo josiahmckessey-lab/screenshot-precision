@@ -4,7 +4,7 @@ import { AppShell } from "@/components/app/AppShell";
 import { APP_NAME, MESSAGE_GUIDE, NEED_MORE_TITLE } from "@/lib/brand";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { ABOUT_HEADING, ABOUT_INTRO_HEADING, ABOUT_PARAGRAPHS, ABOUT_GUIDE_TEXT, FRAMEWORK_HEADING, FRAMEWORK_INTRO, FRAMEWORK_PARTS } from "@/content/about";
+import { ABOUT_HEADING, ABOUT_INTRO_HEADING, ABOUT_PARAGRAPHS, ABOUT_GUIDE_TEXT, FRAMEWORK_HEADING, FRAMEWORK_INTRO, FRAMEWORK_PARTS, RESEARCH_HEADING, RESEARCH_TEXT } from "@/content/about";
 
 export const Route = createFileRoute("/about")({
   loader: async () => {
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/about")({
       { title: `About — ${APP_NAME}` },
       { name: "description", content: "What this library is, and what it is not." },
       { property: "og:title", content: `About — ${APP_NAME}` },
-      { property: "og:description", content: "Pictures and plain explanations drawn from one model of change." },
+      { property: "og:description", content: "Ideas drawn from one model of change." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -37,6 +37,10 @@ function AboutPage() {
         <section className="space-y-5">
           <h2 className="text-3xl">{ABOUT_INTRO_HEADING}</h2>
           {ABOUT_PARAGRAPHS.map((paragraph) => <p key={paragraph} className="text-lg leading-relaxed">{paragraph}</p>)}
+        </section>
+        <section id="research" className="scroll-mt-4 space-y-5">
+          <h2 className="text-3xl">{RESEARCH_HEADING}</h2>
+          <p className="text-lg leading-relaxed">{RESEARCH_TEXT}</p>
         </section>
         <section className="space-y-3 rounded-2xl border bg-card p-5 text-card-foreground">
           <h2 className="text-2xl">For readers who want the theological grounding</h2>

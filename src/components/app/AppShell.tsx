@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-import { APP_NAME } from "@/lib/brand";
+import { APP_NAME, RESEARCH_LINK } from "@/lib/brand";
 import { CrisisButton } from "./CrisisHelp";
 
 export function Wordmark() {
@@ -24,10 +24,11 @@ export function AppShell({ children }: { children: ReactNode }) {
         <CrisisButton />
       </header>
       <main className="flex flex-1 flex-col">{children}</main>
-      <footer className="flex gap-6 pt-8 text-base">
+      <footer className="flex flex-wrap gap-x-6 gap-y-3 pt-8 text-base">
         <Link to="/about" className="underline underline-offset-4">About</Link>
         <Link to="/safety" className="underline underline-offset-4">Safety</Link>
         <Link to="/guide" className="underline underline-offset-4">Find a guide</Link>
+        <Link to="/about" hash="research" className="underline underline-offset-4">{RESEARCH_LINK}</Link>
       </footer>
     </div>
   );
