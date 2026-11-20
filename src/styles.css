@@ -44,6 +44,8 @@
   --color-crisis: var(--crisis);
   --color-crisis-foreground: var(--crisis-foreground);
   --color-overlay: var(--overlay);
+  --color-lamp-stem: var(--lamp-stem);
+  --color-lamp-book: var(--lamp-book);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -59,35 +61,37 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Lamplight: dark surfaces and a soft amber glow. */
+/* Hearth: warm surfaces and a soft amber glow. */
 :root {
   color-scheme: dark;
   --crisis: var(--clay-soft);
   --crisis-foreground: #FFE9D6;
   --overlay: #000000;
-  --radius: 1rem;
-  --background: #14202B;
-  --foreground: #F1E8D6;
-  --card: #1D2E3D;
-  --card-foreground: #F1E8D6;
-  --popover: #1D2E3D;
-  --popover-foreground: #F1E8D6;
-  --primary: #E8B15D;
-  --primary-foreground: #14202B;
-  --secondary: #1D2E3D;
-  --secondary-foreground: #F1E8D6;
-  --muted: #1D2E3D;
-  --muted-foreground: #B7B9B3;
-  --accent: #2A3E50;
-  --accent-foreground: #F1E8D6;
-  --clay: #E8B15D;
-  --clay-soft: #6B2A1E;
-  --sage-soft: #1D2E3D;
-  --destructive: #E8B15D;
-  --destructive-foreground: #14202B;
-  --border: #33475A;
-  --input: #4A5B6A;
-  --ring: #E8B15D;
+  --radius: 1.25rem;
+  --background: #1B1511;
+  --foreground: #F3E9DA;
+  --card: #271D17;
+  --card-foreground: #F3E9DA;
+  --popover: #271D17;
+  --popover-foreground: #F3E9DA;
+  --primary: #E9A94E;
+  --primary-foreground: #1B1511;
+  --secondary: #271D17;
+  --secondary-foreground: #F3E9DA;
+  --muted: #271D17;
+  --muted-foreground: #C2B4A3;
+  --accent: #33261D;
+  --accent-foreground: #F3E9DA;
+  --clay: #E9A94E;
+  --clay-soft: #6E2B1F;
+  --sage-soft: #271D17;
+  --destructive: var(--primary);
+  --destructive-foreground: var(--primary-foreground);
+  --border: #3A2C22;
+  --input: #4B3A2D;
+  --ring: #E9A94E;
+  --lamp-stem: #C98C36;
+  --lamp-book: #2F241C;
   --chart-1: oklch(0.64 0.12 45);
   --chart-2: oklch(0.5 0.06 155);
   --chart-3: oklch(0.7 0.06 120);

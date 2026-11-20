@@ -3,12 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { AGE_ACCEPTED_KEY, AGE_LABEL, AGE_STOP, AGE_TEXT } from "@/lib/brand";
 import { canContinueAge } from "@/lib/age-gate";
+import { LampIllustration } from "./LampIllustration";
 
 export function AgeScreen({ onContinue }: { onContinue: () => void }) {
   const [checked, setChecked] = useState(false);
   const [attempted, setAttempted] = useState(false);
   return (
     <section className="fade-up flex flex-1 flex-col justify-center gap-8 py-10">
+      <LampIllustration />
       <h1 className="text-4xl">{AGE_TEXT}</h1>
       <label className="flex cursor-pointer items-center gap-4 text-lg">
         <Checkbox

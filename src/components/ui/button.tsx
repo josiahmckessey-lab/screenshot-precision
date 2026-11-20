@@ -29,6 +29,9 @@ const buttonVariants = cva(
         xl: "h-14 w-full rounded-full px-8 text-lg font-semibold [&_svg]:size-5",
       },
     },
+    compoundVariants: [
+      { variant: ["default", "calm"], className: "min-h-[48px] rounded-full" },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",

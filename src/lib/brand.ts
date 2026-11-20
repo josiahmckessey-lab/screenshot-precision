@@ -15,6 +15,8 @@ export const AGE_TEXT = "This library is for adults, 18 and older.";
 export const AGE_LABEL = "18 or older";
 export const AGE_STOP = "This library is only for adults, 18 and older.";
 export const AGE_ACCEPTED_KEY = "daybreak-adult-v1";
+export const LAMP_LABEL = "A lamp glowing on a shelf in a dark room";
+export const HOME_GUIDE_TEXT = "Josiah, a guide, keeps this library. Messages are read in time, and a reply may take a few days.";
 
 export const ABOUT_TEXT =
   "This library is a collection of ideas drawn from one model of change. It is not professional care, not crisis care, and not medical advice. Questions left in the question box are saved without names or accounts and are read by a person later, not right away.";
@@ -25,8 +27,8 @@ export const KNOW_MORE_LABEL = "Want to know more about this?";
 export const DEPTH_TITLES = ["The plain why", "How it works", "Research and roots"] as const;
 export const TRY_LABEL = "One small thing to try";
 export const SCRIPTURE_LABEL = "For readers who want Scripture";
-export const QUESTION_TITLE = "Pose a question";
-export const QUESTION_TOPIC_TITLE = "Pose a question about this topic";
+export const QUESTION_TITLE = "Set a question down here";
+export const QUESTION_TOPIC_TITLE = QUESTION_TITLE;
 export const QUESTION_EXAMPLES_HEADING = "Having trouble thinking of a question? Try a few of these.";
 export const QUESTION_EXAMPLES_SHUFFLE = "Show different examples";
 export const QUESTION_NOTICE =
@@ -38,7 +40,7 @@ export const TOPIC_FOOTER = "This library is not professional care or crisis car
 export const GUIDE_TEXT = "A guide is not professional care and not crisis care.";
 export const QUESTION_CRISIS_TEXT =
   "If someone is in danger, call or text 988 (Suicide and Crisis Lifeline). For immediate danger, call 911.";
-export const QUESTION_SEND = "Send question";
+export const QUESTION_SEND = "Send";
 export const QUESTION_IDEAS_HEADING = "Ideas from the model that relate";
 export const QUESTION_SIT_LABEL = "A question to sit with";
 export const QUESTION_KNOW_MORE = "Know more";

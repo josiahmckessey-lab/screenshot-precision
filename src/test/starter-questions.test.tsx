@@ -96,7 +96,7 @@ describe("Starter question behavior", () => {
     actions.sorter.mockResolvedValue({ ok: true, matches: [1, 4], crisis: false });
     render(<QuestionBox {...(topicSlug ? { topicSlug } : {})} />);
     fireEvent.change(screen.getByRole("textbox"), { target: { value: "A typed question" } });
-    fireEvent.click(screen.getByRole("button", { name: "Send question" }));
+    fireEvent.click(screen.getByRole("button", { name: /^Send$/ }));
     await waitFor(() => expect(actions.navigate).toHaveBeenCalled());
     expect(actions.rpc).toHaveBeenCalledWith("submit_question", { _topic_slug: expectedSlug, _body: "A typed question" });
     expect(actions.insert).not.toHaveBeenCalled();
@@ -107,7 +107,7 @@ describe("Starter question behavior", () => {
     actions.sorter.mockResolvedValue({ ok: true, matches: [], crisis: false });
     render(<QuestionBox />);
     fireEvent.change(screen.getByRole("textbox"), { target: { value: "A typed question" } });
-    fireEvent.click(screen.getByRole("button", { name: "Send question" }));
+    fireEvent.click(screen.getByRole("button", { name: /^Send$/ }));
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent(QUESTION_ERROR));
     expect(actions.navigate).not.toHaveBeenCalled();
     expect(actions.save).not.toHaveBeenCalled();

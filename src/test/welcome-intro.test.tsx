@@ -16,15 +16,15 @@ describe("Welcome sequence", () => {
     expect(INTRO_COMPLETED_KEY).toBe("daybreak-intro-v1");
   });
 
-  it("never auto advances and finishes after three Next taps with 400ms exits", () => {
+  it("never auto advances and finishes after four Next taps with 400ms exits", () => {
     vi.useFakeTimers();
     const finish = vi.fn();
     render(<WelcomeIntro onFinish={finish} />);
     act(() => vi.advanceTimersByTime(30000));
     expect(finish).not.toHaveBeenCalled();
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
       fireEvent.click(screen.getByRole("button", { name: "Next" }));
-      if (i < 2) expect(finish).not.toHaveBeenCalled();
+      if (i < 3) expect(finish).not.toHaveBeenCalled();
       act(() => vi.advanceTimersByTime(400));
     }
     expect(finish).toHaveBeenCalledTimes(1);
@@ -37,7 +37,7 @@ describe("Welcome sequence", () => {
     expect(finish).toHaveBeenCalledTimes(1);
   });
 
-  it("reduced motion never auto advances and Next finishes after three taps", () => {
+  it("reduced motion never auto advances and Next finishes after four taps", () => {
     vi.useFakeTimers();
     vi.spyOn(window, "matchMedia").mockImplementation((query) => ({
       matches: true, media: query, onchange: null,
@@ -48,6 +48,7 @@ describe("Welcome sequence", () => {
     render(<WelcomeIntro onFinish={finish} />);
     act(() => vi.advanceTimersByTime(30000));
     expect(finish).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Next" }));
     fireEvent.click(screen.getByRole("button", { name: "Next" }));
     fireEvent.click(screen.getByRole("button", { name: "Next" }));
     expect(finish).not.toHaveBeenCalled();

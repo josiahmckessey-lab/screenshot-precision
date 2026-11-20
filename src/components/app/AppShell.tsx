@@ -3,11 +3,12 @@ import type { ReactNode } from "react";
 
 import { APP_NAME, RESEARCH_LINK } from "@/lib/brand";
 import { CrisisButton } from "./CrisisHelp";
+import { LampMark } from "./LampIllustration";
 
 export function Wordmark() {
   return (
     <span className="inline-flex items-center gap-2.5">
-      <img src="/icon-192.png" alt="" width={32} height={32} className="size-8 rounded-lg" />
+      <LampMark />
       <span className="font-display text-xl tracking-tight">{APP_NAME}</span>
     </span>
   );
