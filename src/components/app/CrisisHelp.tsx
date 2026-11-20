@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { Phone, MessageCircle, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -10,6 +10,8 @@ import { BACK_TO_LIBRARY, CRISIS_TEXT } from "@/lib/brand";
 const CRISIS_HISTORY_KEY = "crisisHelpOpen";
 
 export function CrisisPanel({ text = CRISIS_TEXT }: { text?: string }) {
+  // The link to the Safety page is pointless once the visitor is already on it.
+  const onSafetyPage = useLocation().pathname === "/safety";
   return (
     <section
       aria-label="Crisis help"
@@ -27,9 +29,11 @@ export function CrisisPanel({ text = CRISIS_TEXT }: { text?: string }) {
           <a href="tel:911"><Phone />Call 911</a>
         </Button>
       </div>
-      <Button asChild variant="link" className="h-auto p-0">
-        <Link to="/safety">Safety page<ArrowUpRight /></Link>
-      </Button>
+      {!onSafetyPage && (
+        <Button asChild variant="link" className="h-auto p-0">
+          <Link to="/safety">Safety page<ArrowUpRight /></Link>
+        </Button>
+      )}
     </section>
   );
 }

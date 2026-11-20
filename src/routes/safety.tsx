@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/app/AppShell";
 import { CrisisPanel } from "@/components/app/CrisisHelp";
-import { APP_DESCRIPTION, APP_NAME } from "@/lib/brand";
+import { APP_DESCRIPTION, APP_NAME, BACK_TO_LIBRARY } from "@/lib/brand";
 
 export const Route = createFileRoute("/safety")({
   head: () => ({
@@ -24,6 +24,7 @@ export const Route = createFileRoute("/safety")({
           number. When it is safe, moving away from immediate danger and reaching out to a trusted
           person can help.
         </p>
+        <Link to="/" className="underline underline-offset-4">{BACK_TO_LIBRARY}</Link>
       </div>
     </AppShell>
   ),
