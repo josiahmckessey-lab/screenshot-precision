@@ -1,7 +1,7 @@
 import { APP_NAME } from "@/lib/brand";
 
 export const WELCOME_HEADING = `Welcome to ${APP_NAME}`;
-export const WELCOME_TEXT = "A person is one whole creature, not a pile of separate parts. Body, mind, memory, and meaning move together, and change happens in the whole of a person, one small choice at a time. This library keeps the ideas of one model of that change as pictures and plain sentences. Begin with a question below, or browse the topics.";
+export const WELCOME_TEXT = "A person is one whole creature, not a pile of separate parts. Body, mind, memory, and meaning move together, and change happens in the whole of a person, one small choice at a time. This library explains those ideas through pictures and plain sentences. Begin with a question below, or browse the topics.";
 export const ABOUT_HEADING = "About";
 export const ABOUT_INTRO_HEADING = "What this is";
 export const ABOUT_PARAGRAPHS = [
