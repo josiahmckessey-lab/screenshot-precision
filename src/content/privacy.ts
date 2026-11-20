@@ -5,7 +5,11 @@ export const PRIVACY_SECTIONS = [
   },
   {
     lead: "What is never asked for.",
-    body: "No names, no accounts, no passwords. The library uses no analytics, no tracking, and no cookies, and loads nothing from advertising or font services. The answer to the 18 or older screen, a count of messages sent, and the last results are kept on the device only.",
+    body: "No names, no accounts, no passwords. The library uses no analytics, no tracking, and no cookies, and loads nothing from advertising or font services.",
+  },
+  {
+    lead: "Kept on the device only.",
+    body: "The answer to the 18 or older screen, a count of messages sent, and the last results stay on the device and are never sent anywhere.",
   },
   {
     lead: "What is never done.",
@@ -17,7 +21,7 @@ export const PRIVACY_SECTIONS = [
   },
   {
     lead: "How long.",
-    body: "Questions and messages are kept for 12 months and then deleted.",
+    body: "Questions and messages are reviewed at least once a year, and older ones are deleted. Email copies of guide messages are cleared from the guide inbox on the same schedule.",
   },
   {
     lead: "Leaving and removal.",
