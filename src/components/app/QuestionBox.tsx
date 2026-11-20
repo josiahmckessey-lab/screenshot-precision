@@ -37,8 +37,14 @@ export function QuestionBox({ topicSlug, onResults }: { topicSlug?: string; onRe
     timer.current = setTimeout(() => setPaused(false), RATE_MS);
     setState("sending");
     try {
-      const { error } = await supabase.from("questions").insert({ body: text, topic_slug: topicSlug ?? null });
+      // Save through the database function so the daily limit is enforced in one place.
+      // The generated types mark _topic_slug as non-null; the function itself accepts null.
+      const { data: savedId, error } = await supabase.rpc("submit_question", {
+        _topic_slug: topicSlug ?? null,
+        _body: text,
+      } as { _body: string; _topic_slug: string });
       if (error) throw error;
+      if (!savedId) throw new Error("question_limit");
       const { data } = await supabase.from("library_pages").select("topic_number").eq("status", "active");
       const result = await askSorter({ data: { text } }).catch(() => null);
       const ideas: IdeasResult = {
