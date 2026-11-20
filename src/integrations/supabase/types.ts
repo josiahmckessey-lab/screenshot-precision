@@ -445,6 +445,10 @@ export type Database = {
         Args: { _body: string; _included_question?: string; _reply_to?: string }
         Returns: string
       }
+      submit_question: {
+        Args: { _body: string; _topic_slug: string }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
