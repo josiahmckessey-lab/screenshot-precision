@@ -17,7 +17,7 @@ export const PRIVACY_SECTIONS = [
   },
   {
     lead: "Where typed text goes.",
-    body: "A typed question is read by an automated sorter, run by an outside AI service, only to pick which topics fit. Messages to a guide are delivered by email through outside services. Hosting is provided by an outside service that may keep ordinary server records.",
+    body: "A typed question is read by an automated sorter, run by Anthropic, only to pick which topics fit. Only the typed question is sent, and nothing else goes with it. Saved questions and messages are stored and hosted by Lovable, which may keep ordinary server records. A message to a guide is delivered by email through Resend and arrives in a Proton inbox, where one person reads it. Each of these services has its own privacy policy covering how it handles what it receives.",
   },
   {
     lead: "How long.",
