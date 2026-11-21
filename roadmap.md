@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Refine home order and lamp size, center the heading, keep only the inline topics link, announce welcome lines, set coral error colors and black iPhone status bar; all 64 tests passed, desktop/phone layouts and topics navigation checked, four accessible manual welcome lines and completion verified.
+
 - [x] Apply Hearth colors, pill buttons, lamp illustrations and wordmark, welcome wording and fourth manual intro line, plus the home guide card; all 64 tests passed, phone and desktop screenshots checked, four manual lines and reduced motion verified, topics and guide links followed, crisis colors and numbers checked, theme and manifest confirmed, no overflow or outside font requests.
 
 - [x] Add the one-time post-age welcome sequence with local flags, tap/Skip controls, reduced motion, crisis help and home fade; verified all three lines, automatic completion, new/returning/legacy devices, Skip, crisis panel and reduced motion on phone and desktop; 18 tests passed. Explicit per-line timings total 9.6 seconds before the home fade.

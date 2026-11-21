@@ -85,8 +85,8 @@
   --clay: #E9A94E;
   --clay-soft: #6E2B1F;
   --sage-soft: #271D17;
-  --destructive: var(--primary);
-  --destructive-foreground: var(--primary-foreground);
+  --destructive: #F4A58F;
+  --destructive-foreground: #1B1511;
   --border: #3A2C22;
   --input: #4B3A2D;
   --ring: #E9A94E;

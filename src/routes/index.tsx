@@ -24,9 +24,20 @@ function Home() {
   return (
     <AppShell>
       <section className="fade-up flex flex-col gap-6 py-8">
-        <LampIllustration />
-        <h1 className="text-4xl leading-tight">{WELCOME_HEADING}</h1>
+        <div className="mx-auto w-full max-w-[240px]"><LampIllustration /></div>
+        <h1 className="text-center text-4xl leading-tight">{WELCOME_HEADING}</h1>
         <p className="text-center font-display text-lg leading-relaxed text-primary">{WELCOME_INVITATION}</p>
+        <section className="space-y-3 rounded-2xl border bg-card p-5 text-card-foreground">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{QUESTION_TITLE}</h2>
+          <QuestionBox />
+        </section>
+        <section className="flex items-start gap-4 rounded-lg bg-card p-5 text-card-foreground">
+          <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary font-display text-xl text-primary-foreground">J</span>
+          <div className="space-y-3">
+            <p className="text-base leading-relaxed">{HOME_GUIDE_TEXT}</p>
+            <Link to="/guide" className="text-primary underline underline-offset-4">{FIND_GUIDE}</Link>
+          </div>
+        </section>
         <p className="text-lg leading-relaxed">
           {WELCOME_TEXT.slice(0, -(WELCOME_TOPICS_LABEL.length + 1))}
           <Link to="/about" hash="topics" className="underline underline-offset-4">{WELCOME_TOPICS_LABEL}</Link>.
@@ -35,18 +46,6 @@ function Home() {
           {RESEARCH_NOTICE}{" "}
           <Link to="/about" hash="wellbeing" className="underline underline-offset-4">{RESEARCH_LINK}</Link>
         </p>
-        <Link to="/about" hash="topics" className="text-lg underline underline-offset-4">Browse the topics</Link>
-      </section>
-      <section className="mb-6 flex items-start gap-4 rounded-lg bg-card p-5 text-card-foreground">
-        <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary font-display text-xl text-primary-foreground">J</span>
-        <div className="space-y-3">
-          <p className="text-base leading-relaxed">{HOME_GUIDE_TEXT}</p>
-          <Link to="/guide" className="text-primary underline underline-offset-4">{FIND_GUIDE}</Link>
-        </div>
-      </section>
-      <section className="space-y-3 rounded-2xl border bg-card p-5 text-card-foreground">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{QUESTION_TITLE}</h2>
-        <QuestionBox />
       </section>
     </AppShell>
   );

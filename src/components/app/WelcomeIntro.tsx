@@ -57,13 +57,14 @@ export function WelcomeIntro({ onFinish }: { onFinish: () => void }) {
         <Button
           variant="ghost"
           onClick={advance}
-          aria-label="Next"
           className="h-auto w-full flex-col whitespace-normal rounded-none px-0 py-6 hover:bg-transparent hover:text-foreground"
         >
-          <div key={index} className={`space-y-6 ${reduced ? "" : leaving ? "intro-fade-out" : "intro-fade-in"}`}>
-            <h1 className="font-display text-3xl font-medium leading-relaxed sm:text-4xl">{INTRO_LINES[index]}</h1>
-            <span className="block text-sm font-normal text-muted-foreground">Next</span>
-          </div>
+          <span aria-live="polite" aria-atomic="true">
+            <span key={index} className={`block space-y-6 ${reduced ? "" : leaving ? "intro-fade-out" : "intro-fade-in"}`}>
+              <span className="block font-display text-3xl font-medium leading-relaxed sm:text-4xl">{INTRO_LINES[index]}</span>
+              <span className="block text-sm font-normal text-muted-foreground">Next</span>
+            </span>
+          </span>
         </Button>
       </main>
       <div className="fixed inset-x-0 bottom-0 flex justify-center bg-background px-6 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">

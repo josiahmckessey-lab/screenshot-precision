@@ -23,7 +23,7 @@ describe("Welcome sequence", () => {
     act(() => vi.advanceTimersByTime(30000));
     expect(finish).not.toHaveBeenCalled();
     for (let i = 0; i < 4; i++) {
-      fireEvent.click(screen.getByRole("button", { name: "Next" }));
+      fireEvent.click(screen.getByRole("button", { name: /Next$/ }));
       if (i < 3) expect(finish).not.toHaveBeenCalled();
       act(() => vi.advanceTimersByTime(400));
     }
@@ -48,11 +48,11 @@ describe("Welcome sequence", () => {
     render(<WelcomeIntro onFinish={finish} />);
     act(() => vi.advanceTimersByTime(30000));
     expect(finish).not.toHaveBeenCalled();
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    fireEvent.click(screen.getByRole("button", { name: /Next$/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Next$/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Next$/ }));
     expect(finish).not.toHaveBeenCalled();
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    fireEvent.click(screen.getByRole("button", { name: /Next$/ }));
     expect(finish).toHaveBeenCalledTimes(1);
   });
 });
