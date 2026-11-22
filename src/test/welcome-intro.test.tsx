@@ -5,7 +5,6 @@ import { INTRO_LINES } from "@/content/about";
 import { WELCOME_QUOTE } from "@/lib/brand";
 
 vi.mock("@/components/app/AppShell", () => ({ Wordmark: () => null }));
-vi.mock("@/components/app/CrisisHelp", () => ({ CrisisButton: () => null }));
 import { WelcomeIntro } from "@/components/app/WelcomeIntro";
 
 afterEach(() => { cleanup(); vi.useRealTimers(); vi.restoreAllMocks(); });
@@ -68,5 +67,9 @@ describe("Welcome sequence", () => {
     expect(finish).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole("button", { name: /Next$/ }));
     expect(finish).toHaveBeenCalledTimes(1);
+  });
+  it("shows no Crisis help button", () => {
+    render(<WelcomeIntro onFinish={() => {}} />);
+    expect(screen.queryByRole("button", { name: /crisis help/i })).toBeNull();
   });
 });

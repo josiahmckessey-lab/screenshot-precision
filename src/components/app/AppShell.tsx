@@ -16,7 +16,7 @@ export function Wordmark() {
 }
 
 // Shared safety help stays at the foot of the content, outside the reading lane.
-export function AppShell({ children, hideBack = false }: { children: ReactNode; hideBack?: boolean }) {
+export function AppShell({ children, hideBack = false, hideFooter = false }: { children: ReactNode; hideBack?: boolean; hideFooter?: boolean }) {
   const pathname = useLocation({ select: (location) => location.pathname });
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-xl flex-col px-6 pb-10 pt-[max(1.25rem,env(safe-area-inset-top))]">
@@ -31,6 +31,7 @@ export function AppShell({ children, hideBack = false }: { children: ReactNode; 
           {children}
         </div>
       </main>
+      {!hideFooter && (
       <footer className="space-y-3 pt-10 text-base">
         <div className="flex justify-start"><CrisisButton className="min-h-12" /></div>
         <div className="flex flex-wrap gap-x-6 gap-y-3">
@@ -40,6 +41,7 @@ export function AppShell({ children, hideBack = false }: { children: ReactNode; 
         </div>
         <p className="text-sm text-muted-foreground">{TOPIC_FOOTER}</p>
       </footer>
+      )}
     </div>
   );
 }

@@ -148,7 +148,7 @@ function RootComponent() {
       <InstallHintProvider>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       {gated ? (
-        <AppShell hideBack>{adult === false && <AgeScreen onContinue={() => {
+        <AppShell hideBack hideFooter>{adult === false && <AgeScreen onContinue={() => {
           setAdult(true);
           setIntro(introEligible);
           if (introEligible) void router.navigate({ to: "/" });

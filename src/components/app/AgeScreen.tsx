@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { AGE_ACCEPTED_KEY, AGE_LABEL, AGE_STOP, AGE_TEXT } from "@/lib/brand";
+import { AGE_ACCEPTED_KEY, AGE_LABEL, AGE_STOP, AGE_TEXT, QUESTION_CRISIS_TEXT } from "@/lib/brand";
+import { CrisisPanel } from "./CrisisHelp";
 import { canContinueAge } from "@/lib/age-gate";
 import { LampIllustration } from "./LampIllustration";
 
@@ -22,7 +23,10 @@ export function AgeScreen({ onContinue }: { onContinue: () => void }) {
         {AGE_LABEL}
       </label>
       {attempted && !checked && (
-        <p role="alert" className="text-base text-muted-foreground">{AGE_STOP}</p>
+        <div className="space-y-4">
+          <p role="alert" className="text-base text-muted-foreground">{AGE_STOP}</p>
+          <CrisisPanel text={QUESTION_CRISIS_TEXT} />
+        </div>
       )}
       <Button
         variant="calm"

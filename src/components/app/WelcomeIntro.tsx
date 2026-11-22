@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Wordmark } from "@/components/app/AppShell";
-import { CrisisButton } from "@/components/app/CrisisHelp";
 import { Button } from "@/components/ui/button";
 import { INTRO_LINES } from "@/content/about";
 import { INTRO_FADE_OUT_MS } from "@/lib/welcome-intro";
@@ -68,7 +67,6 @@ export function WelcomeIntro({ onFinish }: { onFinish: () => void }) {
       </main>
       <div className="flex shrink-0 flex-col items-center gap-3 pt-3">
         <Button variant="link" onClick={finish} className="h-12 min-h-11 px-8 text-base">Skip</Button>
-        <CrisisButton className="min-h-12" />
       </div>
     </div>
   );
