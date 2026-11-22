@@ -10,10 +10,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { PART_BY_TOPIC } from "@/content/about";
 import { APP_DESCRIPTION,
   APP_NAME, BACK_TO_IDEAS, DEPTH_TITLES, FIND_GUIDE, KNOW_MORE_LABEL, QUESTION_TOPIC_TITLE, SCRIPTURE_LABEL,
+  SCRIPTURE_MORE_LABEL, SCRIPTURE_VERSE_LABEL, SCRIPTURE_WHY_LABEL,
   TOPIC_FOOTER, TOPIC_PICTURE_LABEL, TOPIC_SENTENCE_LABEL, TRY_LABEL,
 } from "@/lib/brand";
 
-type ScriptureItem = { heading: string; verse: string; reference: string };
+type ScriptureItem = { heading: string; verse: string; reference: string; explanation?: string };
 
 async function loadTopic(slug: string) {
   const { data, error } = await supabase
@@ -28,7 +29,10 @@ async function loadTopic(slug: string) {
     ? (data.scripture as unknown[]).flatMap((s) => {
         const o = s as Partial<ScriptureItem> | null;
         return o && typeof o.verse === "string"
-          ? [{ heading: String(o.heading ?? ""), verse: o.verse, reference: String(o.reference ?? "") }]
+          ? [{
+              heading: String(o.heading ?? ""), verse: o.verse, reference: String(o.reference ?? ""),
+              ...(typeof o.explanation === "string" ? { explanation: o.explanation } : {}),
+            }]
           : [];
       })
     : [];
@@ -93,6 +97,58 @@ function Md({ text }: { text: string }) {
   return <Streamdown className="prose-text space-y-4 text-lg leading-relaxed [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6">{text}</Streamdown>;
 }
 
+function VerseBlock({ s }: { s: ScriptureItem }) {
+  return (
+    <div className="space-y-2">
+      {s.heading && <p className="font-bold">{s.heading}</p>}
+      <blockquote className="whitespace-pre-line border-l-4 pl-4 text-lg italic">{s.verse}</blockquote>
+      <p className="text-muted-foreground">{s.reference}</p>
+    </div>
+  );
+}
+
+function ScriptureSection({ items }: { items: ScriptureItem[] }) {
+  const [moreOpen, setMoreOpen] = useState(false);
+  if (items.length === 0) return null;
+  const first = items[0];
+  if (!first) return null;
+
+  if (typeof first.explanation !== "string") {
+    return (
+      <Collapsible className="rounded-2xl border p-5">
+        <CollapsibleTrigger className="w-full text-left text-lg font-semibold underline-offset-4 hover:underline">
+          {SCRIPTURE_LABEL}
+        </CollapsibleTrigger>
+        <CollapsibleContent className="space-y-6 pt-4">
+          {items.map((s, i) => <VerseBlock key={i} s={s} />)}
+        </CollapsibleContent>
+      </Collapsible>
+    );
+  }
+
+  const rest = items.slice(1);
+  return (
+    <div className="space-y-2">
+      <Card label={SCRIPTURE_VERSE_LABEL}>
+        <blockquote className="whitespace-pre-line border-l-4 pl-4 text-lg italic">{first.verse}</blockquote>
+        <p className="text-muted-foreground">{first.reference}</p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{SCRIPTURE_WHY_LABEL}</p>
+        <p className="text-lg leading-relaxed">{first.explanation}</p>
+      </Card>
+      {rest.length > 0 && (
+        <Collapsible open={moreOpen} onOpenChange={setMoreOpen}>
+          <CollapsibleTrigger className="min-h-11 text-base underline underline-offset-4">
+            {SCRIPTURE_MORE_LABEL}
+          </CollapsibleTrigger>
+          <CollapsibleContent className="space-y-6 pt-2">
+            {rest.map((s, i) => <VerseBlock key={i} s={s} />)}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
+    </div>
+  );
+}
+
 function TopicPage() {
   const t = Route.useLoaderData();
   const [depth, setDepth] = useState(0);
@@ -127,22 +183,7 @@ function TopicPage() {
         )}
         {depth === 0 && tryCard}
 
-        {t.scripture.length > 0 && (
-          <Collapsible className="rounded-2xl border p-5">
-            <CollapsibleTrigger className="w-full text-left text-lg font-semibold underline-offset-4 hover:underline">
-              {SCRIPTURE_LABEL}
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-6 pt-4">
-              {t.scripture.map((s, i) => (
-                <div key={i} className="space-y-2">
-                  {s.heading && <p className="font-bold">{s.heading}</p>}
-                  <blockquote className="whitespace-pre-line border-l-4 pl-4 text-lg italic">{s.verse}</blockquote>
-                  <p className="text-muted-foreground">{s.reference}</p>
-                </div>
-              ))}
-            </CollapsibleContent>
-          </Collapsible>
-        )}
+        <ScriptureSection items={t.scripture} />
 
         <Card label={QUESTION_TOPIC_TITLE}><QuestionBox topicSlug={t.slug} /></Card>
 
