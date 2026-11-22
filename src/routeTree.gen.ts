@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AskRouteImport } from './routes/ask'
+import { Route as ExamplesRouteImport } from './routes/examples'
 import { Route as GuideRouteImport } from './routes/guide'
 import { Route as IdeasRouteImport } from './routes/ideas'
 import { Route as InstallRouteImport } from './routes/install'
@@ -36,6 +37,11 @@ const AboutRoute = AboutRouteImport.update({
 const AskRoute = AskRouteImport.update({
   id: '/ask',
   path: '/ask',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExamplesRoute = ExamplesRouteImport.update({
+  id: '/examples',
+  path: '/examples',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuideRoute = GuideRouteImport.update({
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/ask': typeof AskRoute
+  '/examples': typeof ExamplesRoute
   '/guide': typeof GuideRoute
   '/ideas': typeof IdeasRoute
   '/install': typeof InstallRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/ask': typeof AskRoute
+  '/examples': typeof ExamplesRoute
   '/guide': typeof GuideRoute
   '/ideas': typeof IdeasRoute
   '/install': typeof InstallRoute
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/ask': typeof AskRoute
+  '/examples': typeof ExamplesRoute
   '/guide': typeof GuideRoute
   '/ideas': typeof IdeasRoute
   '/install': typeof InstallRoute
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/ask'
+    | '/examples'
     | '/guide'
     | '/ideas'
     | '/install'
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/ask'
+    | '/examples'
     | '/guide'
     | '/ideas'
     | '/install'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/ask'
+    | '/examples'
     | '/guide'
     | '/ideas'
     | '/install'
@@ -187,6 +199,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AskRoute: typeof AskRoute
+  ExamplesRoute: typeof ExamplesRoute
   GuideRoute: typeof GuideRoute
   IdeasRoute: typeof IdeasRoute
   InstallRoute: typeof InstallRoute
@@ -220,6 +233,13 @@ declare module '@tanstack/react-router' {
       path: '/ask'
       fullPath: '/ask'
       preLoaderRoute: typeof AskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/examples': {
+      id: '/examples'
+      path: '/examples'
+      fullPath: '/examples'
+      preLoaderRoute: typeof ExamplesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guide': {
@@ -299,6 +319,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AskRoute: AskRoute,
+  ExamplesRoute: ExamplesRoute,
   GuideRoute: GuideRoute,
   IdeasRoute: IdeasRoute,
   InstallRoute: InstallRoute,

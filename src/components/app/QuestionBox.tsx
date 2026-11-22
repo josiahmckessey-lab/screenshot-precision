@@ -2,11 +2,11 @@ import { useServerFn } from "@tanstack/react-start";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { CrisisPanel } from "@/components/app/CrisisHelp";
-import { StarterQuestions } from "@/components/app/StarterQuestions";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
-import { QUESTION_CRISIS_TEXT, QUESTION_ERROR, QUESTION_NOTICE, QUESTION_SEND, QUESTION_TITLE, QUESTION_TOPIC_TITLE } from "@/lib/brand";
+import { QUESTION_CRISIS_TEXT, QUESTION_ERROR, QUESTION_EXAMPLES_LINK, QUESTION_SEND, QUESTION_TITLE, QUESTION_TOPIC_TITLE } from "@/lib/brand";
 import { saveIdeas, type IdeasResult } from "@/lib/ideas-session";
 import { match_topics } from "@/lib/match-topics.functions";
 import { canSend, hasCrisisPhrase, RATE_MS } from "@/lib/question-match";
@@ -67,10 +67,7 @@ export function QuestionBox({ topicSlug, onResults }: { topicSlug?: string; onRe
 
   return <div className="space-y-4">
     {crisis && <CrisisPanel text={QUESTION_CRISIS_TEXT} />}
-    <div className="space-y-1">
-      <p className="text-base text-muted-foreground">{QUESTION_NOTICE}</p>
-      <Link to="/privacy" className="text-sm text-muted-foreground underline underline-offset-4">How this is handled</Link>
-    </div>
+    <Link to="/privacy" className="text-sm text-muted-foreground underline underline-offset-4">How this is handled</Link>
     <Textarea ref={textarea} aria-label={topicSlug ? QUESTION_TOPIC_TITLE : QUESTION_TITLE} value={body} maxLength={2000} rows={4} className="text-lg"
       onChange={(e) => { setBody(e.target.value); if (state !== "sending") setState("idle"); }} />
     <div className="flex flex-wrap items-center gap-4">
@@ -78,6 +75,8 @@ export function QuestionBox({ topicSlug, onResults }: { topicSlug?: string; onRe
       {state === "sending" && <p role="status" className="text-muted-foreground">Finding ideas that relate</p>}
       {state === "error" && <p role="alert" className="text-destructive">{QUESTION_ERROR}</p>}
     </div>
-    <StarterQuestions />
+    <Link to="/examples" className="flex min-h-12 items-center justify-between gap-3 py-2 text-sm leading-relaxed text-muted-foreground underline underline-offset-4">
+      <span>{QUESTION_EXAMPLES_LINK}</span><ArrowRight aria-hidden="true" className="size-4 shrink-0" />
+    </Link>
   </div>;
 }

@@ -12,7 +12,7 @@ import { readingLane, validateTopicSearch } from "@/lib/topic-screen";
 import { APP_DESCRIPTION,
   APP_NAME, DEPTH_TITLES, KEEP_READING_LABEL, ASK_DIFFERENT_LABEL, SCRIPTURE_LABEL,
   SCRIPTURE_MORE_LABEL, SCRIPTURE_WHY_LABEL,
-  TOPIC_FOOTER, TOPIC_PICTURE_LABEL, TOPIC_SENTENCE_LABEL, TRY_LABEL,
+  TOPIC_PICTURE_LABEL, TOPIC_SENTENCE_LABEL, TRY_LABEL,
 } from "@/lib/brand";
 
 type ScriptureItem = { heading: string; verse: string; reference: string; explanation?: string };
@@ -166,7 +166,6 @@ function TopicPage() {
         <Card label={TRY_LABEL}><Md text={t.try_text} /></Card>
         <ScriptureSection items={t.scripture} open={search.scripture} moreOpen={search.verses} onOpen={(scripture) => update({ scripture })} onMore={(verses) => update({ verses })} />
         <Link to="/ask" search={{ topic: t.slug }} className="inline-flex min-h-12 items-center text-muted-foreground underline underline-offset-4">{ASK_DIFFERENT_LABEL}</Link>
-        <p className="text-muted-foreground">{TOPIC_FOOTER}</p>
       </article>
     </AppShell>
   );

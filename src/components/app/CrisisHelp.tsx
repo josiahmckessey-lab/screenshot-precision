@@ -38,7 +38,7 @@ export function CrisisPanel({ text = CRISIS_TEXT }: { text?: string }) {
   );
 }
 
-export function CrisisButton() {
+export function CrisisButton({ className = "" }: { className?: string } = {}) {
   const [open, setOpen] = useState(false);
 
   // Browser back closes the panel and leaves the person on the screen they were on.
@@ -60,7 +60,7 @@ export function CrisisButton() {
 
   return (
     <>
-      <Button variant="crisis" onClick={() => change(true)} className="h-11 px-3">
+      <Button variant="crisis" onClick={() => change(true)} className={`h-11 px-3 ${className}`}>
         <Phone />
         Crisis help
       </Button>

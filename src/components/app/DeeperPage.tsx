@@ -50,7 +50,7 @@ export function DeeperPage({ slug, data, entry }: { slug: string; data: DeeperDa
           </>
         )}
         <div className="flex flex-wrap items-center gap-3">
-          <CrisisButton />
+          {!entry && <CrisisButton />}
           <Button asChild variant="quiet" className="h-auto min-h-12 rounded-full whitespace-normal px-5 py-3 text-base"><Link to="/guide">{DEEPER_GUIDE}</Link></Button>
         </div>
       </article>

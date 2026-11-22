@@ -40,10 +40,6 @@ export function DeeperLayer({ data, slug, chooserOpen, fits, allOpen, wordsOpen,
           </Button></li>
         </ul>
       </div>
-      <div className="space-y-4">
-        <h2 className="text-2xl leading-snug">{data.reach_beyond.heading}</h2>
-        {data.reach_beyond.lines.map((line, index) => <p key={index} className="text-lg leading-relaxed">{line}</p>)}
-      </div>
       <Collapsible open={wordsOpen} onOpenChange={onWords} className="rounded-2xl border p-5">
         <CollapsibleTrigger className="min-h-12 w-full text-left text-lg font-semibold underline-offset-4 hover:underline">{DEEPER_WORDS}</CollapsibleTrigger>
         <CollapsibleContent className="space-y-4 pt-4">
@@ -54,6 +50,12 @@ export function DeeperLayer({ data, slug, chooserOpen, fits, allOpen, wordsOpen,
         <h2 className="text-2xl leading-snug">{DEEPER_RELATED}</h2>
         <ul>{data.related.map((topic) => <li key={topic.slug}><Link to="/topic/$slug" params={{ slug: topic.slug }} className="inline-flex min-h-12 items-center underline underline-offset-4">{topic.title}</Link></li>)}</ul>
       </div>
+      <Collapsible defaultOpen={false} className="rounded-2xl border p-5">
+        <CollapsibleTrigger className="min-h-12 w-full text-left text-lg font-semibold underline-offset-4 hover:underline">{data.reach_beyond.heading}</CollapsibleTrigger>
+        <CollapsibleContent className="space-y-4 pt-4">
+          {data.reach_beyond.lines.map((line, index) => <p key={index} className="text-lg leading-relaxed">{line}</p>)}
+        </CollapsibleContent>
+      </Collapsible>
     </section>
   );
 }

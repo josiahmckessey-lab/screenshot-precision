@@ -66,10 +66,8 @@ export const DEEPER_BACK = "Back to the other sayings";
 export const DEEPER_OTHER = "Other sayings on this topic";
 export const QUESTION_TITLE = "Set a question down here";
 export const QUESTION_TOPIC_TITLE = QUESTION_TITLE;
-export const QUESTION_EXAMPLES_HEADING = "Having trouble thinking of a question? Try a few of these.";
-export const QUESTION_EXAMPLES_SHUFFLE = "Show different examples";
-export const QUESTION_NOTICE =
-  "An automated sorter reads the typed text only to pick which pages fit. The text is then saved for a person to read later, not right away. No names or accounts. Not for emergencies. For someone in danger, call or text 988. For immediate danger, call 911.";
+export const QUESTION_EXAMPLES_LINK = "Having trouble thinking of a question? Try a few of these";
+export const EXAMPLES_TITLE = "Questions to start with";
 export const QUESTION_SENT_SHORT = "Question saved. A person will read it later, not right away.";
 export const QUESTION_ERROR = "The question could not be saved. Please try again later.";
 export const FIND_GUIDE = "Find a guide";

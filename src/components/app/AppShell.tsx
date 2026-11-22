@@ -1,7 +1,7 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-import { APP_NAME, FIND_GUIDE } from "@/lib/brand";
+import { APP_NAME, FIND_GUIDE, TOPIC_FOOTER } from "@/lib/brand";
 import { BackButton } from "./BackButton";
 import { CrisisButton } from "./CrisisHelp";
 import { LampMark } from "./LampIllustration";
@@ -15,7 +15,7 @@ export function Wordmark() {
   );
 }
 
-// Every screen uses this shell, so the crisis button is always visible.
+// Shared safety help stays at the foot of the content, outside the reading lane.
 export function AppShell({ children, hideBack = false }: { children: ReactNode; hideBack?: boolean }) {
   const pathname = useLocation({ select: (location) => location.pathname });
   return (
@@ -24,7 +24,6 @@ export function AppShell({ children, hideBack = false }: { children: ReactNode; 
         <Link to="/" aria-label={`${APP_NAME} home`}>
           <Wordmark />
         </Link>
-        <CrisisButton />
       </header>
       {!hideBack && pathname !== "/" && <div className="flex justify-start"><BackButton /></div>}
       <main className="flex flex-1 flex-col">
@@ -32,10 +31,14 @@ export function AppShell({ children, hideBack = false }: { children: ReactNode; 
           {children}
         </div>
       </main>
-      <footer className="flex flex-wrap gap-x-6 gap-y-3 pt-8 text-base">
-        <Link to="/about" className="inline-flex min-h-12 items-center underline underline-offset-4">About</Link>
-        <Link to="/privacy" className="inline-flex min-h-12 items-center underline underline-offset-4">Privacy</Link>
-        <Link to="/guide" className="inline-flex min-h-12 items-center underline underline-offset-4">{FIND_GUIDE}</Link>
+      <footer className="space-y-3 pt-10 text-base">
+        <div className="flex justify-start"><CrisisButton className="min-h-12" /></div>
+        <div className="flex flex-wrap gap-x-6 gap-y-3">
+          <Link to="/about" className="inline-flex min-h-12 items-center underline underline-offset-4">About</Link>
+          <Link to="/privacy" className="inline-flex min-h-12 items-center underline underline-offset-4">Privacy</Link>
+          <Link to="/guide" className="inline-flex min-h-12 items-center underline underline-offset-4">{FIND_GUIDE}</Link>
+        </div>
+        <p className="text-sm text-muted-foreground">{TOPIC_FOOTER}</p>
       </footer>
     </div>
   );

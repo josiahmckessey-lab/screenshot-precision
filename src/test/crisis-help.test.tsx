@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, cleanup, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, cleanup, waitFor, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ReactNode } from "react";
 import { BACK_TO_LIBRARY, CRISIS_TEXT } from "@/lib/brand";
@@ -7,10 +7,12 @@ const router = vi.hoisted(() => ({ pathname: "/" }));
 
 vi.mock("@tanstack/react-router", () => ({
   Link: ({ to, children }: { to: string; children: ReactNode }) => <a href={to}>{children}</a>,
-  useLocation: () => ({ pathname: router.pathname }),
+  useLocation: (options?: { select: (location: { pathname: string }) => unknown }) => options ? options.select({ pathname: router.pathname }) : { pathname: router.pathname },
 }));
+vi.mock("@/components/app/BackButton", () => ({ BackButton: () => null }));
 
 import { CrisisButton, CrisisPanel } from "@/components/app/CrisisHelp";
+import { AppShell } from "@/components/app/AppShell";
 
 afterEach(() => {
   cleanup();
@@ -27,6 +29,14 @@ function bodyText() {
 }
 
 describe("Crisis help panel", () => {
+  it.each(["/", "/topic/topic-10", "/ask", "/topic/topic-10/more/1"])("opens the shared footer help without leaving %s", (path) => {
+    router.pathname = path;
+    vi.spyOn(window.history, "pushState").mockImplementation(() => {});
+    render(<AppShell><p>Page content</p></AppShell>);
+    fireEvent.click(within(screen.getByRole("contentinfo")).getByRole("button", { name: "Crisis help" }));
+    expect(within(screen.getByRole("dialog")).getByRole("link", { name: "Call 988" })).toHaveAttribute("href", "tel:988");
+    expect(router.pathname).toBe(path);
+  });
   it("keeps the crisis numbers above the back control, in order", () => {
     render(<CrisisButton />);
     openPanel();

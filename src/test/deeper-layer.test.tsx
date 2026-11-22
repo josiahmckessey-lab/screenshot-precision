@@ -68,6 +68,19 @@ describe("Optional deeper data", () => {
 });
 
 describe("Specific topic choices", () => {
+  it("keeps reaching beyond closed until opened without navigating or losing the chooser", async () => {
+    const { router } = await openLayer("/topic/topic-10?read=1&chooser=true");
+    const before = router.state.location.href;
+    const trigger = screen.getByRole("button", { name: data.reach_beyond.heading });
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByText("A person can reach beyond a library.")).toBeNull();
+    fireEvent.click(trigger);
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByText("A person can reach beyond a library.")).toBeVisible();
+    expect(router.state.location.href).toBe(before);
+    fireEvent.click(trigger);
+    expect(screen.queryByText("A person can reach beyond a library.")).toBeNull();
+  });
   it("reveals level one before the fit check and navigates back to the exact chooser", async () => {
     const store = vi.spyOn(Storage.prototype, "setItem");
     const { router } = await openLayer();

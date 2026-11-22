@@ -8,19 +8,3 @@ export const STARTER_QUESTIONS = [
   { text: "What is a guide, and what does a guide do?", slug: "topic-08" },
   { text: "What happens in the body before a thought forms?", slug: "topic-04" },
 ] as const;
-
-export type StarterQuestion = (typeof STARTER_QUESTIONS)[number];
-
-export function pickStarterQuestions(previous: readonly StarterQuestion[] = [], random = Math.random): StarterQuestion[] {
-  const remaining = STARTER_QUESTIONS.filter((question) => !previous.includes(question));
-  for (let i = remaining.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    const a = remaining[i];
-    const b = remaining[j];
-    if (a !== undefined && b !== undefined) {
-      remaining[i] = b;
-      remaining[j] = a;
-    }
-  }
-  return remaining.slice(0, 4);
-}

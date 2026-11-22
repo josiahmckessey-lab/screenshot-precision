@@ -48,12 +48,11 @@ export function WelcomeIntro({ onFinish }: { onFinish: () => void }) {
   }, [finish, index, leaving, reduced]);
 
   return (
-    <div className="mx-auto flex h-dvh w-full max-w-xl flex-col px-6 pt-[max(1.25rem,env(safe-area-inset-top))]">
+    <div className="mx-auto flex h-dvh w-full max-w-xl flex-col px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(1.25rem,env(safe-area-inset-top))]">
       <header className="flex shrink-0 items-center justify-between gap-2 py-3">
         <Wordmark />
-        <CrisisButton />
       </header>
-      <main className="flex min-h-0 flex-1 pb-24">
+      <main className="flex min-h-0 flex-1">
         <Button
           variant="ghost"
           onClick={advance}
@@ -67,8 +66,9 @@ export function WelcomeIntro({ onFinish }: { onFinish: () => void }) {
           </span>
         </Button>
       </main>
-      <div className="fixed inset-x-0 bottom-0 flex justify-center bg-background px-6 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
+      <div className="flex shrink-0 flex-col items-center gap-3 pt-3">
         <Button variant="link" onClick={finish} className="h-12 min-h-11 px-8 text-base">Skip</Button>
+        <CrisisButton className="min-h-12" />
       </div>
     </div>
   );

@@ -1,5 +1,9 @@
 export const PRIVACY_SECTIONS = [
   {
+    lead: "In short.",
+    body: "An automated sorter reads the typed text only to pick which pages fit. The text is then saved for a person to read later, not right away. No names or accounts.",
+  },
+  {
     lead: "What is saved.",
     body: "A question typed in the question box is saved with the date and the topic page it was typed on. A message sent to a guide is saved with the date, and with an email address only if one is offered for a reply. These are read by one person, later, not right away, to answer and to improve the library.",
   },
