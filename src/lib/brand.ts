@@ -36,6 +36,10 @@ export const ABOUT_TEXT =
 export const TOPIC_PICTURE_LABEL = "The picture";
 export const TOPIC_SENTENCE_LABEL = "In one sentence";
 export const KNOW_MORE_LABEL = "Want to know more about this?";
+export const BACK_LABEL = "Back";
+export const KEEP_READING_LABEL = "Keep reading";
+export const ASK_DIFFERENT_LABEL = "Ask a different question";
+export const showAllSayingsLabel = (count: number) => `Show all ${count} sayings`;
 export const DEPTH_TITLES = ["The plain why", "How it works", "Research and roots"] as const;
 export const TRY_LABEL = "One small thing to try";
 export const SCRIPTURE_LABEL = "For readers who want Scripture";

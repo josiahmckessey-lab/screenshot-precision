@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/app/AppShell";
 import { GuideMessageBox } from "@/components/app/GuideMessageBox";
@@ -34,7 +34,6 @@ function GuidePage() {
   return (
     <AppShell>
       <div className="space-y-6 py-6">
-        <Link to="/" className="text-base underline underline-offset-4">← Back to home</Link>
         <h1 className="text-4xl leading-tight sm:text-5xl">{GUIDE_TITLE}</h1>
         <p className="text-lg leading-relaxed">{GUIDE_INTRO}</p>
 

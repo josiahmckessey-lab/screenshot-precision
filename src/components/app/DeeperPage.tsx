@@ -1,21 +1,21 @@
-import { useEffect } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { AppShell } from "@/components/app/AppShell";
 import { CrisisButton } from "@/components/app/CrisisHelp";
 import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type { DeeperData, DeeperEntry } from "@/lib/deeper";
 import {
-  DEEPER_BACK, DEEPER_OTHER, DEEPER_NONE, DEEPER_TRY, DEEPER_SURE,
+  DEEPER_OTHER, DEEPER_NONE, DEEPER_TRY, DEEPER_SURE,
   DEEPER_END_TITLE, DEEPER_END_BODY, DEEPER_REMINDER_TITLE, DEEPER_REMINDER,
   DEEPER_BROWSE, DEEPER_ROOM, DEEPER_CARE, DEEPER_GUIDE,
 } from "@/lib/brand";
 
 export function DeeperPage({ slug, data, entry }: { slug: string; data: DeeperData; entry: DeeperEntry | null }) {
-  useEffect(() => { window.scrollTo(0, 0); }, [slug, entry?.position]);
+  const others = useLocation({ select: (location) => location.search["others"] === true });
+  const navigate = useNavigate();
   return (
     <AppShell>
       <article className="space-y-6 py-4">
-        <Link to="/topic/$slug" params={{ slug }} search={{ chooser: true }} className="inline-flex min-h-12 items-center underline underline-offset-4">{DEEPER_BACK}</Link>
         <h1 className="text-4xl leading-tight sm:text-5xl">{entry ? entry.saying : DEEPER_END_TITLE}</h1>
         {entry ? (
           <>
@@ -25,15 +25,17 @@ export function DeeperPage({ slug, data, entry }: { slug: string; data: DeeperDa
               <p className="whitespace-pre-line text-lg leading-relaxed">{entry.try}</p>
             </div>
             <p className="text-base text-muted-foreground">{DEEPER_SURE}: {entry.sure_label}. {entry.sure_note}</p>
-            <section className="space-y-2">
-              <h2 className="text-2xl leading-snug">{DEEPER_OTHER}</h2>
+            <Collapsible open={others} onOpenChange={(open) => { void navigate({ to: ".", search: (previous) => ({ ...previous, others: open }), replace: true, resetScroll: false }); }} className="rounded-2xl border p-5">
+              <CollapsibleTrigger className="min-h-12 w-full text-left text-lg font-semibold">{DEEPER_OTHER}</CollapsibleTrigger>
+              <CollapsibleContent>
               <ul>
                 {data.entries.filter((item) => item.position !== entry.position).map((item) => (
                   <li key={item.position}><Link to="/topic/$slug/more/$position" params={{ slug, position: String(item.position) }} search={{}} className="inline-flex min-h-12 items-center underline underline-offset-4">{`“${item.saying}”`}</Link></li>
                 ))}
                 <li><Link to="/topic/$slug/more/none" params={{ slug }} search={{}} className="inline-flex min-h-12 items-center underline underline-offset-4">{DEEPER_NONE}</Link></li>
               </ul>
-            </section>
+              </CollapsibleContent>
+            </Collapsible>
           </>
         ) : (
           <>

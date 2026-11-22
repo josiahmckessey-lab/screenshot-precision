@@ -21,11 +21,11 @@ export function StarterQuestions() {
     <h3 className="font-sans text-sm leading-relaxed text-muted-foreground">{QUESTION_EXAMPLES_HEADING}</h3>
     <div className="grid gap-2">
       {examples.map((question) => <Link key={question.slug} to="/topic/$slug" params={{ slug: question.slug }} search={{}}
-        className="flex min-h-11 items-center justify-between gap-3 py-2 text-sm leading-relaxed text-muted-foreground underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        className="flex min-h-12 items-center justify-between gap-3 py-2 text-sm leading-relaxed text-muted-foreground underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
         <span>{question.text}</span><ArrowRight aria-hidden="true" className="size-4 shrink-0" />
       </Link>)}
     </div>
-    <Button type="button" variant="ghost" size="sm" onClick={() => {
+    <Button type="button" variant="ghost" size="sm" className="min-h-12" onClick={() => {
       const selected = pickStarterQuestions(examples);
       pageExamples.set(pageKey, selected);
       setExamples(selected);

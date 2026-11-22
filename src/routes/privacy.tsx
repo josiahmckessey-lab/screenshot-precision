@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/app/AppShell";
 import { PRIVACY_SECTIONS } from "@/content/privacy";
@@ -22,7 +22,6 @@ function PrivacyPage() {
   return (
     <AppShell>
       <article className="space-y-6 py-8">
-        <Link to="/" className="underline underline-offset-4">← Back to home</Link>
         <h1 className="text-4xl">Privacy</h1>
         {PRIVACY_SECTIONS.map(({ lead, body }) => (
           <p key={lead} className="text-lg leading-relaxed"><strong>{lead}</strong>{" "}{body}</p>

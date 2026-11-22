@@ -37,7 +37,6 @@ function IdeasPage() {
 
   return <AppShell>
     <div className="space-y-6 py-6">
-      <Link to="/" className="underline underline-offset-4">← Back to home</Link>
       {result?.crisis && <CrisisPanel text={QUESTION_CRISIS_TEXT} />}
       <h1 className="text-3xl leading-tight">{QUESTION_IDEAS_HEADING}</h1>
       <div className="space-y-3">

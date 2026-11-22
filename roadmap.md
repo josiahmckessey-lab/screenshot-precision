@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Simplify home and topic screens, add safe shared Back navigation and URL restoration, move installation to About, add /ask, and shorten saying lists; 101 tests pass, phone Back restored the exact scroll position and expanded list, loaded saying title and question screen confirmed, desktop checked without overflow.
+
 - [x] Move deeper sayings and endpoint to separate pages, preserve the open chooser on return, and verify navigation, titles, top scroll and missing entries on phone and desktop; all 82 tests pass.
 
 - [x] Add the optional specific topic layer, chooser, endpoint, word definitions and related links; verified topic 10, unchanged topics 1, 9 and 15, phone and desktop, focus retention, safety and navigation, reduced motion and 77 tests.

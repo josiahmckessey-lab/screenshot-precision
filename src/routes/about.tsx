@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/app/AppShell";
-import { APP_DESCRIPTION, APP_NAME, MESSAGE_GUIDE, NEED_MORE_TITLE } from "@/lib/brand";
+import { APP_DESCRIPTION, APP_NAME, INSTALL_LABEL, RESEARCH_LINK, MESSAGE_GUIDE, NEED_MORE_TITLE } from "@/lib/brand";
+import { InstallHint } from "@/components/app/InstallHint";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { ABOUT_HEADING, ABOUT_INTRO_HEADING, ABOUT_PARAGRAPHS, ABOUT_GUIDE_TEXT, FRAMEWORK_HEADING, FRAMEWORK_INTRO, FRAMEWORK_PARTS, RESEARCH_HEADING, RESEARCH_TEXT } from "@/content/about";
@@ -32,8 +33,12 @@ function AboutPage() {
   return (
     <AppShell>
       <article className="space-y-8 py-8">
-        <Link to="/" className="underline underline-offset-4">← Back to home</Link>
         <h1 className="text-4xl">{ABOUT_HEADING}</h1>
+        <nav className="flex flex-wrap gap-x-6">
+          <Link to="/install" className="inline-flex min-h-12 items-center underline underline-offset-4">{INSTALL_LABEL}</Link>
+          <Link to="/about" hash="wellbeing" className="inline-flex min-h-12 items-center underline underline-offset-4">{RESEARCH_LINK}</Link>
+        </nav>
+        <InstallHint />
         <section className="space-y-5">
           <h2 className="text-3xl">{ABOUT_INTRO_HEADING}</h2>
           {ABOUT_PARAGRAPHS.map((paragraph) => <p key={paragraph} className="text-lg leading-relaxed">{paragraph}</p>)}

@@ -1,17 +1,16 @@
-import { createFileRoute, Link, notFound, useRouter, type ErrorComponentProps } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { createFileRoute, Link, notFound, useRouter, type ErrorComponentProps, type SearchSchemaInput } from "@tanstack/react-router";
+import { type ReactNode } from "react";
 import { Streamdown } from "streamdown";
 
 import { AppShell } from "@/components/app/AppShell";
-import { QuestionBox } from "@/components/app/QuestionBox";
 import { DeeperLayer } from "@/components/app/DeeperLayer";
 import { loadDeeper } from "@/lib/deeper";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
-import { PART_BY_TOPIC } from "@/content/about";
+import { readingLane, validateTopicSearch } from "@/lib/topic-screen";
 import { APP_DESCRIPTION,
-  APP_NAME, BACK_TO_IDEAS, DEPTH_TITLES, FIND_GUIDE, KNOW_MORE_LABEL, QUESTION_TOPIC_TITLE, SCRIPTURE_LABEL,
+  APP_NAME, DEPTH_TITLES, KEEP_READING_LABEL, ASK_DIFFERENT_LABEL, SCRIPTURE_LABEL,
   SCRIPTURE_MORE_LABEL, SCRIPTURE_WHY_LABEL,
   TOPIC_FOOTER, TOPIC_PICTURE_LABEL, TOPIC_SENTENCE_LABEL, TRY_LABEL,
 } from "@/lib/brand";
@@ -43,10 +42,7 @@ async function loadTopic(slug: string) {
 }
 
 export const Route = createFileRoute("/topic/$slug")({
-  validateSearch: (search: Record<string, unknown>): { from?: string; chooser?: boolean } => ({
-    ...(typeof search["from"] === "string" ? { from: search["from"] } : {}),
-    ...(search["chooser"] === true || search["chooser"] === "true" ? { chooser: true } : {}),
-  }),
+  validateSearch: (search: Record<string, unknown> & SearchSchemaInput) => validateTopicSearch(search),
   loader: ({ params }) => loadTopic(params.slug),
   head: ({ loaderData }) => {
     const title = loaderData ? `${loaderData.title} — ${APP_NAME}` : `Topic — ${APP_NAME}`;
@@ -63,7 +59,6 @@ export const Route = createFileRoute("/topic/$slug")({
   notFoundComponent: () => (
     <AppShell>
       <div className="space-y-4 py-8">
-        <BackLink />
         <h1 className="text-3xl">This topic is not in the library.</h1>
       </div>
     </AppShell>
@@ -75,18 +70,11 @@ function TopicError({ error, reset }: ErrorComponentProps) {
   return (
     <AppShell>
       <div className="space-y-4 py-8" role="alert">
-        <BackLink />
         <p className="text-lg">{error instanceof Error ? error.message : "Something went wrong."}</p>
         <Button onClick={() => { router.invalidate(); reset(); }}>Try again</Button>
       </div>
     </AppShell>
   );
-}
-
-function BackLink() {
-  const { from } = Route.useSearch();
-  if (from === "ideas") return <Link to="/ideas" className="text-base underline underline-offset-4">← {BACK_TO_IDEAS}</Link>;
-  return <Link to="/" className="text-base underline underline-offset-4">← Back to home</Link>;
 }
 
 function Card({ label, children }: { label: string; children: ReactNode }) {
@@ -112,8 +100,7 @@ function VerseBlock({ s }: { s: ScriptureItem }) {
   );
 }
 
-function ScriptureSection({ items }: { items: ScriptureItem[] }) {
-  const [moreOpen, setMoreOpen] = useState(false);
+function ScriptureSection({ items, open, moreOpen, onOpen, onMore }: { items: ScriptureItem[]; open: boolean; moreOpen: boolean; onOpen: (open: boolean) => void; onMore: (open: boolean) => void }) {
   if (items.length === 0) return null;
   const first = items[0];
   if (!first) return null;
@@ -122,8 +109,8 @@ function ScriptureSection({ items }: { items: ScriptureItem[] }) {
   const rest = items.slice(1);
 
   return (
-    <Collapsible className="rounded-2xl border p-5">
-      <CollapsibleTrigger className="w-full text-left text-lg font-semibold underline-offset-4 hover:underline">
+    <Collapsible open={open} onOpenChange={onOpen} className="rounded-2xl border p-5">
+      <CollapsibleTrigger className="min-h-12 w-full text-left text-lg font-semibold underline-offset-4 hover:underline">
         {SCRIPTURE_LABEL}
       </CollapsibleTrigger>
       <CollapsibleContent className="space-y-6 pt-4">
@@ -135,8 +122,8 @@ function ScriptureSection({ items }: { items: ScriptureItem[] }) {
               <p className="text-lg leading-relaxed">{first.explanation}</p>
             </div>
             {rest.length > 0 && (
-              <Collapsible open={moreOpen} onOpenChange={setMoreOpen}>
-                <CollapsibleTrigger className="min-h-11 text-base underline underline-offset-4">
+              <Collapsible open={moreOpen} onOpenChange={onMore}>
+                <CollapsibleTrigger className="min-h-12 text-base underline underline-offset-4">
                   {SCRIPTURE_MORE_LABEL}
                 </CollapsibleTrigger>
                 <CollapsibleContent className="space-y-6 pt-2">
@@ -155,49 +142,31 @@ function ScriptureSection({ items }: { items: ScriptureItem[] }) {
 
 function TopicPage() {
   const t = Route.useLoaderData();
-  const { chooser } = Route.useSearch();
-  const [depth, setDepth] = useState(0);
+  const search = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const { depth, showFit, canRead } = readingLane(search.read, Boolean(t.deeper), search.fits, search.chooser);
   const levels = [t.level1, t.level2, t.level3];
-  const tryCard = <Card label={TRY_LABEL}><Md text={t.try_text} /></Card>;
-
+  function update(patch: Partial<typeof search>) {
+    void navigate({ search: (previous) => ({ ...previous, ...patch }), replace: true, resetScroll: false });
+  }
   return (
     <AppShell>
       <article className="space-y-6 py-4">
-        <BackLink />
         <h1 className="text-4xl leading-tight sm:text-5xl">{t.title}</h1>
-        {(() => {
-          const topicNumber = Number(t.slug.replace("topic-", ""));
-          const part = PART_BY_TOPIC[topicNumber];
-          return part ? (
-            <Link to="/about" hash={`part-${part.number}`} className="text-sm text-muted-foreground underline underline-offset-4">
-              Part {part.number}, {part.title}
-            </Link>
-          ) : null;
-        })()}
         <Card label={TOPIC_PICTURE_LABEL}><Md text={t.picture} /></Card>
         <Card label={TOPIC_SENTENCE_LABEL}><p className="text-2xl leading-snug">{t.sentence}</p></Card>
-
-        {levels.slice(0, depth).map((text, i) => (
-          <div key={i} className="space-y-6">
-            <Card label={DEPTH_TITLES[i] ?? ""}><Md text={text ?? ""} /></Card>
-            {i === 0 && tryCard}
-          </div>
-        ))}
-        {depth < 3 && (
-          <Button size="lg" variant="outline" onClick={() => setDepth((d) => d + 1)}>{KNOW_MORE_LABEL}</Button>
-        )}
-        {depth === 0 && tryCard}
-
-        {t.deeper && <DeeperLayer key={`${t.slug}:${Boolean(chooser)}`} slug={t.slug} data={t.deeper} chooserOpen={chooser} />}
-
-        <ScriptureSection items={t.scripture} />
-
-        <Card label={QUESTION_TOPIC_TITLE}><QuestionBox topicSlug={t.slug} /></Card>
-
-        <div className="space-y-2 pt-4">
-          <Link to="/guide" className="text-lg underline underline-offset-4">{FIND_GUIDE}</Link>
-          <p className="text-muted-foreground">{TOPIC_FOOTER}</p>
-        </div>
+        <section className="space-y-6">
+          {levels.slice(0, depth).map((text, i) => <Card key={i} label={DEPTH_TITLES[i] ?? ""}><Md text={text ?? ""} /></Card>)}
+          {showFit && t.deeper && <DeeperLayer slug={t.slug} data={t.deeper} chooserOpen={search.chooser} fits={search.fits} allOpen={search.all} wordsOpen={search.words}
+            onFit={() => update({ fits: true, chooser: false })}
+            onChoose={() => update({ chooser: true, read: Math.max(1, depth) })}
+            onAll={() => update({ all: true })} onWords={(words) => update({ words })} />}
+          {canRead && <Button size="lg" variant="calm" className="min-h-12" onClick={() => update({ read: depth + 1 })}>{KEEP_READING_LABEL}</Button>}
+        </section>
+        <Card label={TRY_LABEL}><Md text={t.try_text} /></Card>
+        <ScriptureSection items={t.scripture} open={search.scripture} moreOpen={search.verses} onOpen={(scripture) => update({ scripture })} onMore={(verses) => update({ verses })} />
+        <Link to="/ask" search={{ topic: t.slug }} className="inline-flex min-h-12 items-center text-muted-foreground underline underline-offset-4">{ASK_DIFFERENT_LABEL}</Link>
+        <p className="text-muted-foreground">{TOPIC_FOOTER}</p>
       </article>
     </AppShell>
   );

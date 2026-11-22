@@ -1,9 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, type SearchSchemaInput } from "@tanstack/react-router";
 import { DeeperPage } from "@/components/app/DeeperPage";
 import { loadDeeperPage } from "@/lib/deeper";
 import { APP_DESCRIPTION, APP_NAME } from "@/lib/brand";
 
 export const Route = createFileRoute("/topic/$slug_/more/$position")({
+  validateSearch: (search: Record<string, unknown> & SearchSchemaInput) => ({ others: search["others"] === true || search["others"] === "true" }),
   loader: ({ params }) => loadDeeperPage(params.slug, params.position),
   head: ({ loaderData }) => {
     const title = loaderData?.entry?.saying ?? APP_NAME;

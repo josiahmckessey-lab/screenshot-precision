@@ -1,11 +1,11 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory, createRouter, Outlet, RouterProvider } from "@tanstack/react-router";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { QueryClient } from "@tanstack/react-query";
 import { routeTree } from "@/routeTree.gen";
 import { loadDeeper, parseDeeper, type DeeperData } from "@/lib/deeper";
 import type { Database } from "@/integrations/supabase/types";
-import { DEEPER_OPEN, DEEPER_NONE, DEEPER_FITS, DEEPER_BACK } from "@/lib/brand";
+import { DEEPER_OPEN, DEEPER_NONE, DEEPER_FITS, BACK_LABEL, KEEP_READING_LABEL, DEEPER_OTHER } from "@/lib/brand";
 
 const mocks = vi.hoisted(() => ({ from: vi.fn(), eq: vi.fn(), maybeSingle: vi.fn(), related: vi.fn() }));
 vi.mock("@/integrations/supabase/client", () => ({ supabase: { from: mocks.from } }));
@@ -68,40 +68,50 @@ describe("Optional deeper data", () => {
 });
 
 describe("Specific topic choices", () => {
-  it("navigates to saying pages and returns to the open chooser without device storage", async () => {
+  it("reveals level one before the fit check and navigates back to the exact chooser", async () => {
     const store = vi.spyOn(Storage.prototype, "setItem");
     const { router } = await openLayer();
+    expect(screen.queryByRole("button", { name: DEEPER_OPEN })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: KEEP_READING_LABEL }));
     fireEvent.click(await screen.findByRole("button", { name: DEEPER_OPEN }));
     const first = data.entries[0];
-    const second = data.entries[1];
-    if (!first || !second) throw new Error("Two entries are required");
-    fireEvent.click(screen.getByRole("link", { name: `“${first.saying}”` }));
+    if (!first) throw new Error("An entry is required");
+    fireEvent.click(await screen.findByRole("link", { name: `“${first.saying}”` }));
     await waitFor(() => expect(router.state.location.pathname).toBe("/topic/topic-10/more/1"));
     await screen.findByRole("heading", { name: first.saying });
-    expect(screen.queryByRole("link", { name: `“${first.saying}”` })).toBeNull();
-    fireEvent.click(screen.getByRole("link", { name: `“${second.saying}”` }));
-    await waitFor(() => expect(router.state.location.pathname).toBe("/topic/topic-10/more/2"));
-    await screen.findByRole("heading", { name: second.saying });
-    fireEvent.click(screen.getByRole("link", { name: DEEPER_BACK }));
+    expect(screen.queryByRole("link", { name: DEEPER_NONE })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: DEEPER_OTHER }));
+    await screen.findByRole("link", { name: DEEPER_NONE });
+    expect(router.state.location.search).toMatchObject({ others: true });
+    fireEvent.click(screen.getByRole("button", { name: BACK_LABEL }));
     await screen.findByRole("link", { name: `“${first.saying}”` });
     expect(router.state.location.pathname).toBe("/topic/topic-10");
-    expect(router.state.location.search).toEqual({ chooser: true });
+    expect(router.state.location.search).toMatchObject({ read: 1, chooser: true });
+    expect(router.history.location.state.__TSR_index).toBe(0);
     expect(store).not.toHaveBeenCalled();
   });
   it("opens the dedicated endpoint page and returns to the chooser", async () => {
-    const { router } = await openLayer("/topic/topic-10?chooser=true");
+    const { router } = await openLayer("/topic/topic-10?read=1&chooser=true");
     fireEvent.click(await screen.findByRole("link", { name: DEEPER_NONE }));
-    await screen.findByRole("link", { name: DEEPER_BACK });
+    await screen.findByRole("button", { name: BACK_LABEL });
     expect(router.state.location.pathname).toBe("/topic/topic-10/more/none");
     expect(router.state.matches.at(-1)?.routeId).toBe("/topic/$slug_/more/none");
-    fireEvent.click(screen.getByRole("link", { name: DEEPER_BACK }));
+    fireEvent.click(screen.getByRole("button", { name: BACK_LABEL }));
     await screen.findByRole("link", { name: DEEPER_NONE });
-    expect(router.state.location.search).toEqual({ chooser: true });
+    expect(router.state.location.search).toMatchObject({ chooser: true, read: 1 });
+  });
+  it.each(["1", "none"])("uses the parent chooser as a direct arrival fallback for %s", async (position) => {
+    const { router } = await openLayer(`/topic/topic-10/more/${position}`);
+    fireEvent.click(await screen.findByRole("link", { name: BACK_LABEL }));
+    await screen.findByRole("link", { name: DEEPER_NONE });
+    expect(router.state.location.pathname).toBe("/topic/topic-10");
+    expect(router.state.location.search).toMatchObject({ chooser: true, read: 1 });
+    expect(router.history.location.state.__TSR_index).toBe(0);
   });
   it.each(["999", "01", "not-a-position"])("redirects nonexistent position %s to the topic", async (position) => {
     const { router } = await openLayer(`/topic/topic-10/more/${position}`);
     await waitFor(() => expect(router.state.location.pathname).toBe("/topic/topic-10"));
-    await screen.findByRole("button", { name: DEEPER_OPEN });
+    await screen.findByRole("button", { name: KEEP_READING_LABEL });
   });
   it.each(["1", "none"])("redirects %s when the topic has no deeper row", async (position) => {
     mocks.maybeSingle.mockResolvedValue({ data: null, error: null });
@@ -112,9 +122,38 @@ describe("Specific topic choices", () => {
     await waitFor(() => expect(router.state.location.pathname).toBe("/topic/topic-9"));
     expect(screen.queryByRole("button", { name: DEEPER_OPEN })).toBeNull();
   });
-  it("ends the chooser path after accepting the initial fit", async () => {
-    await openLayer();
+  it("continues reading after accepting the fit without adding history entries", async () => {
+    const { router } = await openLayer("/topic/topic-10?read=1");
     fireEvent.click(await screen.findByRole("button", { name: DEEPER_FITS }));
+    fireEvent.click(await screen.findByRole("button", { name: KEEP_READING_LABEL }));
+    await waitFor(() => expect(router.state.location.search).toMatchObject({ read: 2, fits: true }));
+    fireEvent.click(screen.getByRole("button", { name: KEEP_READING_LABEL }));
+    await waitFor(() => expect(router.state.location.search).toMatchObject({ read: 3 }));
+    expect(screen.queryByRole("button", { name: KEEP_READING_LABEL })).toBeNull();
+    expect(router.history.location.state.__TSR_index).toBe(0);
+  });
+  it("restores reading level three on direct arrival", async () => {
+    const { router } = await openLayer("/topic/topic-10?read=3");
+    expect(router.state.location.search).toMatchObject({ read: 3 });
+    expect(screen.queryByRole("button", { name: KEEP_READING_LABEL })).toBeNull();
     expect(screen.queryByRole("button", { name: DEEPER_OPEN })).toBeNull();
+  });
+  it("reveals the remaining sayings without losing the chooser on back", async () => {
+    const extraRow = { ...row, entries: [...data.entries, ...[3, 4, 5, 6].map((position) => ({ ...data.entries[0], position, saying: `Saying ${position}` }))] };
+    const { router } = await openLayer("/topic/topic-10?read=1&chooser=true");
+    mocks.maybeSingle.mockResolvedValue({ data: extraRow, error: null });
+    await act(async () => { await router.invalidate(); });
+    await waitFor(() => expect(router.state.matches.at(-1)?.loaderData).toBeDefined());
+    await screen.findByRole("button", { name: "Show all 6 sayings" });
+    expect(screen.queryByRole("link", { name: "“Saying 5”" })).toBeNull();
+    expect(screen.queryByRole("link", { name: "“Saying 6”" })).toBeNull();
+    expect(screen.getByRole("link", { name: "“Saying 4”" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: DEEPER_NONE })).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Show all 6 sayings" }));
+    fireEvent.click(await screen.findByRole("link", { name: "“Saying 6”" }));
+    await screen.findByRole("heading", { name: "Saying 6" });
+    fireEvent.click(screen.getByRole("button", { name: BACK_LABEL }));
+    await screen.findByRole("link", { name: "“Saying 6”" });
+    expect(router.state.location.search).toMatchObject({ all: true, chooser: true });
   });
 });

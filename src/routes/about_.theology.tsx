@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/app/AppShell";
 import { APP_DESCRIPTION, APP_NAME } from "@/lib/brand";
@@ -40,18 +40,11 @@ export const Route = createFileRoute("/about_/theology")({
   component: TheologyPage,
 });
 
-function BackLink() {
-  return (
-    <Link to="/about" className="underline underline-offset-4">← Back to About</Link>
-  );
-}
-
 function TheologyPage() {
   const sections = Route.useLoaderData();
   return (
     <AppShell>
       <article className="space-y-10 py-8">
-        <BackLink />
         <h1 className="text-4xl">Theological grounding</h1>
         {sections.map((section) => {
           const items = (section.scripture ?? []) as unknown as ScriptureItem[];
@@ -75,7 +68,6 @@ function TheologyPage() {
             </section>
           );
         })}
-        <BackLink />
       </article>
     </AppShell>
   );

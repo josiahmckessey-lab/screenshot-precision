@@ -3,8 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/app/AppShell";
 import { QuestionBox } from "@/components/app/QuestionBox";
 import { LampIllustration } from "@/components/app/LampIllustration";
-import { InstallHint } from "@/components/app/InstallHint";
-import { APP_DESCRIPTION, APP_PREVIEW_TITLE, FIND_GUIDE, HOME_GUIDE_TEXT, QUESTION_TITLE, RESEARCH_LINK, RESEARCH_NOTICE, WELCOME_QUOTE } from "@/lib/brand";
+import { APP_DESCRIPTION, APP_PREVIEW_TITLE, FIND_GUIDE, QUESTION_TITLE, WELCOME_QUOTE } from "@/lib/brand";
 import { WELCOME_HEADING, WELCOME_INVITATION, WELCOME_TEXT, WELCOME_TOPICS_LABEL } from "@/content/about";
 
 export const Route = createFileRoute("/")({
@@ -33,22 +32,11 @@ function Home() {
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{QUESTION_TITLE}</h2>
           <QuestionBox />
         </section>
-        <section className="flex items-start gap-4 rounded-lg bg-card p-5 text-card-foreground">
-          <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary font-display text-xl text-primary-foreground">J</span>
-          <div className="space-y-3">
-            <p className="text-base leading-relaxed">{HOME_GUIDE_TEXT}</p>
-            <Link to="/guide" className="text-primary underline underline-offset-4">{FIND_GUIDE}</Link>
-          </div>
-        </section>
-        <InstallHint />
         <p className="text-lg leading-relaxed">
           {WELCOME_TEXT.slice(0, -(WELCOME_TOPICS_LABEL.length + 1))}
           <Link to="/about" hash="topics" className="underline underline-offset-4">{WELCOME_TOPICS_LABEL}</Link>.
         </p>
-        <p className="text-sm leading-relaxed text-muted-foreground">
-          {RESEARCH_NOTICE}{" "}
-          <Link to="/about" hash="wellbeing" className="underline underline-offset-4">{RESEARCH_LINK}</Link>
-        </p>
+        <Link to="/guide" className="inline-flex min-h-12 items-center text-muted-foreground underline underline-offset-4">{FIND_GUIDE}</Link>
       </section>
     </AppShell>
   );
