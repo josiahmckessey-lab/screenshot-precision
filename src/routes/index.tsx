@@ -4,7 +4,7 @@ import { AppShell } from "@/components/app/AppShell";
 import { QuestionBox } from "@/components/app/QuestionBox";
 import { LampIllustration } from "@/components/app/LampIllustration";
 import { InstallHint } from "@/components/app/InstallHint";
-import { APP_DESCRIPTION, APP_PREVIEW_TITLE, FIND_GUIDE, HOME_GUIDE_TEXT, QUESTION_TITLE, RESEARCH_LINK, RESEARCH_NOTICE } from "@/lib/brand";
+import { APP_DESCRIPTION, APP_PREVIEW_TITLE, FIND_GUIDE, HOME_GUIDE_TEXT, QUESTION_TITLE, RESEARCH_LINK, RESEARCH_NOTICE, WELCOME_QUOTE } from "@/lib/brand";
 import { WELCOME_HEADING, WELCOME_INVITATION, WELCOME_TEXT, WELCOME_TOPICS_LABEL } from "@/content/about";
 
 export const Route = createFileRoute("/")({
@@ -27,6 +27,7 @@ function Home() {
       <section className="fade-up flex flex-col gap-6 py-8">
         <div className="mx-auto w-full max-w-[240px]"><LampIllustration /></div>
         <h1 className="text-center text-4xl leading-tight">{WELCOME_HEADING}</h1>
+        <p className="-mt-3 text-center font-display text-3xl italic leading-relaxed text-muted-foreground">{WELCOME_QUOTE}</p>
         <p className="text-center font-display text-lg leading-relaxed text-primary">{WELCOME_INVITATION}</p>
         <section className="space-y-3 rounded-2xl border bg-card p-5 text-card-foreground">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{QUESTION_TITLE}</h2>

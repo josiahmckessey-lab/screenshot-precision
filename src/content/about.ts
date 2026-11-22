@@ -1,4 +1,4 @@
-import { APP_NAME } from "@/lib/brand";
+import { APP_NAME, WELCOME_QUOTE } from "@/lib/brand";
 
 export const WELCOME_HEADING = `Welcome to ${APP_NAME}`;
 export const WELCOME_INVITATION = "Come in. Take as long as needed. Nothing here is graded.";
@@ -6,6 +6,7 @@ export const WELCOME_TOPICS_LABEL = "browse the topics";
 export const INTRO_LINES = [
   "Come in.",
   "Welcome to The Gift",
+  WELCOME_QUOTE,
   "A person is one whole creature, not a pile of separate parts.",
   "Change happens in the whole of a person, one small choice at a time.",
 ] as const;

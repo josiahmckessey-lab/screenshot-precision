@@ -27,6 +27,9 @@ export const INSTALL_SECTIONS = [
   { heading: "Android", steps: ["Open the library in Chrome.", "Tap the menu, the three dots.", "Tap Install app or Add to Home screen.", "Confirm."] },
 ] as const;
 
+// A quoted line the owner supplied verbatim; quotation marks are part of the text.
+export const WELCOME_QUOTE = "\u201cWe are the gift, and life unwraps us.\u201d";
+
 export const ABOUT_TEXT =
   "This library is a collection of ideas drawn from one model of change. It is not professional care, not crisis care, and not medical advice. Questions left in the question box are saved without names or accounts and are read by a person later, not right away.";
 

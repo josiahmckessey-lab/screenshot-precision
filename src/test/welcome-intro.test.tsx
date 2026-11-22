@@ -1,6 +1,8 @@
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { INTRO_COMPLETED_KEY, shouldPlayIntro } from "@/lib/welcome-intro";
+import { INTRO_LINES } from "@/content/about";
+import { WELCOME_QUOTE } from "@/lib/brand";
 
 vi.mock("@/components/app/AppShell", () => ({ Wordmark: () => null }));
 vi.mock("@/components/app/CrisisHelp", () => ({ CrisisButton: () => null }));
@@ -16,15 +18,26 @@ describe("Welcome sequence", () => {
     expect(INTRO_COMPLETED_KEY).toBe("daybreak-intro-v1");
   });
 
-  it("never auto advances and finishes after four Next taps with 400ms exits", () => {
+  it("keeps five lines with the quoted line third", () => {
+    expect(INTRO_LINES).toEqual([
+      "Come in.",
+      "Welcome to The Gift",
+      WELCOME_QUOTE,
+      "A person is one whole creature, not a pile of separate parts.",
+      "Change happens in the whole of a person, one small choice at a time.",
+    ]);
+    expect(INTRO_LINES).toHaveLength(5);
+  });
+
+  it("never auto advances and finishes after five Next taps with 400ms exits", () => {
     vi.useFakeTimers();
     const finish = vi.fn();
     render(<WelcomeIntro onFinish={finish} />);
     act(() => vi.advanceTimersByTime(30000));
     expect(finish).not.toHaveBeenCalled();
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
       fireEvent.click(screen.getByRole("button", { name: /Next$/ }));
-      if (i < 3) expect(finish).not.toHaveBeenCalled();
+      if (i < 4) expect(finish).not.toHaveBeenCalled();
       act(() => vi.advanceTimersByTime(400));
     }
     expect(finish).toHaveBeenCalledTimes(1);
@@ -37,7 +50,7 @@ describe("Welcome sequence", () => {
     expect(finish).toHaveBeenCalledTimes(1);
   });
 
-  it("reduced motion never auto advances and Next finishes after four taps", () => {
+  it("reduced motion never auto advances and Next finishes after five taps", () => {
     vi.useFakeTimers();
     vi.spyOn(window, "matchMedia").mockImplementation((query) => ({
       matches: true, media: query, onchange: null,
@@ -48,6 +61,7 @@ describe("Welcome sequence", () => {
     render(<WelcomeIntro onFinish={finish} />);
     act(() => vi.advanceTimersByTime(30000));
     expect(finish).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: /Next$/ }));
     fireEvent.click(screen.getByRole("button", { name: /Next$/ }));
     fireEvent.click(screen.getByRole("button", { name: /Next$/ }));
     fireEvent.click(screen.getByRole("button", { name: /Next$/ }));

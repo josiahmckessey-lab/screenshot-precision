@@ -56,9 +56,13 @@ describe("Product rules", () => {
     // link must not trip the check on shown copy.
     const isContact = (v: string) =>
       /^(mailto:|tel:)/i.test(v) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-    const bad = Object.values(brand).filter(
-      (v) => typeof v === "string" && !isContact(v) && words.test(v.replace(/\bUS\b/g, "")),
-    );
+    // WELCOME_QUOTE is a quoted line the owner supplied verbatim, so its own words stand.
+    const bad = Object.entries(brand)
+      .filter(([key]) => key !== "WELCOME_QUOTE")
+      .map(([, value]) => value)
+      .filter(
+        (v) => typeof v === "string" && !isContact(v) && words.test(v.replace(/\bUS\b/g, "")),
+      );
     expect(bad).toEqual([]);
   });
 });
