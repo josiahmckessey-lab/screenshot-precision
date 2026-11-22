@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { INSTALL_HINT_TITLE, INSTALL_IOS_HINT, INSTALL_LABEL, INSTALL_NOT_NOW, INSTALL_OTHER_HINT } from "@/lib/brand";
+import { INSTALL_HINT_BODY, INSTALL_HINT_TITLE, INSTALL_LABEL, INSTALL_NOT_NOW } from "@/lib/brand";
 
 export const INSTALL_HINT_KEY = "daybreak-install-hint-v1";
 
@@ -70,14 +71,20 @@ export function InstallHintProvider({ children }: { children: ReactNode }) {
 }
 
 export function InstallHint() {
-  const { visible, ios, canPrompt, busy, dismiss, install } = useContext(InstallContext);
+  const { visible, canPrompt, busy, dismiss, install } = useContext(InstallContext);
   if (!visible) return null;
   return (
     <section className="space-y-3 rounded-lg border bg-card p-5 text-card-foreground">
       <h2 className="font-display text-xl">{INSTALL_HINT_TITLE}</h2>
-      {ios || !canPrompt ? <p className="text-base leading-relaxed text-muted-foreground">{ios ? INSTALL_IOS_HINT : INSTALL_OTHER_HINT}</p> : null}
-      <div className="flex flex-wrap gap-3">
-        {!ios && canPrompt && <Button variant="calm" disabled={busy} onClick={() => void install()}>{INSTALL_LABEL}</Button>}
+      <p className="text-base leading-relaxed text-muted-foreground">{INSTALL_HINT_BODY}</p>
+      <div className="flex flex-col gap-3 sm:flex-row">
+        {canPrompt ? (
+          <Button variant="calm" className="min-h-12" disabled={busy} onClick={() => void install()}>{INSTALL_LABEL}</Button>
+        ) : (
+          <Button variant="calm" className="min-h-12" asChild>
+            <Link to="/install">{INSTALL_LABEL}</Link>
+          </Button>
+        )}
         <Button variant="quiet" className="min-h-12 rounded-full" onClick={dismiss}>{INSTALL_NOT_NOW}</Button>
       </div>
     </section>

@@ -20,8 +20,7 @@ export const HOME_GUIDE_TEXT = "Josiah, a guide, keeps this library. Messages ar
 export const INSTALL_HINT_TITLE = "Keep The Gift close";
 export const INSTALL_LABEL = "Add to home screen";
 export const INSTALL_NOT_NOW = "Not now";
-export const INSTALL_IOS_HINT = "Tap the Share button, then Add to Home Screen.";
-export const INSTALL_OTHER_HINT = "Open the browser menu, then choose Install app or Add to Home screen.";
+export const INSTALL_HINT_BODY = "Keep The Gift on the home screen, one tap away.";
 export const INSTALL_PAGE_TITLE = "Add The Gift to a home screen";
 export const INSTALL_SECTIONS = [
   { heading: "iPhone", steps: ["Open the library in Safari.", "Tap the Share button, the square with an arrow.", "Scroll down and tap Add to Home Screen.", "Tap Add."] },
