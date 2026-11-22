@@ -43,8 +43,10 @@ async function loadTopic(slug: string) {
 }
 
 export const Route = createFileRoute("/topic/$slug")({
-  validateSearch: (search: Record<string, unknown>): { from?: string } =>
-    typeof search["from"] === "string" ? { from: search["from"] } : {},
+  validateSearch: (search: Record<string, unknown>): { from?: string; chooser?: boolean } => ({
+    ...(typeof search["from"] === "string" ? { from: search["from"] } : {}),
+    ...(search["chooser"] === true || search["chooser"] === "true" ? { chooser: true } : {}),
+  }),
   loader: ({ params }) => loadTopic(params.slug),
   head: ({ loaderData }) => {
     const title = loaderData ? `${loaderData.title} — ${APP_NAME}` : `Topic — ${APP_NAME}`;
@@ -153,6 +155,7 @@ function ScriptureSection({ items }: { items: ScriptureItem[] }) {
 
 function TopicPage() {
   const t = Route.useLoaderData();
+  const { chooser } = Route.useSearch();
   const [depth, setDepth] = useState(0);
   const levels = [t.level1, t.level2, t.level3];
   const tryCard = <Card label={TRY_LABEL}><Md text={t.try_text} /></Card>;
@@ -185,7 +188,7 @@ function TopicPage() {
         )}
         {depth === 0 && tryCard}
 
-        {t.deeper && <DeeperLayer key={t.slug} data={t.deeper} />}
+        {t.deeper && <DeeperLayer key={`${t.slug}:${Boolean(chooser)}`} slug={t.slug} data={t.deeper} chooserOpen={chooser} />}
 
         <ScriptureSection items={t.scripture} />
 

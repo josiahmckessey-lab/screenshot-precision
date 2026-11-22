@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Move deeper sayings and endpoint to separate pages, preserve the open chooser on return, and verify navigation, titles, top scroll and missing entries on phone and desktop; all 82 tests pass.
+
 - [x] Add the optional specific topic layer, chooser, endpoint, word definitions and related links; verified topic 10, unchanged topics 1, 9 and 15, phone and desktop, focus retention, safety and navigation, reduced motion and 77 tests.
 - [x] Replace the profession name in topic 10 entry 3 with guides as requested; confirmed the stored entry appears unchanged otherwise and all eight choices are available.
 

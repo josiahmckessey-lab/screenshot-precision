@@ -19,6 +19,8 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as AboutTheologyRouteImport } from './routes/about_.theology'
 import { Route as TopicSlugRouteImport } from './routes/topic/$slug'
+import { Route as TopicSlugMorePositionRouteImport } from './routes/topic/$slug_.more.$position'
+import { Route as TopicSlugMoreNoneRouteImport } from './routes/topic/$slug_.more.none'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,6 +72,16 @@ const TopicSlugRoute = TopicSlugRouteImport.update({
   path: '/topic/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TopicSlugMorePositionRoute = TopicSlugMorePositionRouteImport.update({
+  id: '/topic/$slug_/more/$position',
+  path: '/topic/$slug/more/$position',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TopicSlugMoreNoneRoute = TopicSlugMoreNoneRouteImport.update({
+  id: '/topic/$slug_/more/none',
+  path: '/topic/$slug/more/none',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -82,6 +94,8 @@ export interface FileRoutesByFullPath {
   '/safety': typeof SafetyRoute
   '/about/theology': typeof AboutTheologyRoute
   '/topic/$slug': typeof TopicSlugRoute
+  '/topic/$slug/more/$position': typeof TopicSlugMorePositionRoute
+  '/topic/$slug/more/none': typeof TopicSlugMoreNoneRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -94,6 +108,8 @@ export interface FileRoutesByTo {
   '/safety': typeof SafetyRoute
   '/about/theology': typeof AboutTheologyRoute
   '/topic/$slug': typeof TopicSlugRoute
+  '/topic/$slug/more/$position': typeof TopicSlugMorePositionRoute
+  '/topic/$slug/more/none': typeof TopicSlugMoreNoneRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +123,8 @@ export interface FileRoutesById {
   '/safety': typeof SafetyRoute
   '/about_/theology': typeof AboutTheologyRoute
   '/topic/$slug': typeof TopicSlugRoute
+  '/topic/$slug_/more/$position': typeof TopicSlugMorePositionRoute
+  '/topic/$slug_/more/none': typeof TopicSlugMoreNoneRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,6 +139,8 @@ export interface FileRouteTypes {
     | '/safety'
     | '/about/theology'
     | '/topic/$slug'
+    | '/topic/$slug/more/$position'
+    | '/topic/$slug/more/none'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,6 +153,8 @@ export interface FileRouteTypes {
     | '/safety'
     | '/about/theology'
     | '/topic/$slug'
+    | '/topic/$slug/more/$position'
+    | '/topic/$slug/more/none'
   id:
     | '__root__'
     | '/'
@@ -145,6 +167,8 @@ export interface FileRouteTypes {
     | '/safety'
     | '/about_/theology'
     | '/topic/$slug'
+    | '/topic/$slug_/more/$position'
+    | '/topic/$slug_/more/none'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -158,6 +182,8 @@ export interface RootRouteChildren {
   SafetyRoute: typeof SafetyRoute
   AboutTheologyRoute: typeof AboutTheologyRoute
   TopicSlugRoute: typeof TopicSlugRoute
+  TopicSlugMorePositionRoute: typeof TopicSlugMorePositionRoute
+  TopicSlugMoreNoneRoute: typeof TopicSlugMoreNoneRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -232,6 +258,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TopicSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/topic/$slug_/more/$position': {
+      id: '/topic/$slug_/more/$position'
+      path: '/topic/$slug/more/$position'
+      fullPath: '/topic/$slug/more/$position'
+      preLoaderRoute: typeof TopicSlugMorePositionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/topic/$slug_/more/none': {
+      id: '/topic/$slug_/more/none'
+      path: '/topic/$slug/more/none'
+      fullPath: '/topic/$slug/more/none'
+      preLoaderRoute: typeof TopicSlugMoreNoneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -246,6 +286,8 @@ const rootRouteChildren: RootRouteChildren = {
   SafetyRoute: SafetyRoute,
   AboutTheologyRoute: AboutTheologyRoute,
   TopicSlugRoute: TopicSlugRoute,
+  TopicSlugMorePositionRoute: TopicSlugMorePositionRoute,
+  TopicSlugMoreNoneRoute: TopicSlugMoreNoneRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

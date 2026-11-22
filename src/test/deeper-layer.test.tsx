@@ -1,10 +1,11 @@
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { createMemoryHistory, createRootRoute, createRouter, RouterProvider } from "@tanstack/react-router";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { createMemoryHistory, createRouter, Outlet, RouterProvider } from "@tanstack/react-router";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { DeeperLayer } from "@/components/app/DeeperLayer";
+import { QueryClient } from "@tanstack/react-query";
+import { routeTree } from "@/routeTree.gen";
 import { loadDeeper, parseDeeper, type DeeperData } from "@/lib/deeper";
 import type { Database } from "@/integrations/supabase/types";
-import { DEEPER_OPEN, DEEPER_NONE, DEEPER_FITS, DEEPER_WORDS } from "@/lib/brand";
+import { DEEPER_OPEN, DEEPER_NONE, DEEPER_FITS, DEEPER_BACK } from "@/lib/brand";
 
 const mocks = vi.hoisted(() => ({ from: vi.fn(), eq: vi.fn(), maybeSingle: vi.fn(), related: vi.fn() }));
 vi.mock("@/integrations/supabase/client", () => ({ supabase: { from: mocks.from } }));
@@ -25,16 +26,18 @@ beforeEach(() => {
   mocks.eq.mockReset(); mocks.maybeSingle.mockReset(); mocks.related.mockReset();
   mocks.from.mockImplementation((table: string) => ({ select: () => table === "library_deeper"
     ? { eq: mocks.eq }
-    : { in: () => ({ eq: mocks.related }) } }));
+    : { in: () => ({ eq: mocks.related }), eq: () => ({ eq: () => ({ maybeSingle: async () => ({ data: { slug: "topic-10", title: "Topic ten", picture: "A picture", sentence: "A sentence", level1: "", level2: "", level3: "", try_text: "A small step", scripture: [] }, error: null }) }) }) } }));
   mocks.eq.mockReturnValue({ maybeSingle: mocks.maybeSingle });
   mocks.related.mockResolvedValue({ data: [], error: null });
 });
 
-async function openLayer() {
-  const root = createRootRoute({ component: () => <DeeperLayer data={data} /> });
-  const router = createRouter({ routeTree: root, history: createMemoryHistory({ initialEntries: ["/"] }) });
+async function openLayer(path = "/topic/topic-10") {
+  mocks.maybeSingle.mockResolvedValue({ data: row, error: null });
+  routeTree.update({ component: Outlet });
+  const router = createRouter({ routeTree, context: { queryClient: new QueryClient() }, history: createMemoryHistory({ initialEntries: [path] }) });
   await router.load();
-  return render(<RouterProvider router={router} />);
+  const view = render(<RouterProvider router={router} />);
+  return { ...view, router };
 }
 
 describe("Optional deeper data", () => {
@@ -65,45 +68,53 @@ describe("Optional deeper data", () => {
 });
 
 describe("Specific topic choices", () => {
-  it("replaces an entry on selection without moving focus or writing device storage", async () => {
+  it("navigates to saying pages and returns to the open chooser without device storage", async () => {
     const store = vi.spyOn(Storage.prototype, "setItem");
-    const view = await openLayer();
-    expect(screen.queryByRole("button", { name: DEEPER_NONE })).toBeNull();
-    fireEvent.click(screen.getByRole("button", { name: DEEPER_OPEN }));
-    const first = screen.getByRole("button", { name: `“${data.entries[0]?.saying}”` });
-    first.focus(); fireEvent.click(first);
-    expect(first).toHaveAttribute("aria-pressed", "true");
-    expect(document.activeElement).toBe(first);
-    const live = view.container.querySelector('[aria-live="polite"]');
-    expect(live).toHaveTextContent("That can be a strength that kept a person safe for a long time.");
-    const second = screen.getByRole("button", { name: `“${data.entries[1]?.saying}”` });
-    second.focus(); fireEvent.click(second);
-    expect(first).toHaveAttribute("aria-pressed", "false");
-    expect(second).toHaveAttribute("aria-pressed", "true");
-    expect(document.activeElement).toBe(second);
-    expect(live).toHaveTextContent("Accepting help can feel like giving up control.");
-    expect(live).not.toHaveTextContent("That can be a strength that kept a person safe for a long time.");
-    fireEvent.click(screen.getByRole("button", { name: DEEPER_NONE }));
-    expect(second).toHaveAttribute("aria-pressed", "false");
-    expect(screen.getByRole("button", { name: DEEPER_NONE })).toHaveAttribute("aria-pressed", "true");
-    expect(screen.getByRole("button", { name: DEEPER_WORDS })).toHaveAttribute("aria-expanded", "false");
-    fireEvent.click(screen.getByRole("button", { name: DEEPER_WORDS }));
-    expect(screen.getByRole("button", { name: DEEPER_WORDS })).toHaveAttribute("aria-expanded", "true");
+    const { router } = await openLayer();
+    fireEvent.click(await screen.findByRole("button", { name: DEEPER_OPEN }));
+    const first = data.entries[0];
+    const second = data.entries[1];
+    if (!first || !second) throw new Error("Two entries are required");
+    fireEvent.click(screen.getByRole("link", { name: `“${first.saying}”` }));
+    await waitFor(() => expect(router.state.location.pathname).toBe("/topic/topic-10/more/1"));
+    await screen.findByRole("heading", { name: first.saying });
+    expect(screen.queryByRole("link", { name: `“${first.saying}”` })).toBeNull();
+    fireEvent.click(screen.getByRole("link", { name: `“${second.saying}”` }));
+    await waitFor(() => expect(router.state.location.pathname).toBe("/topic/topic-10/more/2"));
+    await screen.findByRole("heading", { name: second.saying });
+    fireEvent.click(screen.getByRole("link", { name: DEEPER_BACK }));
+    await screen.findByRole("link", { name: `“${first.saying}”` });
+    expect(router.state.location.pathname).toBe("/topic/topic-10");
+    expect(router.state.location.search).toEqual({ chooser: true });
     expect(store).not.toHaveBeenCalled();
+  });
+  it("opens the dedicated endpoint page and returns to the chooser", async () => {
+    const { router } = await openLayer("/topic/topic-10?chooser=true");
+    fireEvent.click(await screen.findByRole("link", { name: DEEPER_NONE }));
+    await screen.findByRole("link", { name: DEEPER_BACK });
+    expect(router.state.location.pathname).toBe("/topic/topic-10/more/none");
+    expect(router.state.matches.at(-1)?.routeId).toBe("/topic/$slug_/more/none");
+    fireEvent.click(screen.getByRole("link", { name: DEEPER_BACK }));
+    await screen.findByRole("link", { name: DEEPER_NONE });
+    expect(router.state.location.search).toEqual({ chooser: true });
+  });
+  it.each(["999", "01", "not-a-position"])("redirects nonexistent position %s to the topic", async (position) => {
+    const { router } = await openLayer(`/topic/topic-10/more/${position}`);
+    await waitFor(() => expect(router.state.location.pathname).toBe("/topic/topic-10"));
+    await screen.findByRole("button", { name: DEEPER_OPEN });
+  });
+  it.each(["1", "none"])("redirects %s when the topic has no deeper row", async (position) => {
+    mocks.maybeSingle.mockResolvedValue({ data: null, error: null });
+    routeTree.update({ component: Outlet });
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() }, history: createMemoryHistory({ initialEntries: [`/topic/topic-9/more/${position}`] }) });
+    await router.load();
+    render(<RouterProvider router={router} />);
+    await waitFor(() => expect(router.state.location.pathname).toBe("/topic/topic-9"));
+    expect(screen.queryByRole("button", { name: DEEPER_OPEN })).toBeNull();
   });
   it("ends the chooser path after accepting the initial fit", async () => {
     await openLayer();
-    fireEvent.click(screen.getByRole("button", { name: DEEPER_FITS }));
+    fireEvent.click(await screen.findByRole("button", { name: DEEPER_FITS }));
     expect(screen.queryByRole("button", { name: DEEPER_OPEN })).toBeNull();
-    expect(screen.getByRole("link")).toHaveAttribute("href", "/about#topics");
-  });
-  it("resets selection after the component is unmounted", async () => {
-    const view = await openLayer();
-    fireEvent.click(screen.getByRole("button", { name: DEEPER_OPEN }));
-    fireEvent.click(screen.getByRole("button", { name: DEEPER_NONE }));
-    view.unmount();
-    await openLayer();
-    expect(screen.getByRole("button", { name: DEEPER_OPEN })).toBeTruthy();
-    expect(screen.queryByRole("button", { name: DEEPER_NONE })).toBeNull();
   });
 });

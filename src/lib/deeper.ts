@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { redirect } from "@tanstack/react-router";
 import type { Database } from "@/integrations/supabase/types";
 
 export type DeeperEntry = {
@@ -53,4 +54,13 @@ export async function loadDeeper(slug: string): Promise<DeeperData | null> {
     }
     return { ...parseDeeper(data), related };
   } catch { return null; }
+}
+
+export async function loadDeeperPage(slug: string, position: string) {
+  const data = await loadDeeper(slug);
+  const entry = data?.entries.find((item) => String(item.position) === position);
+  if (!data || (position !== "none" && !entry)) {
+    throw redirect({ to: "/topic/$slug", params: { slug }, replace: true });
+  }
+  return { data, entry: entry ?? null };
 }
