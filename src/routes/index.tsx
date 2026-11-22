@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/app/AppShell";
 import { QuestionBox } from "@/components/app/QuestionBox";
 import { LampIllustration } from "@/components/app/LampIllustration";
+import { InstallHint } from "@/components/app/InstallHint";
 import { APP_DESCRIPTION, APP_PREVIEW_TITLE, FIND_GUIDE, HOME_GUIDE_TEXT, QUESTION_TITLE, RESEARCH_LINK, RESEARCH_NOTICE } from "@/lib/brand";
 import { WELCOME_HEADING, WELCOME_INVITATION, WELCOME_TEXT, WELCOME_TOPICS_LABEL } from "@/content/about";
 
@@ -38,6 +39,7 @@ function Home() {
             <Link to="/guide" className="text-primary underline underline-offset-4">{FIND_GUIDE}</Link>
           </div>
         </section>
+        <InstallHint />
         <p className="text-lg leading-relaxed">
           {WELCOME_TEXT.slice(0, -(WELCOME_TOPICS_LABEL.length + 1))}
           <Link to="/about" hash="topics" className="underline underline-offset-4">{WELCOME_TOPICS_LABEL}</Link>.

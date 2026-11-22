@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Add device-only installation hint below the home guide card, installation instructions and footer link, and exact privacy wording; verified permanent dismissal, standalone visibility, early browser offer retention and simulated acceptance, phone and desktop navigation, and 68 tests.
+
 - [x] Refine home order and lamp size, center the heading, keep only the inline topics link, announce welcome lines, set coral error colors and black iPhone status bar; all 64 tests passed, desktop/phone layouts and topics navigation checked, four accessible manual welcome lines and completion verified.
 
 - [x] Apply Hearth colors, pill buttons, lamp illustrations and wordmark, welcome wording and fourth manual intro line, plus the home guide card; all 64 tests passed, phone and desktop screenshots checked, four manual lines and reduced motion verified, topics and guide links followed, crisis colors and numbers checked, theme and manifest confirmed, no overflow or outside font requests.

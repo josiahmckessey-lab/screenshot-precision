@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as GuideRouteImport } from './routes/guide'
 import { Route as IdeasRouteImport } from './routes/ideas'
+import { Route as InstallRouteImport } from './routes/install'
 import { Route as ManifestDotwebmanifestRouteImport } from './routes/manifest[.]webmanifest'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SafetyRouteImport } from './routes/safety'
@@ -37,6 +38,11 @@ const GuideRoute = GuideRouteImport.update({
 const IdeasRoute = IdeasRouteImport.update({
   id: '/ideas',
   path: '/ideas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InstallRoute = InstallRouteImport.update({
+  id: '/install',
+  path: '/install',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ManifestDotwebmanifestRoute = ManifestDotwebmanifestRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/guide': typeof GuideRoute
   '/ideas': typeof IdeasRoute
+  '/install': typeof InstallRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/privacy': typeof PrivacyRoute
   '/safety': typeof SafetyRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/guide': typeof GuideRoute
   '/ideas': typeof IdeasRoute
+  '/install': typeof InstallRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/privacy': typeof PrivacyRoute
   '/safety': typeof SafetyRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/guide': typeof GuideRoute
   '/ideas': typeof IdeasRoute
+  '/install': typeof InstallRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/privacy': typeof PrivacyRoute
   '/safety': typeof SafetyRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/guide'
     | '/ideas'
+    | '/install'
     | '/manifest.webmanifest'
     | '/privacy'
     | '/safety'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/guide'
     | '/ideas'
+    | '/install'
     | '/manifest.webmanifest'
     | '/privacy'
     | '/safety'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/guide'
     | '/ideas'
+    | '/install'
     | '/manifest.webmanifest'
     | '/privacy'
     | '/safety'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   GuideRoute: typeof GuideRoute
   IdeasRoute: typeof IdeasRoute
+  InstallRoute: typeof InstallRoute
   ManifestDotwebmanifestRoute: typeof ManifestDotwebmanifestRoute
   PrivacyRoute: typeof PrivacyRoute
   SafetyRoute: typeof SafetyRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/ideas'
       fullPath: '/ideas'
       preLoaderRoute: typeof IdeasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/install': {
+      id: '/install'
+      path: '/install'
+      fullPath: '/install'
+      preLoaderRoute: typeof InstallRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/manifest.webmanifest': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   GuideRoute: GuideRoute,
   IdeasRoute: IdeasRoute,
+  InstallRoute: InstallRoute,
   ManifestDotwebmanifestRoute: ManifestDotwebmanifestRoute,
   PrivacyRoute: PrivacyRoute,
   SafetyRoute: SafetyRoute,

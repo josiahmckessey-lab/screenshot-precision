@@ -17,6 +17,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { AppShell } from "@/components/app/AppShell";
 import { AgeScreen } from "@/components/app/AgeScreen";
 import { WelcomeIntro } from "@/components/app/WelcomeIntro";
+import { InstallHintProvider } from "@/components/app/InstallHint";
 import { INTRO_COMPLETED_KEY, shouldPlayIntro } from "@/lib/welcome-intro";
 import { APP_DESCRIPTION, AGE_ACCEPTED_KEY, APP_NAME, APP_PREVIEW_TITLE } from "@/lib/brand";
 
@@ -144,6 +145,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <InstallHintProvider>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       {gated ? (
         <AppShell>{adult === false && <AgeScreen onContinue={() => {
@@ -162,6 +164,7 @@ function RootComponent() {
         <div className={homeFade ? "intro-home-fade" : "contents"}><Outlet /></div>
       )}
       <Toaster position="top-center" />
+      </InstallHintProvider>
     </QueryClientProvider>
   );
 }

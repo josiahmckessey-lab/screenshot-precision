@@ -9,7 +9,7 @@ export const PRIVACY_SECTIONS = [
   },
   {
     lead: "Kept on the device only.",
-    body: "The answer to the 18 or older screen, a count of messages sent, and the last results stay on the device and are never sent anywhere.",
+    body: "The answer to the 18 or older screen, a count of messages sent, the last results, and whether the welcome lines and the home screen hint were already shown stay on the device and are never sent anywhere.",
   },
   {
     lead: "What is never done.",

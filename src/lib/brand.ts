@@ -17,6 +17,16 @@ export const AGE_STOP = "This library is only for adults, 18 and older.";
 export const AGE_ACCEPTED_KEY = "daybreak-adult-v1";
 export const LAMP_LABEL = "A lamp glowing on a shelf in a dark room";
 export const HOME_GUIDE_TEXT = "Josiah, a guide, keeps this library. Messages are read in time, and a reply may take a few days.";
+export const INSTALL_HINT_TITLE = "Keep The Gift close";
+export const INSTALL_LABEL = "Add to home screen";
+export const INSTALL_NOT_NOW = "Not now";
+export const INSTALL_IOS_HINT = "Tap the Share button, then Add to Home Screen.";
+export const INSTALL_OTHER_HINT = "Open the browser menu, then choose Install app or Add to Home screen.";
+export const INSTALL_PAGE_TITLE = "Add The Gift to a home screen";
+export const INSTALL_SECTIONS = [
+  { heading: "iPhone", steps: ["Open the library in Safari.", "Tap the Share button, the square with an arrow.", "Scroll down and tap Add to Home Screen.", "Tap Add."] },
+  { heading: "Android", steps: ["Open the library in Chrome.", "Tap the menu, the three dots.", "Tap Install app or Add to Home screen.", "Confirm."] },
+] as const;
 
 export const ABOUT_TEXT =
   "This library is a collection of ideas drawn from one model of change. It is not professional care, not crisis care, and not medical advice. Questions left in the question box are saved without names or accounts and are read by a person later, not right away.";

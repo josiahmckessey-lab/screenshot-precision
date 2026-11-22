@@ -1,7 +1,7 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-import { APP_NAME, RESEARCH_LINK } from "@/lib/brand";
+import { APP_NAME, INSTALL_LABEL, RESEARCH_LINK } from "@/lib/brand";
 import { CrisisButton } from "./CrisisHelp";
 import { LampMark } from "./LampIllustration";
 
@@ -35,6 +35,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <Link to="/safety" className="underline underline-offset-4">Safety</Link>
         <Link to="/privacy" className="underline underline-offset-4">Privacy</Link>
         <Link to="/guide" className="underline underline-offset-4">Find a guide</Link>
+        <Link to="/install" className="underline underline-offset-4">{INSTALL_LABEL}</Link>
         <Link to="/about" hash="wellbeing" className="underline underline-offset-4">{RESEARCH_LINK}</Link>
       </footer>
     </div>
