@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PART_BY_TOPIC } from "@/content/about";
 import { APP_DESCRIPTION,
   APP_NAME, BACK_TO_IDEAS, DEPTH_TITLES, FIND_GUIDE, KNOW_MORE_LABEL, QUESTION_TOPIC_TITLE, SCRIPTURE_LABEL,
-  SCRIPTURE_MORE_LABEL, SCRIPTURE_VERSE_LABEL, SCRIPTURE_WHY_LABEL,
+  SCRIPTURE_MORE_LABEL, SCRIPTURE_WHY_LABEL,
   TOPIC_FOOTER, TOPIC_PICTURE_LABEL, TOPIC_SENTENCE_LABEL, TRY_LABEL,
 } from "@/lib/brand";
 
@@ -113,39 +113,38 @@ function ScriptureSection({ items }: { items: ScriptureItem[] }) {
   const first = items[0];
   if (!first) return null;
 
-  if (typeof first.explanation !== "string") {
-    return (
-      <Collapsible className="rounded-2xl border p-5">
-        <CollapsibleTrigger className="w-full text-left text-lg font-semibold underline-offset-4 hover:underline">
-          {SCRIPTURE_LABEL}
-        </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-6 pt-4">
-          {items.map((s, i) => <VerseBlock key={i} s={s} />)}
-        </CollapsibleContent>
-      </Collapsible>
-    );
-  }
-
+  const hasExplanation = typeof first.explanation === "string";
   const rest = items.slice(1);
+
   return (
-    <div className="space-y-2">
-      <Card label={SCRIPTURE_VERSE_LABEL}>
-        <blockquote className="whitespace-pre-line border-l-4 pl-4 text-lg italic">{first.verse}</blockquote>
-        <p className="text-muted-foreground">{first.reference}</p>
-        <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{SCRIPTURE_WHY_LABEL}</p>
-        <p className="text-lg leading-relaxed">{first.explanation}</p>
-      </Card>
-      {rest.length > 0 && (
-        <Collapsible open={moreOpen} onOpenChange={setMoreOpen}>
-          <CollapsibleTrigger className="min-h-11 text-base underline underline-offset-4">
-            {SCRIPTURE_MORE_LABEL}
-          </CollapsibleTrigger>
-          <CollapsibleContent className="space-y-6 pt-2">
-            {rest.map((s, i) => <VerseBlock key={i} s={s} />)}
-          </CollapsibleContent>
-        </Collapsible>
-      )}
-    </div>
+    <Collapsible className="rounded-2xl border p-5">
+      <CollapsibleTrigger className="w-full text-left text-lg font-semibold underline-offset-4 hover:underline">
+        {SCRIPTURE_LABEL}
+      </CollapsibleTrigger>
+      <CollapsibleContent className="space-y-6 pt-4">
+        {hasExplanation ? (
+          <>
+            <VerseBlock s={first} />
+            <div className="space-y-2">
+              <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{SCRIPTURE_WHY_LABEL}</p>
+              <p className="text-lg leading-relaxed">{first.explanation}</p>
+            </div>
+            {rest.length > 0 && (
+              <Collapsible open={moreOpen} onOpenChange={setMoreOpen}>
+                <CollapsibleTrigger className="min-h-11 text-base underline underline-offset-4">
+                  {SCRIPTURE_MORE_LABEL}
+                </CollapsibleTrigger>
+                <CollapsibleContent className="space-y-6 pt-2">
+                  {rest.map((s, i) => <VerseBlock key={i} s={s} />)}
+                </CollapsibleContent>
+              </Collapsible>
+            )}
+          </>
+        ) : (
+          items.map((s, i) => <VerseBlock key={i} s={s} />)
+        )}
+      </CollapsibleContent>
+    </Collapsible>
   );
 }
 

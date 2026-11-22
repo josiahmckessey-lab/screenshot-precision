@@ -27,7 +27,6 @@ export const KNOW_MORE_LABEL = "Want to know more about this?";
 export const DEPTH_TITLES = ["The plain why", "How it works", "Research and roots"] as const;
 export const TRY_LABEL = "One small thing to try";
 export const SCRIPTURE_LABEL = "For readers who want Scripture";
-export const SCRIPTURE_VERSE_LABEL = "A verse to hold";
 export const SCRIPTURE_WHY_LABEL = "Why this verse fits";
 export const SCRIPTURE_MORE_LABEL = "Want more verses on this topic?";
 export const QUESTION_TITLE = "Set a question down here";
