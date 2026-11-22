@@ -55,3 +55,4 @@ use the editor.
 - Guide submissions use a validated public server function and an atomic capped insert RPC; save before Resend notification and acknowledge saved messages even if email fails, without logging or reading message text back.
 - Questions are saved by calling the `submit_question` RPC (topic slug or null, plus body) instead of inserting into `questions`, so the daily limit lives in the database and a null return is handled as a save failure.
 - Privacy paragraphs live in `src/content/privacy.ts` and render through the shared shell; shared form-notice links point to `/privacy` without altering existing notices.
+- Optional deeper topic rows load with `maybeSingle` and fail closed to null; the chooser stores state only in its component, so missing data preserves existing pages and no device history is added.

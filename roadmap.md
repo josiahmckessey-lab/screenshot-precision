@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Add the optional specific topic layer, chooser, endpoint, word definitions and related links; verified topic 10, unchanged topics 1, 9 and 15, phone and desktop, focus retention, safety and navigation, reduced motion and 77 tests.
+- [ ] Resolve the excluded professional wording in topic 10 entry 3; that entry remains hidden pending the owner's wording choice, with stored text unchanged.
+
 - [x] Add device-only installation hint below the home guide card, installation instructions and footer link, and exact privacy wording; verified permanent dismissal, standalone visibility, early browser offer retention and simulated acceptance, phone and desktop navigation, and 68 tests.
 
 - [x] Refine home order and lamp size, center the heading, keep only the inline topics link, announce welcome lines, set coral error colors and black iPhone status bar; all 64 tests passed, desktop/phone layouts and topics navigation checked, four accessible manual welcome lines and completion verified.

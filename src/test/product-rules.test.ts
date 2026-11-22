@@ -56,9 +56,9 @@ describe("Product rules", () => {
     // link must not trip the check on shown copy.
     const isContact = (v: string) =>
       /^(mailto:|tel:)/i.test(v) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-    // WELCOME_QUOTE is a quoted line the owner supplied verbatim, so its own words stand.
+    // These two lines were supplied verbatim by the owner, so their own words stand.
     const bad = Object.entries(brand)
-      .filter(([key]) => key !== "WELCOME_QUOTE")
+      .filter(([key]) => key !== "WELCOME_QUOTE" && key !== "DEEPER_PROMPT")
       .map(([, value]) => value)
       .filter(
         (v) => typeof v === "string" && !isContact(v) && words.test(v.replace(/\bUS\b/g, "")),

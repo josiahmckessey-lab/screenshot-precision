@@ -4,6 +4,8 @@ import { Streamdown } from "streamdown";
 
 import { AppShell } from "@/components/app/AppShell";
 import { QuestionBox } from "@/components/app/QuestionBox";
+import { DeeperLayer } from "@/components/app/DeeperLayer";
+import { loadDeeper } from "@/lib/deeper";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
@@ -36,7 +38,8 @@ async function loadTopic(slug: string) {
           : [];
       })
     : [];
-  return { ...data, scripture };
+  const deeper = await loadDeeper(slug);
+  return { ...data, scripture, deeper };
 }
 
 export const Route = createFileRoute("/topic/$slug")({
@@ -181,6 +184,8 @@ function TopicPage() {
           <Button size="lg" variant="outline" onClick={() => setDepth((d) => d + 1)}>{KNOW_MORE_LABEL}</Button>
         )}
         {depth === 0 && tryCard}
+
+        {t.deeper && <DeeperLayer key={t.slug} data={t.deeper} />}
 
         <ScriptureSection items={t.scripture} />
 
