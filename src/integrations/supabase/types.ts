@@ -239,6 +239,39 @@ export type Database = {
         }
         Relationships: []
       }
+      library_deeper: {
+        Row: {
+          also_related: Json
+          chooser_heading: string
+          entries: Json
+          reach_beyond: Json
+          status: string
+          topic_number: number
+          version: string
+          words: Json
+        }
+        Insert: {
+          also_related?: Json
+          chooser_heading?: string
+          entries?: Json
+          reach_beyond?: Json
+          status?: string
+          topic_number: number
+          version?: string
+          words?: Json
+        }
+        Update: {
+          also_related?: Json
+          chooser_heading?: string
+          entries?: Json
+          reach_beyond?: Json
+          status?: string
+          topic_number?: number
+          version?: string
+          words?: Json
+        }
+        Relationships: []
+      }
       library_pages: {
         Row: {
           home_line: string
