@@ -47,7 +47,7 @@ describe("Starter question behavior", () => {
     render(<QuestionBox {...(topicSlug ? { topicSlug } : {})} />);
     const input = screen.getByRole("textbox");
     fireEvent.change(input, { target: { value: "An edited question" } });
-    const examplesLink = screen.getByRole("link", { name: /Having trouble/ });
+    const examplesLink = screen.getByRole("link", { name: /Just looking around/ });
     expect(examplesLink).toHaveAttribute("href", "/examples");
     fireEvent.click(examplesLink);
     expect(input).toHaveValue("An edited question");
@@ -96,5 +96,23 @@ describe("Starter question behavior", () => {
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent(QUESTION_ERROR));
     expect(actions.navigate).not.toHaveBeenCalled();
     expect(actions.save).not.toHaveBeenCalled();
+  });
+
+  it("passes validated saying numbers and fit into saved device results", async () => {
+    actions.rpc.mockResolvedValue({ data: "saved", error: null });
+    actions.sorter.mockResolvedValue({ ok: true, matches: [5], sayings: { 5: 3, 8: 1 }, fit: "close", crisis: false });
+    render(<QuestionBox />);
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "A habit" } });
+    fireEvent.click(screen.getByRole("button", { name: /^Send$/ }));
+    await waitFor(() => expect(actions.save).toHaveBeenCalledWith(sessionStorage, { text: "A habit", matches: [5], sayings: { 5: 3 }, fit: "close", crisis: false }));
+  });
+
+  it("keeps fallback results loose without saying numbers", async () => {
+    actions.rpc.mockResolvedValue({ data: "saved", error: null });
+    actions.sorter.mockResolvedValue({ ok: false, matches: [], sayings: { 4: 3 }, fit: "close", crisis: false });
+    render(<QuestionBox />);
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "I feel flooded" } });
+    fireEvent.click(screen.getByRole("button", { name: /^Send$/ }));
+    await waitFor(() => expect(actions.save).toHaveBeenCalledWith(sessionStorage, { text: "I feel flooded", matches: [4], sayings: {}, fit: "loose", crisis: false }));
   });
 });

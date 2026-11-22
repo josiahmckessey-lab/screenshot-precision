@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { AppShell } from "@/components/app/AppShell";
-import { STARTER_QUESTIONS } from "@/content/starter-questions";
+import { STARTER_GROUPS, STARTER_QUESTIONS } from "@/content/starter-questions";
 import { APP_DESCRIPTION, APP_NAME, EXAMPLES_TITLE } from "@/lib/brand";
 
 export const Route = createFileRoute("/examples")({
@@ -27,9 +27,11 @@ function ExamplesPage() {
     <AppShell>
       <section className="space-y-6 py-4">
         <h1 className="text-4xl leading-tight">{EXAMPLES_TITLE}</h1>
+        {STARTER_GROUPS.map((group) => <section key={group} className="space-y-2">
+        <h2 className="text-lg text-muted-foreground">{group}</h2>
         <ul className="divide-y divide-border">
-          {STARTER_QUESTIONS.map((question) => (
-            <li key={question.slug}>
+          {STARTER_QUESTIONS.filter((question) => (question.group ?? "When something is hard") === group).map((question) => (
+            <li key={question.text}>
               <Link to="/topic/$slug" params={{ slug: question.slug }} search={{}}
                 className="flex min-h-12 w-full items-center justify-between gap-4 py-4 text-lg leading-relaxed underline underline-offset-4">
                 <span>{question.text}</span><ArrowRight aria-hidden="true" className="size-5 shrink-0" />
@@ -37,6 +39,7 @@ function ExamplesPage() {
             </li>
           ))}
         </ul>
+        </section>)}
       </section>
     </AppShell>
   );

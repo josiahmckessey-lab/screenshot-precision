@@ -6,6 +6,34 @@ import { bestTopics } from "@/lib/question-match";
 export const FALLBACK_TOPICS = [1, 4, 8] as const;
 export const DEFAULT_MATCH_DAILY_CAP = 1500;
 
+export type MatchFit = "close" | "loose";
+export type ParsedMatch = { matches: number[]; sayings: Record<number, number>; fit: MatchFit; crisis: boolean };
+
+export function sanitizeSayings(raw: unknown, matches: number[]): Record<number, number> {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return {};
+  const value = raw as Record<string, unknown>;
+  const sayings: Record<number, number> = {};
+  for (const topic of matches) {
+    const position = value[String(topic)];
+    if (typeof position === "number" && Number.isSafeInteger(position) && position >= 1) sayings[topic] = position;
+  }
+  return sayings;
+}
+
+/** Project only validated stored saying text, never model text. */
+export function readStoredSayings(raw: unknown): { position: number; saying: string }[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.flatMap((value: unknown) => {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return [];
+    const entry = value as Record<string, unknown>;
+    const position = entry["position"];
+    const saying = entry["saying"];
+    if (typeof position !== "number" || !Number.isSafeInteger(position) || position < 1 || typeof saying !== "string") return [];
+    if (/\b(?:therap\w*|counsel\w*|treatm\w*)\b/i.test(Object.values(entry).join(" "))) return [];
+    return [{ position, saying }];
+  });
+}
+
 /** Keep only whole numbers from 1 to 20, at most 3, no repeats. */
 export function sanitizeMatches(raw: unknown): number[] {
   if (!Array.isArray(raw)) return [];
@@ -26,21 +54,31 @@ export function sanitizeMatches(raw: unknown): number[] {
  */
 export function parseMatchReply(
   text: string,
-): { matches: number[]; crisis: boolean } | null {
+): ParsedMatch | null {
   const start = text.indexOf("{");
   const end = text.lastIndexOf("}");
-  if (start < 0 || end <= start) return null;
   let parsed: unknown;
   try {
-    parsed = JSON.parse(text.slice(start, end + 1));
+    parsed = JSON.parse(start >= 0 && end > start ? text.slice(start, end + 1) : text);
   } catch {
     return null;
   }
   if (!parsed || typeof parsed !== "object") return null;
   const obj = parsed as Record<string, unknown>;
-  const matches = sanitizeMatches(obj["matches"]);
-  if (matches.length === 0) return null;
-  return { matches, crisis: obj["crisis"] === true };
+  const raw = Array.isArray(parsed) ? parsed : obj["matches"];
+  const matches: number[] = [];
+  const sayings: Record<number, number> = {};
+  if (Array.isArray(raw)) for (const value of raw) {
+    const entry = value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : null;
+    const topic = entry ? entry["topic"] : value;
+    if (typeof topic !== "number" || !Number.isInteger(topic) || topic < 1 || topic > 20 || matches.includes(topic)) continue;
+    matches.push(topic);
+    const saying = entry?.["saying"];
+    if (typeof saying === "number" && Number.isSafeInteger(saying) && saying >= 1) sayings[topic] = saying;
+    if (matches.length === 3) break;
+  }
+  if (matches.length === 0 && (!Array.isArray(raw) || raw.length > 0)) return null;
+  return { matches, sayings, fit: obj["fit"] === "close" ? "close" : "loose", crisis: obj["crisis"] === true };
 }
 
 /**

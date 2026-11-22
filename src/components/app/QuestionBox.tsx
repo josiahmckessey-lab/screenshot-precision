@@ -10,7 +10,7 @@ import { QUESTION_CRISIS_TEXT, QUESTION_ERROR, QUESTION_EXAMPLES_LINK, QUESTION_
 import { saveIdeas, type IdeasResult } from "@/lib/ideas-session";
 import { match_topics } from "@/lib/match-topics.functions";
 import { canSend, hasCrisisPhrase, RATE_MS } from "@/lib/question-match";
-import { pickTopicNumbers } from "@/lib/match-topics";
+import { pickTopicNumbers, sanitizeMatches, sanitizeSayings } from "@/lib/match-topics";
 
 export function QuestionBox({ topicSlug, onResults }: { topicSlug?: string; onResults?: (result: IdeasResult) => void }) {
   const [body, setBody] = useState("");
@@ -51,6 +51,8 @@ export function QuestionBox({ topicSlug, onResults }: { topicSlug?: string; onRe
         text,
         matches: pickTopicNumbers(result, text, (data ?? []).map((t) => t.topic_number)),
         crisis: localCrisis || result?.crisis === true,
+        sayings: result?.ok && sanitizeMatches(result.matches).length ? sanitizeSayings(result.sayings, result.matches) : {},
+        fit: result?.ok && sanitizeMatches(result.matches).length && result.fit === "close" ? "close" : "loose",
       };
       saveIdeas(sessionStorage, ideas);
       onResults?.(ideas);

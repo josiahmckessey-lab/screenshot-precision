@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Add validated closest saying and fit results with compatible device storage, stored saying links, and optional live sorter checks; real saved result navigation verified on phone and desktop, 149 app checks and the final 32 case live evaluation pass. An earlier run missed case 12, so model matches can vary; the supplied instruction and expectations remain unchanged.
+- [x] Group all existing and fourteen new starter questions into four groups on the examples page; all 22 links tested, phone layout and loose fit fallback verified without runtime errors.
+
 - [x] Simplify home and question screens, add /examples and the privacy summary, move shared crisis help and care notice to the footer, and close reaching beyond by default; 112 tests pass, phone and desktop navigation checked, automatic crisis panel verified without storing test text, stored content and sorter unchanged.
 
 - [x] Simplify home and topic screens, add safe shared Back navigation and URL restoration, move installation to About, add /ask, and shorten saying lists; 101 tests pass, phone Back restored the exact scroll position and expanded list, loaded saying title and question screen confirmed, desktop checked without overflow.

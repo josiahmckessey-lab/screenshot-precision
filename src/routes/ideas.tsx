@@ -4,17 +4,12 @@ import { AppShell } from "@/components/app/AppShell";
 import { CrisisPanel } from "@/components/app/CrisisHelp";
 import { QuestionBox } from "@/components/app/QuestionBox";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
-import { APP_DESCRIPTION, APP_NAME, ASK_ANOTHER_QUESTION, MESSAGE_GUIDE, NEED_MORE_TEXT, NEED_MORE_TITLE, QUESTION_CRISIS_TEXT, QUESTION_IDEAS_HEADING, QUESTION_KNOW_MORE, QUESTION_SIT_LABEL, QUESTION_START_OVER } from "@/lib/brand";
+import { getIdeasLibrary } from "@/lib/match-topics.functions";
+import { APP_DESCRIPTION, APP_NAME, ASK_ANOTHER_QUESTION, CLOSEST_SAYING_LABEL, IDEAS_LOOSE_FIT, MESSAGE_GUIDE, NEED_MORE_TEXT, NEED_MORE_TITLE, QUESTION_CRISIS_TEXT, QUESTION_IDEAS_HEADING, QUESTION_KNOW_MORE, QUESTION_SIT_LABEL, QUESTION_START_OVER } from "@/lib/brand";
 import { clearIdeas, readIdeas, type IdeasResult } from "@/lib/ideas-session";
 
 export const Route = createFileRoute("/ideas")({
-  loader: async () => {
-    const { data, error } = await supabase.from("library_pages")
-      .select("slug,title,topic_number,home_line,sentence").eq("status", "active");
-    if (error) throw new Error("The ideas could not be loaded.");
-    return data ?? [];
-  },
+  loader: () => getIdeasLibrary(),
   head: () => ({ meta: [
     { title: `Ideas that relate — ${APP_NAME}` },
     { name: "description", content: APP_DESCRIPTION },
@@ -26,7 +21,7 @@ export const Route = createFileRoute("/ideas")({
 });
 
 function IdeasPage() {
-  const topics = Route.useLoaderData();
+  const { topics, deeper } = Route.useLoaderData();
   const navigate = useNavigate();
   const [result, setResult] = useState<IdeasResult | null>(null);
   useEffect(() => { setResult(readIdeas(sessionStorage)); }, []);
@@ -39,12 +34,17 @@ function IdeasPage() {
     <div className="space-y-6 py-6">
       {result?.crisis && <CrisisPanel text={QUESTION_CRISIS_TEXT} />}
       <h1 className="text-3xl leading-tight">{QUESTION_IDEAS_HEADING}</h1>
+      {result?.fit === "loose" && <p className="text-muted-foreground">{IDEAS_LOOSE_FIT}</p>}
       <div className="space-y-3">
         {ideas.map((t) => <section key={t.slug} className="space-y-3 rounded-xl border bg-card p-5 text-card-foreground">
           <h2 className="text-xl font-semibold">{t.title}</h2>
           <p className="text-lg leading-relaxed">{t.sentence}</p>
           <p className="text-sm uppercase tracking-wide text-muted-foreground">{QUESTION_SIT_LABEL}</p>
           <p className="text-lg leading-relaxed">{t.home_line}</p>
+          {deeper.find((row) => row.topic_number === t.topic_number)?.entries.filter((entry) => entry.position === result?.sayings?.[t.topic_number]).slice(0, 1).map((entry) => <div key={entry.position} className="space-y-1">
+            <p className="text-sm text-muted-foreground">{CLOSEST_SAYING_LABEL}</p>
+            <Link to="/topic/$slug/more/$position" params={{ slug: t.slug, position: String(entry.position) }} search={{}} className="inline-flex min-h-12 items-center text-lg leading-relaxed underline underline-offset-4">{entry.saying}</Link>
+          </div>)}
           <Button asChild variant="outline"><Link to="/topic/$slug" params={{ slug: t.slug }} search={{ from: "ideas" }}>{QUESTION_KNOW_MORE}</Link></Button>
         </section>)}
       </div>

@@ -23,4 +23,19 @@ describe("Ideas session rules", () => {
   it("uses a total daily sorter cap of 1500", () => {
     expect(DEFAULT_MATCH_DAILY_CAP).toBe(1500);
   });
+
+  it("reads new results and preserves old results without optional fields", () => {
+    const result = { text: "a habit", matches: [5, 2], sayings: { 5: 3 }, fit: "close" as const, crisis: false };
+    saveIdeas(sessionStorage, result);
+    expect(readIdeas(sessionStorage)).toEqual(result);
+    sessionStorage.setItem(IDEAS_SESSION_KEY, JSON.stringify({ text: "older result", matches: [2], crisis: false }));
+    expect(readIdeas(sessionStorage)).toEqual({ text: "older result", matches: [2], crisis: false });
+  });
+
+  it("rejects invalid saved saying numbers and defaults invalid fit to loose", () => {
+    sessionStorage.setItem(IDEAS_SESSION_KEY, JSON.stringify({ text: "a habit", matches: [1, 5, 20], sayings: { 1: 0, 5: 2, 20: 1.5, 7: 3 }, fit: "near", crisis: false }));
+    expect(readIdeas(sessionStorage)).toEqual({ text: "a habit", matches: [1, 5, 20], sayings: { 5: 2 }, fit: "loose", crisis: false });
+    sessionStorage.setItem(IDEAS_SESSION_KEY, JSON.stringify({ text: "a habit", matches: [5], sayings: [2], fit: "loose" }));
+    expect(readIdeas(sessionStorage)?.sayings).toEqual({});
+  });
 });

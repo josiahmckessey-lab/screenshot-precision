@@ -3,7 +3,7 @@ import { createMemoryHistory, createRouter, Outlet, RouterProvider } from "@tans
 import { QueryClient } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { routeTree } from "@/routeTree.gen";
-import { STARTER_QUESTIONS } from "@/content/starter-questions";
+import { STARTER_GROUPS, STARTER_QUESTIONS } from "@/content/starter-questions";
 
 vi.mock("@/integrations/supabase/client", () => ({ supabase: {
   from: (table: string) => ({ select: () => ({ eq: () => ({ eq: () => ({ maybeSingle: async () => ({
@@ -13,6 +13,15 @@ vi.mock("@/integrations/supabase/client", () => ({ supabase: {
 afterEach(cleanup);
 
 describe("All starter questions", () => {
+  it("keeps all existing entries in the last group and adds fourteen other ways in", () => {
+    expect(STARTER_GROUPS).toEqual(["Out of curiosity", "For someone else", "Everyday life", "When something is hard"]);
+    expect(STARTER_GROUPS.map((group) => STARTER_QUESTIONS.filter((question) => question.group === group).length)).toEqual([6, 4, 4, 8]);
+    expect(STARTER_QUESTIONS.slice(0, 14).map((question) => question.slug)).toEqual([
+      "topic-01", "topic-02", "topic-03", "topic-05", "topic-11", "topic-13",
+      "topic-08", "topic-18", "topic-19", "topic-12", "topic-04", "topic-17", "topic-20", "topic-16",
+    ]);
+    expect(STARTER_QUESTIONS.slice(14).map((question) => question.slug)).toEqual(["topic-02", "topic-13", "topic-01", "topic-11", "topic-05", "topic-07", "topic-08", "topic-04"]);
+  });
   it.each(STARTER_QUESTIONS)("opens $slug from the examples page", async (question) => {
     routeTree.update({ component: Outlet });
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() }, history: createMemoryHistory({ initialEntries: ["/examples"] }) });

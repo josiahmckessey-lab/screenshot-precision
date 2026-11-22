@@ -8,7 +8,7 @@ import type { Database } from "@/integrations/supabase/types";
 const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_VERSION = "2023-06-01";
 // The model thinks before answering, so the budget has to cover thinking plus the JSON.
-const MAX_REPLY_TOKENS = 800;
+const MAX_REPLY_TOKENS = 1000;
 
 /** Read-only client for public library rows. Never holds a session. */
 export function createPublicReadClient() {
