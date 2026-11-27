@@ -59,4 +59,4 @@ use the editor.
 - Shared Back uses in-app history indices and parent fallbacks with router scroll restoration to avoid leaving the library.
 - The /ask route validates scope against active topics and reuses QuestionBox to keep submissions unchanged.
 - Kept items store only one validated topic slug, title and timestamp on the device; the home check back reads storage after hydration and fetches only active public try text, with answers kept in component state and no reminders or tracking.
-- The guided walk (/walk) orders active `library_walk` rows joined to active pages via `src/lib/walk-load.ts`; the step and done state live in validated search params, the chosen answer stays in component state, and only the next step number is kept on the device through `src/lib/walk.ts`. Topic and walk screens share `TopicCards` so the picture and sentence cards cannot drift.
+- Guided walk: `walk-load.ts` orders active walk rows joined to active pages; step and done are validated search params, answers stay in component state, and `walk.ts` keeps only the next step on the device. `TopicCards` is shared with topic pages to prevent drift.
