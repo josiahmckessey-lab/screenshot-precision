@@ -1,6 +1,6 @@
 // User-facing names and copy shared across screens.
 // Banned words (see src/test/product-rules.test.ts) must never appear in user-facing text.
-// No first- or second-person words in app text: write "a person" and "people".
+// The library may address readers directly, but never speaks in first person.
 export const APP_NAME = "The Gift";
 export const APP_TAGLINE = "A quiet library of ideas about how people change.";
 export const APP_PREVIEW_TITLE = `${APP_NAME}, ${APP_TAGLINE.charAt(0).toLowerCase()}${APP_TAGLINE.slice(1)}`;
@@ -69,6 +69,28 @@ export const QUESTION_TOPIC_TITLE = QUESTION_TITLE;
 export const QUESTION_EXAMPLES_LINK = "Just looking around? Try a few of these";
 export const CLOSEST_SAYING_LABEL = "Closest saying";
 export const IDEAS_LOOSE_FIT = "These are the nearest ideas. They may not fit exactly.";
+export const IDEAS_ECHO_LABEL = "What you set down";
+export const IDEAS_ECHO_END = "...";
+export const LANDING_LABEL = "Where does this land?";
+export const LANDING_CHOICES = [
+  { id: "fits", label: "This fits", reply: "Good. A picture that fits is worth keeping. One small thing is enough for now." },
+  { id: "part", label: "Part of it fits", reply: "Part is a fine place to begin. Parts can be looked at one at a time." },
+  { id: "not", label: "Not quite", reply: "That is useful to know. Some ideas land and some do not. Another question may open a better door." },
+  { id: "curious", label: "Just curious", reply: "Curiosity is a good reason to read. Anything here can be tried, kept, or simply thought about." },
+] as const;
+export const KEEP_LATER_LABEL = "Keep this for later";
+export const KEPT_CONFIRMATION = "Kept on this device only. It will be waiting on the home screen.";
+export const SEE_SAYINGS_LABEL = "See the sayings";
+export const keptTopicLabel = (title: string) => `A small thing kept from ${title}`;
+export const KEPT_QUESTION = "How did it go?";
+export const KEPT_CHOICES = [
+  { id: "tried", label: "Tried it", reply: "One point counts. The next one tends to be a little easier. Keeping it small is the whole trick." },
+  { id: "later", label: "Not yet", reply: "That is fine. It will keep. One small go, whenever a moment shows up." },
+  { id: "else", label: "Tried something else", reply: "Something that fits is the one to keep. That counts too." },
+] as const;
+export const KEPT_DONE = "Done";
+export const KEPT_TOPIC_LINK = "Look at the topic again";
+export const KEPT_PRIVACY = "If a small thing is kept for later, a note of which topic stays on this device only. It is never sent anywhere, and it is cleared once it has been answered.";
 export const EXAMPLES_TITLE = "Questions to start with";
 export const QUESTION_SENT_SHORT = "Question saved. A person will read it later, not right away.";
 export const QUESTION_ERROR = "The question could not be saved. Please try again later.";

@@ -4,6 +4,7 @@ import { Streamdown } from "streamdown";
 
 import { AppShell } from "@/components/app/AppShell";
 import { DeeperLayer } from "@/components/app/DeeperLayer";
+import { TopicLanding } from "@/components/app/TopicLanding";
 import { loadDeeper } from "@/lib/deeper";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -12,7 +13,7 @@ import { readingLane, validateTopicSearch } from "@/lib/topic-screen";
 import { APP_DESCRIPTION,
   APP_NAME, DEPTH_TITLES, KEEP_READING_LABEL, ASK_DIFFERENT_LABEL, SCRIPTURE_LABEL,
   SCRIPTURE_MORE_LABEL, SCRIPTURE_WHY_LABEL,
-  TOPIC_PICTURE_LABEL, TOPIC_SENTENCE_LABEL, TRY_LABEL,
+  TOPIC_PICTURE_LABEL, TOPIC_SENTENCE_LABEL, TRY_LABEL, LANDING_LABEL,
 } from "@/lib/brand";
 
 type ScriptureItem = { heading: string; verse: string; reference: string; explanation?: string };
@@ -164,6 +165,8 @@ function TopicPage() {
           {canRead && <Button size="lg" variant="calm" className="min-h-12" onClick={() => update({ read: depth + 1 })}>{KEEP_READING_LABEL}</Button>}
         </section>
         <Card label={TRY_LABEL}><Md text={t.try_text} /></Card>
+        <Card label={LANDING_LABEL}><TopicLanding key={t.slug} slug={t.slug} title={t.title} hasDeeper={Boolean(t.deeper)}
+          onChoose={() => update({ chooser: true, read: Math.max(1, depth) })} /></Card>
         <ScriptureSection items={t.scripture} open={search.scripture} moreOpen={search.verses} onOpen={(scripture) => update({ scripture })} onMore={(verses) => update({ verses })} />
         <Link to="/ask" search={{ topic: t.slug }} className="inline-flex min-h-12 items-center text-muted-foreground underline underline-offset-4">{ASK_DIFFERENT_LABEL}</Link>
       </article>

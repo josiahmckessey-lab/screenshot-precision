@@ -58,3 +58,4 @@ use the editor.
 - Optional deeper rows use `maybeSingle`, fail closed and redirect missing sayings to the topic. Validated topic search params retain reading, fit, chooser and disclosures via replace without scroll reset; history restores the reading lane.
 - Shared Back uses in-app history indices and parent fallbacks with router scroll restoration to avoid leaving the library.
 - The /ask route validates scope against active topics and reuses QuestionBox to keep submissions unchanged.
+- Kept items store only one validated topic slug, title and timestamp on the device; the home check back reads storage after hydration and fetches only active public try text, with answers kept in component state and no reminders or tracking.

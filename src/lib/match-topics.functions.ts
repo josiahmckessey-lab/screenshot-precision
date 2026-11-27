@@ -21,6 +21,17 @@ export type MatchTopicsResult = ParsedMatch & {
 
 const fail = (reason: string): MatchTopicsResult => ({ ok: false, matches: [], sayings: {}, fit: "loose", crisis: false, reason });
 
+export const getKeptTopic = createServerFn({ method: "GET" })
+  .inputValidator((data: { slug: unknown }) => ({
+    slug: typeof data?.slug === "string" && data.slug.length <= 128 && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(data.slug) ? data.slug : "",
+  }))
+  .handler(async ({ data }) => {
+    if (!data.slug) return null;
+    const client = createPublicReadClient();
+    const result = await client.from("library_pages").select("try_text").eq("slug", data.slug).eq("status", "active").maybeSingle();
+    return result.error ? null : result.data;
+  });
+
 export const getIdeasLibrary = createServerFn({ method: "GET" }).handler(async () => {
   const client = createPublicReadClient();
   const [topics, deeper] = await Promise.all([

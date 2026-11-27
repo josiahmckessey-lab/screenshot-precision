@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/app/AppShell";
 import { QuestionBox } from "@/components/app/QuestionBox";
+import { KeptCheckBack } from "@/components/app/KeptCheckBack";
 import { LampIllustration } from "@/components/app/LampIllustration";
 import { APP_DESCRIPTION, APP_PREVIEW_TITLE, QUESTION_TITLE, WELCOME_QUOTE } from "@/lib/brand";
 import { WELCOME_HEADING, WELCOME_INVITATION, WELCOME_TEXT, WELCOME_TOPICS_LABEL } from "@/content/about";
@@ -27,6 +28,7 @@ function Home() {
         <div className="mx-auto w-full max-w-[240px]"><LampIllustration /></div>
         <h1 className="text-center text-4xl leading-tight">{WELCOME_HEADING}</h1>
         <p className="text-center font-display text-lg leading-relaxed text-primary">{WELCOME_INVITATION}</p>
+        <KeptCheckBack />
         <section className="space-y-3 rounded-2xl border bg-card p-5 text-card-foreground">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{QUESTION_TITLE}</h2>
           <QuestionBox />

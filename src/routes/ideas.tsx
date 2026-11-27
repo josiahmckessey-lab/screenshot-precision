@@ -5,8 +5,8 @@ import { CrisisPanel } from "@/components/app/CrisisHelp";
 import { QuestionBox } from "@/components/app/QuestionBox";
 import { Button } from "@/components/ui/button";
 import { getIdeasLibrary } from "@/lib/match-topics.functions";
-import { APP_DESCRIPTION, APP_NAME, ASK_ANOTHER_QUESTION, CLOSEST_SAYING_LABEL, IDEAS_LOOSE_FIT, MESSAGE_GUIDE, NEED_MORE_TEXT, NEED_MORE_TITLE, QUESTION_CRISIS_TEXT, QUESTION_IDEAS_HEADING, QUESTION_KNOW_MORE, QUESTION_SIT_LABEL, QUESTION_START_OVER } from "@/lib/brand";
-import { clearIdeas, readIdeas, type IdeasResult } from "@/lib/ideas-session";
+import { APP_DESCRIPTION, APP_NAME, ASK_ANOTHER_QUESTION, CLOSEST_SAYING_LABEL, IDEAS_ECHO_LABEL, IDEAS_LOOSE_FIT, MESSAGE_GUIDE, NEED_MORE_TEXT, NEED_MORE_TITLE, QUESTION_CRISIS_TEXT, QUESTION_IDEAS_HEADING, QUESTION_KNOW_MORE, QUESTION_SIT_LABEL, QUESTION_START_OVER } from "@/lib/brand";
+import { clearIdeas, ideasEcho, readIdeas, type IdeasResult } from "@/lib/ideas-session";
 
 export const Route = createFileRoute("/ideas")({
   loader: () => getIdeasLibrary(),
@@ -34,6 +34,10 @@ function IdeasPage() {
     <div className="space-y-6 py-6">
       {result?.crisis && <CrisisPanel text={QUESTION_CRISIS_TEXT} />}
       <h1 className="text-3xl leading-tight">{QUESTION_IDEAS_HEADING}</h1>
+      {result && <div className="space-y-2">
+        <p className="text-sm text-muted-foreground">{IDEAS_ECHO_LABEL}</p>
+        <blockquote className="whitespace-pre-wrap border-l-2 pl-4 text-lg leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">{ideasEcho(result)}</blockquote>
+      </div>}
       {result?.fit === "loose" && <p className="text-muted-foreground">{IDEAS_LOOSE_FIT}</p>}
       <div className="space-y-3">
         {ideas.map((t) => <section key={t.slug} className="space-y-3 rounded-xl border bg-card p-5 text-card-foreground">

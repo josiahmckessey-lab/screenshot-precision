@@ -1,9 +1,19 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { clearIdeas, IDEAS_SESSION_KEY, readIdeas, saveIdeas } from "@/lib/ideas-session";
+import { clearIdeas, ideasEcho, IDEAS_SESSION_KEY, readIdeas, saveIdeas } from "@/lib/ideas-session";
 import { DEFAULT_MATCH_DAILY_CAP } from "@/lib/match-topics";
 
 describe("Ideas session rules", () => {
   beforeEach(() => { sessionStorage.clear(); localStorage.clear(); });
+  it("echoes no text without a saved result", () => {
+    expect(ideasEcho(null)).toBeNull();
+  });
+  it("preserves typed line breaks up to 400 characters", () => {
+    const text = "a".repeat(199) + "\n" + "b".repeat(200);
+    expect(ideasEcho({ text, matches: [1], crisis: false })).toBe(text);
+  });
+  it("cuts longer typed text at 400 characters and adds three dots", () => {
+    expect(ideasEcho({ text: "a".repeat(400) + "not echoed", matches: [1], crisis: false })).toBe("a".repeat(400) + "...");
+  });
   it("keeps the typed text, ordered topic numbers and crisis state only in session storage", () => {
     const result = { text: "panic and loneliness", matches: [4, 8], crisis: true };
     saveIdeas(sessionStorage, result);

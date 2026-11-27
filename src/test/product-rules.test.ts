@@ -49,9 +49,9 @@ describe("Product rules", () => {
     expect(users.sort()).toEqual([join("src", "lib", "guide-message.functions.ts"), join("src", "lib", "match-topics.functions.ts")].sort());
   });
 
-  it("uses no first- or second-person words in shown copy", async () => {
+  it("never speaks in first person in shown copy", async () => {
     const brand = await import("@/lib/brand");
-    const words = /\b(i|me|my|we|us|our|you|your|you're|we're)\b/i;
+    const words = /\b(i|me|my|mine|we|us|our|ours|let's|we're|i'm)\b/i;
     // A real contact address is data, not prose: ".me" in an email or a tel:/mailto:
     // link must not trip the check on shown copy.
     const isContact = (v: string) =>

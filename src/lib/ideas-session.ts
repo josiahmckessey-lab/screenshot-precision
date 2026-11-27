@@ -1,7 +1,13 @@
 import { sanitizeMatches, sanitizeSayings, type MatchFit } from "@/lib/match-topics";
+import { IDEAS_ECHO_END } from "@/lib/brand";
 
 export const IDEAS_SESSION_KEY = "daybreak-ideas-v1";
 export type IdeasResult = { text: string; matches: number[]; crisis: boolean; sayings?: Record<number, number>; fit?: MatchFit };
+
+export function ideasEcho(result: IdeasResult | null): string | null {
+  if (!result) return null;
+  return result.text.length > 400 ? result.text.slice(0, 400) + IDEAS_ECHO_END : result.text;
+}
 
 export function saveIdeas(storage: Storage, result: IdeasResult) {
   storage.setItem(IDEAS_SESSION_KEY, JSON.stringify(result));
