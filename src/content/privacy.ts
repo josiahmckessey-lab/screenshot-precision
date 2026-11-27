@@ -1,9 +1,9 @@
-import { KEPT_PRIVACY } from "@/lib/brand";
+import { KEPT_PRIVACY, WALK_PRIVACY } from "@/lib/brand";
 
 export const PRIVACY_SECTIONS = [
   {
     lead: "In short.",
-    body: `An automated sorter reads the typed text only to pick which pages fit. The text is then saved for a person to read later, not right away. No names or accounts. ${KEPT_PRIVACY}`,
+    body: `An automated sorter reads the typed text only to pick which pages fit. The text is then saved for a person to read later, not right away. No names or accounts. ${KEPT_PRIVACY} ${WALK_PRIVACY}`,
   },
   {
     lead: "What is saved.",
@@ -15,7 +15,7 @@ export const PRIVACY_SECTIONS = [
   },
   {
     lead: "Kept on the device only.",
-    body: `The answer to the 18 or older screen, a count of messages sent, the last results, and whether the welcome lines and the home screen hint were already shown stay on the device and are never sent anywhere. ${KEPT_PRIVACY}`,
+    body: `The answer to the 18 or older screen, a count of messages sent, the last results, and whether the welcome lines and the home screen hint were already shown stay on the device and are never sent anywhere. ${KEPT_PRIVACY} ${WALK_PRIVACY}`,
   },
   {
     lead: "What is never done.",

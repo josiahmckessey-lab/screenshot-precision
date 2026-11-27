@@ -138,3 +138,17 @@ export const GUIDE_EMAIL_HREF = "mailto:JosiahMcKessey@proton.me";
 export const GUIDE_HOURS = "Replies to calls, texts, and messages may take a few days.";
 export const GUIDE_CRISIS_TEXT =
   "If someone is in danger, call or text 988. For immediate danger, call 911.";
+export const WALK_TITLE = "Walk the whole path";
+export const WALK_INTRO = "Twenty pictures, one at a time, from the first to the last. Each ends with one question and a few ways to answer. Nothing is scored, and the walk can be left at any point.";
+export const WALK_BEGIN = "Begin";
+export const WALK_CONTINUE = "Continue";
+export const WALK_RESTART = "Start from the beginning";
+export const WALK_QUESTION_LABEL = "A question";
+export const WALK_NEXT = "Next";
+export const WALK_READ_TOPIC = "Read this topic";
+export const WALK_DONE_TITLE = "That is the whole path.";
+export const WALK_DONE_TEXT = "From the first picture to the last. The path has no finish line, and nothing here needs to be completed. The best next step is often a conversation with a steady person a little further along the same road.";
+export const WALK_AGAIN = "Walk it again";
+export const WALK_LOAD_ERROR = "The path could not be opened. Please try again later.";
+export const WALK_RETRY = "Try again";
+export const WALK_PRIVACY = "If the walk is started, the number of the last picture stays on this device only. It is never sent anywhere.";

@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/app/AppShell";
-import { APP_DESCRIPTION, APP_NAME, INSTALL_LABEL, RESEARCH_LINK, MESSAGE_GUIDE, NEED_MORE_TITLE } from "@/lib/brand";
+import { APP_DESCRIPTION, APP_NAME, INSTALL_LABEL, RESEARCH_LINK, MESSAGE_GUIDE, NEED_MORE_TITLE, WALK_TITLE } from "@/lib/brand";
 import { InstallHint } from "@/components/app/InstallHint";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -56,6 +56,7 @@ function AboutPage() {
         <section id="topics" className="scroll-mt-4 space-y-5">
           <h2 className="text-3xl">{FRAMEWORK_HEADING}</h2>
           <p className="text-lg leading-relaxed">{FRAMEWORK_INTRO}</p>
+          <Link to="/walk" className="inline-flex min-h-12 items-center text-lg underline underline-offset-4">{WALK_TITLE}</Link>
           <div className="space-y-5">
             {FRAMEWORK_PARTS.map((part) => (
               <section key={part.number} id={`part-${part.number}`} className="scroll-mt-4 space-y-4 rounded-2xl border bg-card p-5 text-card-foreground">

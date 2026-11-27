@@ -5,7 +5,7 @@ import { QuestionBox } from "@/components/app/QuestionBox";
 import { KeptCheckBack } from "@/components/app/KeptCheckBack";
 import { LampIllustration } from "@/components/app/LampIllustration";
 import { APP_DESCRIPTION, APP_PREVIEW_TITLE, QUESTION_TITLE, WELCOME_QUOTE } from "@/lib/brand";
-import { WELCOME_HEADING, WELCOME_INVITATION, WELCOME_TEXT, WELCOME_TOPICS_LABEL } from "@/content/about";
+import { WELCOME_HEADING, WELCOME_INVITATION, WELCOME_TEXT_JOIN, WELCOME_TEXT_START, WELCOME_TOPICS_LABEL, WELCOME_WALK_LABEL } from "@/content/about";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -35,7 +35,9 @@ function Home() {
         </section>
         <p className="my-6 text-center font-display text-2xl italic leading-relaxed text-muted-foreground">{WELCOME_QUOTE}</p>
         <p className="text-lg leading-relaxed">
-          {WELCOME_TEXT.slice(0, -(WELCOME_TOPICS_LABEL.length + 1))}
+          {WELCOME_TEXT_START}
+          <Link to="/walk" className="underline underline-offset-4">{WELCOME_WALK_LABEL}</Link>
+          {WELCOME_TEXT_JOIN}
           <Link to="/about" hash="topics" className="underline underline-offset-4">{WELCOME_TOPICS_LABEL}</Link>.
         </p>
       </section>

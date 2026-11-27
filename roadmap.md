@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Add the guided walk at /walk with entry, step and done screens, device only saved step, home and About links and the privacy sentence; 219 app checks pass and the full walk was followed on a phone sized browser. The optional live sorter check missed case 12 again, unrelated to this change.
+
 - [x] Add validated closest saying and fit results with compatible device storage, stored saying links, and optional live sorter checks; real saved result navigation verified on phone and desktop, 149 app checks and the final 32 case live evaluation pass. An earlier run missed case 12, so model matches can vary; the supplied instruction and expectations remain unchanged.
 - [x] Group all existing and fourteen new starter questions into four groups on the examples page; all 22 links tested, phone layout and loose fit fallback verified without runtime errors.
 
