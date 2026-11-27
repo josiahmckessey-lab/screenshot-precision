@@ -320,6 +320,30 @@ export type Database = {
         }
         Relationships: []
       }
+      library_walk: {
+        Row: {
+          options: Json
+          question: string
+          status: string
+          topic_number: number
+          version: string
+        }
+        Insert: {
+          options?: Json
+          question: string
+          status?: string
+          topic_number: number
+          version?: string
+        }
+        Update: {
+          options?: Json
+          question?: string
+          status?: string
+          topic_number?: number
+          version?: string
+        }
+        Relationships: []
+      }
       match_calls: {
         Row: {
           calls: number
