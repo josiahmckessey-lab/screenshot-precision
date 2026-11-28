@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { QUESTION_CRISIS_TEXT, QUESTION_ERROR, QUESTION_EXAMPLES_LINK, QUESTION_FINDING, QUESTION_HANDLED_LINK, QUESTION_PLACEHOLDER, QUESTION_SEND, QUESTION_SHOW_OTHERS, QUESTION_TITLE, QUESTION_TOPIC_TITLE } from "@/lib/brand";
-import { saveIdeas, type IdeasResult } from "@/lib/ideas-session";
+import { markIdeasFresh, saveIdeas, type IdeasResult } from "@/lib/ideas-session";
 import { match_topics } from "@/lib/match-topics.functions";
 import { canSend, hasCrisisPhrase, RATE_MS } from "@/lib/question-match";
 import { pickTopicNumbers, sanitizeMatches, sanitizeSayings } from "@/lib/match-topics";
@@ -35,7 +35,7 @@ export function QuestionBox({ topicSlug, onResults }: { topicSlug?: string; onRe
     const el = textarea.current;
     if (!el) return;
     el.style.height = "auto";
-    // Left to the one row minimum while empty, so the hint text never stretches the box.
+    // Left to the minimum height while empty, so the hint text never stretches the box.
     if (body) el.style.height = `${el.scrollHeight}px`;
   }, [body]);
 
@@ -75,6 +75,7 @@ export function QuestionBox({ topicSlug, onResults }: { topicSlug?: string; onRe
         fit: result?.ok && sanitizeMatches(result.matches).length && result.fit === "close" ? "close" : "loose",
       };
       saveIdeas(sessionStorage, ideas);
+      markIdeasFresh(sessionStorage);
       onResults?.(ideas);
       setBody("");
       setCrisis(false);
@@ -94,7 +95,7 @@ export function QuestionBox({ topicSlug, onResults }: { topicSlug?: string; onRe
     {crisis && <CrisisPanel text={QUESTION_CRISIS_TEXT} />}
     <Textarea ref={textarea} aria-label={topicSlug ? QUESTION_TOPIC_TITLE : QUESTION_TITLE} value={body} maxLength={2000} rows={1}
       placeholder={QUESTION_PLACEHOLDER}
-      className={cn("max-h-[15.5rem] min-h-14 resize-none overflow-y-auto rounded-2xl px-4 py-3.5 text-lg leading-7 transition-opacity placeholder:truncate placeholder:text-base md:text-lg", isSending && "opacity-60")}
+      className={cn("max-h-[15.5rem] min-h-[96px] resize-none overflow-y-auto rounded-2xl px-4 py-3.5 text-lg leading-7 transition-opacity placeholder:truncate placeholder:text-base md:text-lg", isSending && "opacity-60")}
       onChange={(e) => { setBody(e.target.value); if (state !== "sending") setState("idle"); }}
       onKeyDown={(e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); void send(); } }} />
     <div className="flex min-h-12 items-center gap-3">

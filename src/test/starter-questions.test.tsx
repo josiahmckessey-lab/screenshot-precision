@@ -22,7 +22,7 @@ vi.mock("@/integrations/supabase/client", () => ({
     rpc: actions.rpc,
   },
 }));
-vi.mock("@/lib/ideas-session", () => ({ saveIdeas: actions.save }));
+vi.mock("@/lib/ideas-session", () => ({ saveIdeas: actions.save, markIdeasFresh: vi.fn() }));
 
 import { QuestionBox } from "@/components/app/QuestionBox";
 
@@ -66,6 +66,13 @@ describe("Starter question behavior", () => {
     expectNothingSent();
     expect(sessionWrite).not.toHaveBeenCalled();
     sessionWrite.mockRestore();
+  });
+
+  it("gives the textarea a two line minimum height of 96px", () => {
+    render(<QuestionBox />);
+    const classes = screen.getByRole("textbox").className.split(/\s+/);
+    expect(classes).toContain("min-h-[96px]");
+    expect(classes).not.toContain("min-h-14");
   });
 
   it("leaves the examples link row out of the general question box", () => {

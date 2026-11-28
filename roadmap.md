@@ -69,3 +69,4 @@
 
 - [x] Engagement pass: saved question echo, topic fit choices, one device only kept item with a one hour home check back, and both privacy additions; 184 checks passed, real question submission and keep flow verified on phone and desktop, hour eligibility verified with an aged device timestamp, no page errors.
 - [x] Inspect active AI Gateway usage after engagement changes; no active Gateway model calls found, so no model replacements or approval request were needed; the direct Anthropic sorter remains unchanged.
+- [x] Home and response pass: home heading is the app name with no lamp, 96px question box, results lamp and typed lead in line with session fresh flag; checked on a phone sized view.

@@ -39,6 +39,17 @@ describe("Home and About welcome paragraph", () => {
     expect(walk.compareDocumentPosition(quote) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
+  it("shows only the app name as the heading, the short invitation and no lamp drawing", async () => {
+    await open("/");
+    const heading = await screen.findByRole("heading", { level: 1 });
+    expect(heading.textContent).toBe("The Gift");
+    const main = heading.closest("main") ?? document.body;
+    expect(flat(main.textContent)).not.toContain("Welcome to");
+    expect(flat(main.textContent)).not.toContain("Come in.");
+    expect(heading.nextElementSibling?.textContent).toBe("Nothing here is graded.");
+    expect(main.querySelector('svg[role="img"]')).toBeNull();
+  });
+
   it("opens About with the long paragraph and its two links", async () => {
     await open("/about");
     const heading = await screen.findByRole("heading", { level: 1, name: "About" });

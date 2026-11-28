@@ -3,7 +3,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/app/AppShell";
 import { QuestionBox } from "@/components/app/QuestionBox";
 import { KeptCheckBack } from "@/components/app/KeptCheckBack";
-import { LampIllustration } from "@/components/app/LampIllustration";
 import { ArrowRight } from "lucide-react";
 import { APP_DESCRIPTION, APP_PREVIEW_TITLE, HOME_LINK_EXAMPLES, HOME_LINK_TOPICS, QUESTION_TITLE, WALK_TITLE, WELCOME_QUOTE } from "@/lib/brand";
 import { WELCOME_HEADING, WELCOME_INVITATION } from "@/content/about";
@@ -28,7 +27,6 @@ function Home() {
   return (
     <AppShell>
       <section className="fade-up flex flex-col gap-6 py-8">
-        <div className="mx-auto w-full max-w-[240px]"><LampIllustration /></div>
         <h1 className="text-center text-4xl leading-tight">{WELCOME_HEADING}</h1>
         <p className="text-center font-display text-lg leading-relaxed text-primary">{WELCOME_INVITATION}</p>
         <KeptCheckBack />

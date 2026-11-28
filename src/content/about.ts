@@ -1,7 +1,7 @@
 import { APP_NAME, WELCOME_QUOTE } from "@/lib/brand";
 
-export const WELCOME_HEADING = `Welcome to ${APP_NAME}`;
-export const WELCOME_INVITATION = "Come in. Take as long as needed. Nothing here is graded.";
+export const WELCOME_HEADING = APP_NAME;
+export const WELCOME_INVITATION = "Nothing here is graded.";
 export const WELCOME_TOPICS_LABEL = "browse the topics";
 export const WELCOME_WALK_LABEL = "walk the whole path";
 export const INTRO_LINES = [

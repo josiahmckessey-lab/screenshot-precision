@@ -32,7 +32,7 @@ use the editor.
 ## Project rules
 
 - Appearance colors live in global semantic tokens and dedicated button variants; fonts are imported from installed font packages so external font services are never requested.
-- Lamp illustration and compact wordmark share one browser-safe SVG module and global color tokens, keeping the age and home drawings consistent without outside image requests.
+- Lamp illustration and compact wordmark share one browser-safe SVG module and global color tokens, keeping the age and results drawings consistent; no other screen shows the drawing without outside image requests.
 
 - Server logic uses TanStack `createServerFn` (in `src/lib/*.functions.ts`), not Supabase Edge Functions — the brief's "Edge Functions" maps to these.
 - `brain_chunks`, `app_config`, `spend_ledger` have RLS on with no user policies and no anon/authenticated grants; read them only via `supabaseAdmin` loaded inside a handler after auth. Never import their contents into browser code (enforced by `src/test/product-rules.test.ts`).
@@ -45,7 +45,7 @@ use the editor.
 - Chat uses AI Elements conversation/message/composer primitives with the existing final-validated RPC, rather than exposing streamed unvalidated text; session history stays in memory and database writes remain consent-controlled. Card expansion returns only the requested part and adds deep material at levels 2–3.
 - The app is a read-only library with no accounts: the paused AI chat, sign-in, consent and settings code lives in root `paused-chat/` (outside `src/`, so it is never routed, bundled, linted or tested); restore from there instead of rewriting.
 - The 18+ gate and one-time intro eligibility live in `__root.tsx` and read device local storage only (`/safety` stays reachable); AppShell owns footer crisis help and the care notice, while the full-screen intro places crisis help below Skip outside the advance control.
-- Ideas persist typed text, validated ordered topic and saying numbers, fit and crisis state in device session storage with legacy compatibility; public library reads for results use a server function in the existing sorter module so only stored library text can be shown.
+- The results lead in types out only while the device session fresh flag set by QuestionBox is present and motion is allowed, with the full line always in the page for screen readers. Ideas persist typed text, validated ordered topic and saying numbers, fit and crisis state in device session storage with legacy compatibility; public library reads for results use a server function in the existing sorter module so only stored library text can be shown.
 - Guide submissions use a validated public server function and an atomic capped insert RPC; save before Resend notification and acknowledge saved messages even if email fails, without logging or reading message text back.
 - Questions are saved by calling the `submit_question` RPC (topic slug or null, plus body) instead of inserting into `questions`, so the daily limit lives in the database and a null return is handled as a save failure.
 - Privacy paragraphs live in `src/content/privacy.ts` and render through the shared shell; shared form-notice links point to `/privacy` without altering existing notices.

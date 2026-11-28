@@ -205,6 +205,18 @@
   animation: intro-home-fade 600ms ease-out both;
 }
 
+@utility typing-cursor {
+  animation: cursor-blink 900ms steps(1) infinite;
+}
+
+@utility cards-fade-in {
+  animation: intro-home-fade 300ms ease-out both;
+}
+
+@keyframes cursor-blink {
+  50% { opacity: 0; }
+}
+
 @keyframes intro-fade-out {
   from { opacity: 1; }
   to { opacity: 0; }
