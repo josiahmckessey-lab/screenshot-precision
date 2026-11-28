@@ -32,9 +32,9 @@ export function LampIllustration() {
   );
 }
 
-export function LampMark() {
+export function LampMark({ className = "size-8 shrink-0" }: { className?: string } = {}) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 32 32" width="32" height="32" className="size-8 shrink-0">
+    <svg aria-hidden="true" viewBox="0 0 32 32" width="32" height="32" className={className}>
       <circle cx="16" cy="16" r="16" fill="var(--background)" />
       <path d="M9 17L12 7H20L23 17Z" fill="var(--primary)" />
       <path d="M16 17V24M10 25H22" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" />

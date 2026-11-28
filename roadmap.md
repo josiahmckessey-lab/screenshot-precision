@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Home and question box pass: stripped home to lamp, heading, invitation, check back, question card, three link rows and the quiet quote; moved the long welcome paragraph to the top of About; added random starter chips with Show others, a growing one row textarea, an arrow Send button, Ctrl or Cmd plus Enter, and the pulsing lamp while sending; 226 checks pass and the flow was followed on a phone sized browser. Desktop layout not checked.
+
 - [x] Add the guided walk at /walk with entry, step and done screens, device only saved step, home and About links and the privacy sentence; 219 app checks pass and the full walk was followed on a phone sized browser. The optional live sorter check missed case 12 again, unrelated to this change.
 
 - [x] Add validated closest saying and fit results with compatible device storage, stored saying links, and optional live sorter checks; real saved result navigation verified on phone and desktop, 149 app checks and the final 32 case live evaluation pass. An earlier run missed case 12, so model matches can vary; the supplied instruction and expectations remain unchanged.

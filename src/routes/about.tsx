@@ -5,7 +5,7 @@ import { APP_DESCRIPTION, APP_NAME, INSTALL_LABEL, RESEARCH_LINK, MESSAGE_GUIDE,
 import { InstallHint } from "@/components/app/InstallHint";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { ABOUT_HEADING, ABOUT_INTRO_HEADING, ABOUT_PARAGRAPHS, ABOUT_GUIDE_TEXT, FRAMEWORK_HEADING, FRAMEWORK_INTRO, FRAMEWORK_PARTS, RESEARCH_HEADING, RESEARCH_TEXT } from "@/content/about";
+import { WELCOME_TEXT_JOIN, WELCOME_TEXT_START, WELCOME_TOPICS_LABEL, WELCOME_WALK_LABEL, ABOUT_HEADING, ABOUT_INTRO_HEADING, ABOUT_PARAGRAPHS, ABOUT_GUIDE_TEXT, FRAMEWORK_HEADING, FRAMEWORK_INTRO, FRAMEWORK_PARTS, RESEARCH_HEADING, RESEARCH_TEXT } from "@/content/about";
 
 export const Route = createFileRoute("/about")({
   loader: async () => {
@@ -34,6 +34,12 @@ function AboutPage() {
     <AppShell>
       <article className="space-y-8 py-8">
         <h1 className="text-4xl">{ABOUT_HEADING}</h1>
+        <p className="text-lg leading-relaxed">
+          {WELCOME_TEXT_START}
+          <Link to="/walk" className="underline underline-offset-4">{WELCOME_WALK_LABEL}</Link>
+          {WELCOME_TEXT_JOIN}
+          <Link to="/about" hash="topics" className="underline underline-offset-4">{WELCOME_TOPICS_LABEL}</Link>.
+        </p>
         <nav className="flex flex-wrap gap-x-6">
           <Link to="/install" className="inline-flex min-h-12 items-center underline underline-offset-4">{INSTALL_LABEL}</Link>
           <Link to="/about" hash="wellbeing" className="inline-flex min-h-12 items-center underline underline-offset-4">{RESEARCH_LINK}</Link>

@@ -25,3 +25,17 @@ export const STARTER_QUESTIONS: readonly StarterQuestion[] = [
   { text: "What is a guide, and what does a guide do?", slug: "topic-08" },
   { text: "What happens in the body before a thought forms?", slug: "topic-04" },
 ].map((question) => ({ ...question, group: question.group ?? "When something is hard" })) as readonly StarterQuestion[];
+
+export const STARTER_CHIP_COUNT = 4;
+
+/** Picks a random set of starter questions, leaving out the ones shown just before. */
+export function pickStarterChips(previous: readonly StarterQuestion[] = [], random: () => number = Math.random): StarterQuestion[] {
+  const shown = new Set(previous.map((question) => question.text));
+  const pool = STARTER_QUESTIONS.filter((question) => !shown.has(question.text));
+  const picked: StarterQuestion[] = [];
+  while (picked.length < STARTER_CHIP_COUNT && pool.length) {
+    const [next] = pool.splice(Math.floor(random() * pool.length), 1);
+    if (next) picked.push(next);
+  }
+  return picked;
+}

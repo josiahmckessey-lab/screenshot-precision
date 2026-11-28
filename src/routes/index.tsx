@@ -4,8 +4,9 @@ import { AppShell } from "@/components/app/AppShell";
 import { QuestionBox } from "@/components/app/QuestionBox";
 import { KeptCheckBack } from "@/components/app/KeptCheckBack";
 import { LampIllustration } from "@/components/app/LampIllustration";
-import { APP_DESCRIPTION, APP_PREVIEW_TITLE, QUESTION_TITLE, WELCOME_QUOTE } from "@/lib/brand";
-import { WELCOME_HEADING, WELCOME_INVITATION, WELCOME_TEXT_JOIN, WELCOME_TEXT_START, WELCOME_TOPICS_LABEL, WELCOME_WALK_LABEL } from "@/content/about";
+import { ArrowRight } from "lucide-react";
+import { APP_DESCRIPTION, APP_PREVIEW_TITLE, HOME_LINK_EXAMPLES, HOME_LINK_TOPICS, QUESTION_TITLE, WALK_TITLE, WELCOME_QUOTE } from "@/lib/brand";
+import { WELCOME_HEADING, WELCOME_INVITATION } from "@/content/about";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -21,6 +22,8 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+const ROW = "flex min-h-12 w-full items-center justify-between gap-3 py-2 text-lg underline underline-offset-4";
+
 function Home() {
   return (
     <AppShell>
@@ -33,13 +36,12 @@ function Home() {
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{QUESTION_TITLE}</h2>
           <QuestionBox />
         </section>
-        <p className="my-6 text-center font-display text-2xl italic leading-relaxed text-muted-foreground">{WELCOME_QUOTE}</p>
-        <p className="text-lg leading-relaxed">
-          {WELCOME_TEXT_START}
-          <Link to="/walk" className="underline underline-offset-4">{WELCOME_WALK_LABEL}</Link>
-          {WELCOME_TEXT_JOIN}
-          <Link to="/about" hash="topics" className="underline underline-offset-4">{WELCOME_TOPICS_LABEL}</Link>.
-        </p>
+        <nav className="flex flex-col">
+          <Link to="/walk" className={ROW}><span>{WALK_TITLE}</span><ArrowRight aria-hidden="true" className="size-4 shrink-0" /></Link>
+          <Link to="/about" hash="topics" className={ROW}><span>{HOME_LINK_TOPICS}</span><ArrowRight aria-hidden="true" className="size-4 shrink-0" /></Link>
+          <Link to="/examples" className={ROW}><span>{HOME_LINK_EXAMPLES}</span><ArrowRight aria-hidden="true" className="size-4 shrink-0" /></Link>
+        </nav>
+        <p className="text-center font-display text-base italic leading-relaxed text-muted-foreground">{WELCOME_QUOTE}</p>
       </section>
     </AppShell>
   );

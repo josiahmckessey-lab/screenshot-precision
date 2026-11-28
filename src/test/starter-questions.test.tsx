@@ -28,6 +28,18 @@ import { QuestionBox } from "@/components/app/QuestionBox";
 
 afterEach(() => { cleanup(); vi.clearAllMocks(); });
 
+const STARTER_TEXTS = new Set(STARTER_QUESTIONS.map((question) => question.text));
+function chipTexts() {
+  return screen.getAllByRole("button").map((button) => button.textContent ?? "").filter((text) => STARTER_TEXTS.has(text));
+}
+function expectNothingSent() {
+  expect(actions.insert).not.toHaveBeenCalled();
+  expect(actions.rpc).not.toHaveBeenCalled();
+  expect(actions.sorter).not.toHaveBeenCalled();
+  expect(actions.save).not.toHaveBeenCalled();
+  expect(actions.navigate).not.toHaveBeenCalled();
+}
+
 describe("Starter question behavior", () => {
   it.each([
     ["Why can understanding something and changing it be two different things?", "topic-02"],
@@ -42,22 +54,83 @@ describe("Starter question behavior", () => {
     expect(STARTER_QUESTIONS.find((question) => question.text === text)?.slug).toBe(slug);
   });
 
-  it.each([undefined, "topic-01"])("opens the examples without changing the draft, sending or saving, topic=%s", (topicSlug) => {
+  it("opens the examples from a topic question without changing the draft, sending or saving", () => {
     const sessionWrite = vi.spyOn(Storage.prototype, "setItem");
-    render(<QuestionBox {...(topicSlug ? { topicSlug } : {})} />);
+    render(<QuestionBox topicSlug="topic-01" />);
     const input = screen.getByRole("textbox");
     fireEvent.change(input, { target: { value: "An edited question" } });
     const examplesLink = screen.getByRole("link", { name: /Just looking around/ });
     expect(examplesLink).toHaveAttribute("href", "/examples");
     fireEvent.click(examplesLink);
     expect(input).toHaveValue("An edited question");
-    expect(actions.insert).not.toHaveBeenCalled();
-    expect(actions.rpc).not.toHaveBeenCalled();
-    expect(actions.sorter).not.toHaveBeenCalled();
-    expect(actions.save).not.toHaveBeenCalled();
-    expect(actions.navigate).not.toHaveBeenCalled();
+    expectNothingSent();
     expect(sessionWrite).not.toHaveBeenCalled();
     sessionWrite.mockRestore();
+  });
+
+  it("leaves the examples link row out of the general question box", () => {
+    render(<QuestionBox />);
+    expect(screen.queryByRole("link", { name: /Just looking around/ })).toBeNull();
+    expect(screen.getByRole("link", { name: "How this is handled" })).toHaveAttribute("href", "/privacy");
+  });
+
+  it("fills the textarea from a chip without sending", () => {
+    const sessionWrite = vi.spyOn(Storage.prototype, "setItem");
+    render(<QuestionBox />);
+    const chips = chipTexts();
+    expect(chips).toHaveLength(4);
+    expect(new Set(chips).size).toBe(4);
+    fireEvent.click(screen.getByRole("button", { name: chips[0]! }));
+    const input = screen.getByRole("textbox");
+    expect(input).toHaveValue(chips[0]!);
+    expect(input).toHaveFocus();
+    expectNothingSent();
+    expect(sessionWrite).not.toHaveBeenCalled();
+    sessionWrite.mockRestore();
+  });
+
+  it("swaps in four different chips with Show others", () => {
+    render(<QuestionBox />);
+    let before = chipTexts();
+    for (let round = 0; round < 5; round += 1) {
+      fireEvent.click(screen.getByRole("button", { name: "Show others" }));
+      const after = chipTexts();
+      expect(after).toHaveLength(4);
+      expect(after.filter((text) => before.includes(text))).toEqual([]);
+      before = after;
+    }
+    expectNothingSent();
+  });
+
+  it("sends with Ctrl+Enter or Cmd+Enter, not with plain Enter", async () => {
+    actions.rpc.mockResolvedValue({ data: "saved", error: null });
+    actions.sorter.mockResolvedValue({ ok: true, matches: [4], crisis: false });
+    render(<QuestionBox />);
+    const input = screen.getByRole("textbox");
+    expect(input).toHaveAttribute("placeholder", "What has been on your mind?");
+    fireEvent.change(input, { target: { value: "A typed question" } });
+    fireEvent.keyDown(input, { key: "Enter" });
+    fireEvent.keyDown(input, { key: "Enter", shiftKey: true });
+    expectNothingSent();
+    fireEvent.keyDown(input, { key: "Enter", ctrlKey: true });
+    expect(screen.getByRole("status")).toHaveTextContent("Finding ideas that relate");
+    await waitFor(() => expect(actions.navigate).toHaveBeenCalledTimes(1));
+    expect(actions.rpc).toHaveBeenCalledTimes(1);
+    cleanup();
+    vi.clearAllMocks();
+    actions.rpc.mockResolvedValue({ data: "saved", error: null });
+    actions.sorter.mockResolvedValue({ ok: true, matches: [4], crisis: false });
+    render(<QuestionBox />);
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "Another question" } });
+    fireEvent.keyDown(screen.getByRole("textbox"), { key: "Enter", metaKey: true });
+    await waitFor(() => expect(actions.rpc).toHaveBeenCalledWith("submit_question", { _topic_slug: null, _body: "Another question" }));
+  });
+
+  it("does not send an empty box with Ctrl+Enter", () => {
+    render(<QuestionBox />);
+    fireEvent.keyDown(screen.getByRole("textbox"), { key: "Enter", ctrlKey: true });
+    expectNothingSent();
+    expect(screen.getByRole("button", { name: /^Send$/ })).toBeDisabled();
   });
 
   it("keeps automatic crisis help available when a crisis question cannot be saved", async () => {
