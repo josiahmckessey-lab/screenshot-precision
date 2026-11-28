@@ -6,10 +6,10 @@ import { BackButton } from "./BackButton";
 import { CrisisButton } from "./CrisisHelp";
 import { LampMark } from "./LampIllustration";
 
-export function Wordmark() {
+export function Wordmark({ showLamp = true }: { showLamp?: boolean } = {}) {
   return (
     <span className="inline-flex items-center gap-2.5">
-      <LampMark />
+      {showLamp ? <LampMark /> : <span aria-hidden="true" className="size-8 shrink-0" />}
       <span className="font-display text-xl tracking-tight">{APP_NAME}</span>
     </span>
   );
@@ -22,7 +22,7 @@ export function AppShell({ children, hideBack = false, hideFooter = false }: { c
     <div className="mx-auto flex min-h-dvh w-full max-w-xl flex-col px-6 pb-10 pt-[max(1.25rem,env(safe-area-inset-top))]">
       <header className="flex items-center justify-between gap-2 py-3">
         <Link to="/" aria-label={`${APP_NAME} home`}>
-          <Wordmark />
+          <Wordmark showLamp={pathname !== "/"} />
         </Link>
       </header>
       {!hideBack && pathname !== "/" && <div className="flex justify-start"><BackButton /></div>}

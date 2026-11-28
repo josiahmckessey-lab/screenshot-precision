@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Correct lamp placement only: restored the centered 240px home drawing, reserved the hidden home header mark space, removed the results drawing, and verified header marks on results and topic pages; 234 checks passed and phone and desktop displays confirmed unchanged header text positions with no runtime errors.
+
 - [x] Home and question box pass: stripped home to lamp, heading, invitation, check back, question card, three link rows and the quiet quote; moved the long welcome paragraph to the top of About; added random starter chips with Show others, a growing one row textarea, an arrow Send button, Ctrl or Cmd plus Enter, and the pulsing lamp while sending; 226 checks pass and the flow was followed on a phone sized browser. Desktop layout not checked.
 
 - [x] Add the guided walk at /walk with entry, step and done screens, device only saved step, home and About links and the privacy sentence; 219 app checks pass and the full walk was followed on a phone sized browser. The optional live sorter check missed case 12 again, unrelated to this change.

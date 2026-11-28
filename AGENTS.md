@@ -32,7 +32,7 @@ use the editor.
 ## Project rules
 
 - Appearance colors live in global semantic tokens and dedicated button variants; fonts are imported from installed font packages so external font services are never requested.
-- Lamp illustration and compact wordmark share one browser-safe SVG module and global color tokens, keeping the age and results drawings consistent; no other screen shows the drawing without outside image requests.
+- Lamp illustration and compact wordmark share one browser-safe SVG module and global color tokens; the large drawing belongs on age and home screens, while AppShell hides only the home header mark and reserves its space to keep the brand text fixed.
 
 - Server logic uses TanStack `createServerFn` (in `src/lib/*.functions.ts`), not Supabase Edge Functions — the brief's "Edge Functions" maps to these.
 - `brain_chunks`, `app_config`, `spend_ledger` have RLS on with no user policies and no anon/authenticated grants; read them only via `supabaseAdmin` loaded inside a handler after auth. Never import their contents into browser code (enforced by `src/test/product-rules.test.ts`).

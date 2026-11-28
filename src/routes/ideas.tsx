@@ -2,7 +2,6 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { AppShell } from "@/components/app/AppShell";
 import { CrisisPanel } from "@/components/app/CrisisHelp";
-import { LampIllustration } from "@/components/app/LampIllustration";
 import { cn } from "@/lib/utils";
 import { QuestionBox } from "@/components/app/QuestionBox";
 import { Button } from "@/components/ui/button";
@@ -68,7 +67,6 @@ function IdeasPage() {
   return <AppShell>
     <div className="space-y-6 py-6">
       {result?.crisis && <CrisisPanel text={QUESTION_CRISIS_TEXT} />}
-      <div className="mx-auto w-full max-w-[120px]"><LampIllustration /></div>
       <h1 className="text-3xl leading-tight">{QUESTION_IDEAS_HEADING}</h1>
       {result && <div className="space-y-2">
         <p className="text-sm text-muted-foreground">{IDEAS_ECHO_LABEL}</p>

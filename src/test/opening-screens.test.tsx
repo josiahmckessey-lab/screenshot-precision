@@ -16,6 +16,14 @@ import { AgeScreen } from "@/components/app/AgeScreen";
 afterEach(() => { cleanup(); router.pathname = "/"; localStorage.clear(); });
 
 describe("Opening screens stay calm", () => {
+  it.each(["/ideas", "/topic/topic-10"])("%s keeps the lamp mark in the header", (path) => {
+    router.pathname = path;
+    render(<AppShell><p>Page</p></AppShell>);
+    const header = screen.getByRole("banner");
+    expect(header.textContent).toBe("The Gift");
+    expect(header.querySelector("svg")).toBeInTheDocument();
+  });
+
   it("age screen has no footer and no Crisis help button", () => {
     render(<AppShell hideBack hideFooter><AgeScreen onContinue={() => {}} /></AppShell>);
     expect(screen.queryByRole("contentinfo")).toBeNull();

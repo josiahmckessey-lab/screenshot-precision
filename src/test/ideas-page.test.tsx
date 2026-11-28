@@ -61,7 +61,8 @@ describe("Results lead in line", () => {
     const cards = screen.getByTestId("idea-cards");
     expect(quote.compareDocumentPosition(line) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(line.compareDocumentPosition(cards) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(document.querySelectorAll('main svg[role="img"]').length).toBe(1);
+    expect(document.querySelectorAll('main svg[role="img"]').length).toBe(0);
+    expect(screen.getByRole("banner").querySelector("svg")).toBeInTheDocument();
   });
 
   it("shows the full line and the cards at once on a return visit", async () => {

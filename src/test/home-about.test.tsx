@@ -39,7 +39,7 @@ describe("Home and About welcome paragraph", () => {
     expect(walk.compareDocumentPosition(quote) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
-  it("shows only the app name as the heading, the short invitation and no lamp drawing", async () => {
+  it("shows the app name heading and short invitation below the restored home lamp", async () => {
     await open("/");
     const heading = await screen.findByRole("heading", { level: 1 });
     expect(heading.textContent).toBe("The Gift");
@@ -47,7 +47,13 @@ describe("Home and About welcome paragraph", () => {
     expect(flat(main.textContent)).not.toContain("Welcome to");
     expect(flat(main.textContent)).not.toContain("Come in.");
     expect(heading.nextElementSibling?.textContent).toBe("Nothing here is graded.");
-    expect(main.querySelector('svg[role="img"]')).toBeNull();
+    const lamp = main.querySelector('svg[role="img"]');
+    expect(lamp).toBeInTheDocument();
+    expect(lamp?.compareDocumentPosition(heading) && lamp.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const header = screen.getByRole("banner");
+    expect(header.textContent).toBe("The Gift");
+    expect(header.querySelector("svg")).toBeNull();
+    expect(screen.getByRole("link", { name: "The Gift home" })).toHaveAttribute("href", "/");
   });
 
   it("opens About with the long paragraph and its two links", async () => {
